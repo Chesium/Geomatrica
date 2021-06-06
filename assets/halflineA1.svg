@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <rect width="128" height="128" id="artboard_1" />
+    <clipPath id="clip_1">
+      <use xlink:href="#artboard_1" clip-rule="evenodd" />
+    </clipPath>
+  </defs>
+  <g id="icon" clip-path="url(#clip_1)">
+    <use xlink:href="#artboard_1" stroke="none" fill="#FFFFFF" />
+    <path d="M0 0L137 0L137 10L0 10L0 0Z" transform="matrix(0.70710677 -0.70710677 0.70710677 0.70710677 24.694916 96.23404)" id="Rectangle-2" fill="#00FFFF" fill-rule="evenodd" stroke="#808080" stroke-width="0" />
+    <g id="Group" transform="translate(20 84)">
+      <path d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" id="Ellipse-4" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+      <path d="M0 9.33333C0 4.17868 4.17868 0 9.33333 0C14.488 0 18.6667 4.17868 18.6667 9.33333C18.6667 14.488 14.488 18.6667 9.33333 18.6667C4.17868 18.6667 0 14.488 0 9.33333Z" transform="translate(2.6666565 2.666687)" id="Ellipse-3" fill="#FF8800" fill-rule="evenodd" stroke="#888888" stroke-width="2" />
+    </g>
+    <g id="Group" transform="translate(49 55)">
+      <path d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" id="Ellipse-4" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+      <path d="M0 9.33333C0 4.17868 4.17868 0 9.33333 0C14.488 0 18.6667 4.17868 18.6667 9.33333C18.6667 14.488 14.488 18.6667 9.33333 18.6667C4.17868 18.6667 0 14.488 0 9.33333Z" transform="translate(2.666687 2.6666565)" id="Ellipse-3" fill="#FF8800" fill-rule="evenodd" stroke="#888888" stroke-width="2" />
+    </g>
+    <path d="M0 0L128 0L128 128L0 128L0 0Z" id="Rectangle" fill="#D3D3D3" fill-opacity="0" fill-rule="evenodd" stroke="#888888" stroke-width="15" />
+  </g>
+</svg>

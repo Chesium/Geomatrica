@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Geomatrica 210605</title>
+    <script src="lib/pixi.js"></script>
+
+    <link rel="stylesheet" href="lib/spectre.min.css">
+    <link rel="stylesheet" href="lib/spectre-exp.min.css">
+    <link rel="stylesheet" href="lib/spectre-icons.min.css">
+
+    <style>
+        #workarea {
+            image-rendering: -webkit-optimize-contrast;
+        }
+
+        #toolbar {
+            image-rendering: -webkit-optimize-contrast;
+        }
+
+        #toolbar-container {
+            position: absolute;
+            top: 0px;
+            left:0px;
+            width: 60px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        #workarea-container {
+            position: absolute;
+            top: 0px;
+            left: 60px;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="workarea-container">
+        <canvas id="workarea"></canvas>
+    </div>
+    <div id="toolbar-container">
+        <canvas id="toolbar"></canvas>
+    </div>
+    <script src="js/init.js"></script>
+    <script src="js/point.js"></script>
+    <script src="js/line.js"></script>
+    <script src="js/circle.js"></script>
+    <script src="js/obj.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/interaction.js"></script>
+    <script src="js/toolbar.js"></script>
+</body>
+
+</html>
