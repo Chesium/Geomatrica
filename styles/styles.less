@@ -1,0 +1,65 @@
+#workarea,
+#toolbar {
+    image-rendering: -webkit-optimize-contrast;
+}
+
+#toolbar-container,
+#toolbar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 60px;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgb(160, 160, 160);
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+#workarea-container {
+    position: absolute;
+    top: 0px;
+    left: 60px;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+.Cmode-switch {
+    /* border: 2px solid #4CAF50; */
+    border: none;
+    outline: none;
+    transition-duration: 0.2s;
+    background-image: url(../assets/circleA0.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+    height: 50px;
+    width: 50px;
+
+    position: relative;
+    top: 5px;
+    left: 5px;
+}
+
+@icons: "moveA", "segmentA", "pointA", "circleA", "lineA", "halflineA", "intersectionA";
+
+each(@icons, {
+        .button-@{index} {
+            background-image: url("../assets/@{value}0.svg")
+        }
+
+        .button-@{index}:hover {
+            background-image: url("../assets/@{value}1.svg") !important
+        }
+
+        .button-@{index}[activated=true] {
+            background-image: url("../assets/@{value}2.svg")
+        }
+    }
+
+);

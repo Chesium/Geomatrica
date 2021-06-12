@@ -1,0 +1,105 @@
+#workarea,
+#toolbar {
+  image-rendering: -webkit-optimize-contrast;
+}
+#toolbar-container,
+#toolbar {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 60px;
+  height: 100%;
+  overflow: hidden;
+  background-color: #a0a0a0;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+#workarea-container {
+  position: absolute;
+  top: 0px;
+  left: 60px;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+.Cmode-switch {
+  /* border: 2px solid #4CAF50; */
+  border: none;
+  outline: none;
+  transition-duration: 0.2s;
+  background-image: url(../assets/circleA0.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 50px 50px;
+  height: 50px;
+  width: 50px;
+  position: relative;
+  top: 5px;
+  left: 5px;
+}
+.button-1 {
+  background-image: url("../assets/moveA0.svg");
+}
+.button-1:hover {
+  background-image: url("../assets/moveA1.svg") !important;
+}
+.button-1[activated=true] {
+  background-image: url("../assets/moveA2.svg");
+}
+.button-2 {
+  background-image: url("../assets/segmentA0.svg");
+}
+.button-2:hover {
+  background-image: url("../assets/segmentA1.svg") !important;
+}
+.button-2[activated=true] {
+  background-image: url("../assets/segmentA2.svg");
+}
+.button-3 {
+  background-image: url("../assets/pointA0.svg");
+}
+.button-3:hover {
+  background-image: url("../assets/pointA1.svg") !important;
+}
+.button-3[activated=true] {
+  background-image: url("../assets/pointA2.svg");
+}
+.button-4 {
+  background-image: url("../assets/circleA0.svg");
+}
+.button-4:hover {
+  background-image: url("../assets/circleA1.svg") !important;
+}
+.button-4[activated=true] {
+  background-image: url("../assets/circleA2.svg");
+}
+.button-5 {
+  background-image: url("../assets/lineA0.svg");
+}
+.button-5:hover {
+  background-image: url("../assets/lineA1.svg") !important;
+}
+.button-5[activated=true] {
+  background-image: url("../assets/lineA2.svg");
+}
+.button-6 {
+  background-image: url("../assets/halflineA0.svg");
+}
+.button-6:hover {
+  background-image: url("../assets/halflineA1.svg") !important;
+}
+.button-6[activated=true] {
+  background-image: url("../assets/halflineA2.svg");
+}
+.button-7 {
+  background-image: url("../assets/intersectionA0.svg");
+}
+.button-7:hover {
+  background-image: url("../assets/intersectionA1.svg") !important;
+}
+.button-7[activated=true] {
+  background-image: url("../assets/intersectionA2.svg");
+}
