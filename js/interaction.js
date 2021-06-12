@@ -5,42 +5,43 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerdown", (event) => {
     switch (Cmode) {
         case 0://拖动模式
             if (FI != -1) {
-                O[FI].beginDrag(pos);
+                // console.log(O[FI].geometry);
+                O[FI].geometry.beginDrag(pos);
             }
             break;
         case 1://画线模式
             if (FI == -1) {
-                newObj(1, 1, { p: [newObj(0, 1, {}, pos), newObj(0, 1, {}, pos)] });
+                new obj(1, 0, { p: [(new obj(0, 0, {}, { pos: pos })).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
             } else {
-                switch (O[FI].type) {
+                switch (O[FI].geometry.type) {
                     case 0://从已有点开始画线
-                        newObj(1, 1, { p: [O[FI], newObj(0, 1, {}, pos)] });
+                        new obj(1, 0, { p: [O[FI].geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
                     case 1://画线时点到线
-                        newObj(1, 1, { p: [newObj(0, 2, { l: O[FI] }, pos), newObj(0, 1, {}, pos)] });
+                        new obj(1, 0, { p: [new obj(0, 1, { l: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
                     case 2://画线时点到圆
-                        newObj(1, 1, { p: [newObj(0, 3, { c: O[FI] }, pos), newObj(0, 1, {}, pos)] });
+                        new obj(1, 0, { p: [new obj(0, 2, { c: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
                     default:
                         break;
                 }
             }
-            O[N - 1].beginDraw(pos);
+            O[O.length - 1].geometry.beginDraw(pos);
             break;
         case 2://画点模式
             if (FI == -1) {
-                newObj(0, 1, {}, pos);//随便画个点
+                new obj(0, 0, {}, { pos: pos });
             } else {
-                switch (O[FI].type) {
+                switch (O[FI].geometry.type) {
                     case 0://画点时点击点
-                        
+
                         break;
                     case 1://画点时点到线
-                        newObj(0, 2, { l: O[FI] }, pos);
+                        new obj(0, 1, { l: O[FI].geometry }, { pos: pos });
                         break;
                     case 2://画点时点到圆
-                        newObj(0, 3, { c: O[FI] }, pos);
+                        new obj(0, 2, { c: O[FI].geometry }, { pos: pos });
                         break;
                     default:
                         break;
@@ -49,63 +50,63 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerdown", (event) => {
             break;
         case 3://画圆模式
             if (FI == -1) {
-                newObj(2, 1, { p: [newObj(0, 1, {}, pos), newObj(0, 1, {}, pos)] });
+                new obj(2, 0, { p: [(new obj(0, 0, {}, { pos: pos })).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] },{});
             } else {
-                switch (O[FI].type) {
+                switch (O[FI].geometry.type) {
                     case 0://从已有点开始画圆
-                        newObj(2, 1, { p: [O[FI], newObj(0, 1, {}, pos)] });
+                        new obj(2, 0, { p: [O[FI].geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
                     case 1://画圆时点到线
-                        newObj(2, 1, { p: [newObj(0, 2, { l: O[FI] }, pos), newObj(0, 1, {}, pos)] });
+                        new obj(2, 0, { p: [new obj(0, 1, { l: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
                     case 2://画圆时点到圆
-                        newObj(2, 1, { p: [newObj(0, 3, { c: O[FI] }, pos), newObj(0, 1, {}, pos)] });
+                        new obj(2, 0, { p: [new obj(0, 2, { c: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
                     default:
                         break;
                 }
             }
-            O[N - 1].beginDraw(pos);
+            O[O.length - 1].geometry.beginDraw(pos);
             break;
         case 4://画直线模式
             if (FI == -1) {
-                newObj(1, 2, { p: [newObj(0, 1, {}, pos), newObj(0, 1, {}, pos)] });
+                new obj(1, 1, { p: [(new obj(0, 0, {}, { pos: pos })).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
             } else {
-                switch (O[FI].type) {
-                    case 0://从已有点开始画直线
-                        newObj(1, 2, { p: [O[FI], newObj(0, 1, {}, pos)] });
+                switch (O[FI].geometry.type) {
+                    case 0://从已有点开始画线
+                        new obj(1, 1, { p: [O[FI].geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
-                    case 1://画直线时点到线
-                        newObj(1, 2, { p: [newObj(0, 2, { l: O[FI] }, pos), newObj(0, 1, {}, pos)] });
+                    case 1://画线时点到线
+                        new obj(1, 1, { p: [new obj(0, 1, { l: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
-                    case 2://画直线时点到圆
-                        newObj(1, 2, { p: [newObj(0, 3, { c: O[FI] }, pos), newObj(0, 1, {}, pos)] });
+                    case 2://画线时点到圆
+                        new obj(1, 1, { p: [new obj(0, 2, { c: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
                     default:
                         break;
                 }
             }
-            O[N - 1].beginDraw(pos);
+            O[O.length - 1].geometry.beginDraw(pos);
             break;
         case 5://画射线模式
             if (FI == -1) {
-                newObj(1, 3, { p: [newObj(0, 1, {}, pos), newObj(0, 1, {}, pos)] });
+                new obj(1, 2, { p: [(new obj(0, 0, {}, { pos: pos })).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
             } else {
-                switch (O[FI].type) {
-                    case 0://从已有点开始画射线
-                        newObj(1, 3, { p: [O[FI], newObj(0, 1, {}, pos)] });
+                switch (O[FI].geometry.type) {
+                    case 0://从已有点开始画线
+                        new obj(1, 2, { p: [O[FI].geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
-                    case 1://画射线时点到线
-                        newObj(1, 3, { p: [newObj(0, 2, { l: O[FI] }, pos), newObj(0, 1, {}, pos)] });
+                    case 1://画线时点到线
+                        new obj(1, 2, { p: [new obj(0, 1, { l: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
-                    case 2://画射线时点到圆
-                        newObj(1, 3, { p: [newObj(0, 3, { c: O[FI] }, pos), newObj(0, 1, {}, pos)] });
+                    case 2://画线时点到圆
+                        new obj(1, 2, { p: [new obj(0, 2, { c: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
                     default:
                         break;
                 }
             }
-            O[N - 1].beginDraw(pos);
+            O[O.length - 1].geometry.beginDraw(pos);
             break;
         default:
             break;
@@ -114,56 +115,60 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerdown", (event) => {
 
 mainCanvasApp.renderer.plugins.interaction.on("pointermove", (event) => {
     let pos = { x: event.data.global.x, y: event.data.global.y };
-    if(moving){
-        O[F].updateDrag(pos);
+    if (moving) {
+        O[F].geometry.updDrag(pos);
     }
 });
 
 mainCanvasApp.renderer.plugins.interaction.on("pointerup", (event) => {
     let pos = { x: event.data.global.x, y: event.data.global.y };
     if (F != -1) {
-        if (O[F].initializing) {
-            O[F].initializing = false;
+        if (O[F].geometry.initializing) {
+            O[F].geometry.initializing = false;
             var FI = chooseByGlobalPos(pos);
             // console.log(`FI:${FI}`);
             if (FI != -1) {
                 var stickP;
-                switch (O[FI].type) {
+                switch (O[FI].geometry.type) {
                     case 0://在点上松手
-                        stickP=O[FI];
+                        stickP = O[FI].geometry;
                         break;
 
                     case 1://在线上松手
-                        stickP = newObj(0, 2, { l: O[FI] }, pos);
+                        stickP = new obj(0, 1, { l: O[FI].geometry }, { pos: pos }).geometry;
                         break;
 
                     case 2://在圆上松手
-                        stickP = newObj(0, 3, { c: O[FI] }, pos);
+                        stickP = new obj(0, 2, { c: O[FI].geometry }, { pos: pos }).geometry;
                         break;
-                
+
                     default:
                         break;
                 }
-                stickP.children.push(O[F].children[0]);
-                O[F].children[0].parents.pop();
-                O[F].children[0].parents.push(stickP);
-                O[F].children[0].dfn.p[1] = stickP;
-                O[F].children.pop();
+                stickP.children.push(O[F].geometry.children[0]);
+                O[F].geometry.children[0].parents.pop();
+                O[F].geometry.children[0].parents.push(stickP);
+                O[F].geometry.children[0].dfn.p[1] = stickP;
+                O[F].geometry.children.pop();
                 O[F].remove();
             }
         }
     }
-    for (let i in O) {
-        // console.log(O[i].index, O[i].boundChanged, O[i].bitmapChanged);
-        if (O[i].boundChanged == 1) {
-            O[i].updateBound();
-            O[i].boundChanged = 0;
+    var IAAs=IAseq.flat(Infinity);
+    for (var i in IAAs) {
+        if(IAAs[i].removed){
+            continue;
         }
-        if (O[i].bitmapChanged == 1) {
-            O[i].updateBitmap();
-            O[i].bitmapChanged = 0;
+        // console.log(O[i].index, O[i].boundChanged, O[i].bitmapChanged);
+        if (IAAs[i].needUpdBound) {
+            IAAs[i].updBound();
+            IAAs[i].needUpdBound = false;
+        }
+        if (IAAs[i].needUpdBitmap) {
+            IAAs[i].updBitmap();
+            IAAs[i].needUpdBitmap = false;
         }
     }
-    F=-1;
+    F = -1;
     moving = false;
 });

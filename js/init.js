@@ -6,19 +6,15 @@ const mainCanvasApp = new PIXI.Application({
     backgroundAlpha: 0,
     resizeTo: document.querySelector('#workarea-container'),
     view: document.querySelector('#workarea'),
-    backgroundColor:0x000000,
-    backgroundAlpha:0
+    backgroundColor: 0x000000,
+    backgroundAlpha: 0
 });
 
 const mainCanvas = mainCanvasApp.stage;
 
-var O = [new Array()];
-var N = 0;
-var moving=false;
-var F = -1;
-var Cmode = 1;
-var showBoundBox = false;
-var stageBound =[[0,0],[mainCanvasApp.view.width,mainCanvasApp.view.height]];
+//越大越靠前
+const zIofT=[10,5,5];
+// var stageBound = [[30, 30], [800, 800]];
 
 const _DefaultStyle_ = {
     point: {
