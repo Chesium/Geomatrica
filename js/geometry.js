@@ -141,8 +141,8 @@ geometry.prototype.calcData = function () {
                         r2 = this.dfn.c[1].data.r;
                     var k = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
                     var s = Math.sqrt(k);
-                    if(s>r1+r2){
-                        this.data.exist=false;
+                    if (s > r1 + r2) {
+                        this.data.exist = false;
                         return;
                     }
                     var n = (r1 * r1 - r2 * r2) / (2 * k) + 0.5;
@@ -178,6 +178,84 @@ geometry.prototype.calcData = function () {
                     this.data.y = yM + q * (x1 - xM);
                     break;
 
+                case 6://圆与线的第一个交点
+                    var a = this.dfn.l.data.a,
+                        b = this.dfn.l.data.b,
+                        c = this.dfn.l.data.c,
+                        d = this.dfn.l.data.d,
+                        rg = this.dfn.l.data.r,//range of t
+                        x = this.dfn.c.data.x,
+                        y = this.dfn.c.data.y,
+                        r = this.dfn.c.data.r;
+                    var A = a * a + c * c,
+                        B = 2 * (a * (b - x) + c * (d - y)),
+                        C = b * b + d * d + x * x + y * y - r * r - 2 * (b * x + d * y);
+                    var delta = B * B - 4 * A * C;//判别式Δ
+                    if (delta < 0) {
+                        this.data.exist = false;
+                        return;
+                    }
+                    var t1 = (-B + Math.sqrt(delta)) / (2 * A);
+                    var t2 = -(B / A + t1), ts = [], t;
+                    if (t1 >= Math.min(rg[0], rg[1]) && t1 <= Math.max(rg[0], rg[1])) {
+                        ts.push(t1);
+                    }
+                    if (t2 >= Math.min(rg[0], rg[1]) && t2 <= Math.max(rg[0], rg[1])) {
+                        ts.push(t2);
+                    }
+                    if (ts.length == 0) {
+                        this.data.exist = false;
+                        return;
+                    }
+                    if (this.dfn.l.data.dr == 1) {
+                        t = Math.max(...ts);
+                    } else {
+                        t = Math.min(...ts);
+                    }
+                    this.data.exist = true;
+                    this.data.x = a * t + b;
+                    this.data.y = c * t + d;
+                    break;
+
+                case 7://圆与线的第二个交点
+                    var a = this.dfn.l.data.a,
+                        b = this.dfn.l.data.b,
+                        c = this.dfn.l.data.c,
+                        d = this.dfn.l.data.d,
+                        rg = this.dfn.l.data.r,//range of t
+                        x = this.dfn.c.data.x,
+                        y = this.dfn.c.data.y,
+                        r = this.dfn.c.data.r;
+                    var A = a * a + c * c,
+                        B = 2 * (a * (b - x) + c * (d - y)),
+                        C = b * b + d * d + x * x + y * y - r * r - 2 * (b * x + d * y);
+                    var delta = B * B - 4 * A * C;//判别式Δ
+                    if (delta < 0) {
+                        this.data.exist = false;
+                        return;
+                    }
+                    var t1 = (-B + Math.sqrt(delta)) / (2 * A);
+                    var t2 = -(B / A + t1), ts = [], t;
+                    if (t1 >= Math.min(rg[0], rg[1]) && t1 <= Math.max(rg[0], rg[1])) {
+                        ts.push(t1);
+                    }
+                    if (t2 >= Math.min(rg[0], rg[1]) && t2 <= Math.max(rg[0], rg[1])) {
+                        ts.push(t2);
+                    }
+                    if (ts.length != 2) {
+                        this.data.exist = false;
+                        return;
+                    }
+                    if (this.dfn.l.data.dr == -1) {
+                        t = Math.max(...ts);
+                    } else {
+                        t = Math.min(...ts);
+                    }
+                    this.data.exist = true;
+                    this.data.x = a * t + b;
+                    this.data.y = c * t + d;
+                    break;
+
                 default:
                     break;
             }
@@ -202,8 +280,10 @@ geometry.prototype.calcData = function () {
                             this.data.d = 0;
                             this.data.r = [y1, y2];
                             if (y1 < y2) {
+                                this.data.dr = 1;
                                 this.cache.p = [this.dfn.p[0], this.dfn.p[1]];
                             } else {
+                                this.data.dr = -1;
                                 this.cache.p = [this.dfn.p[1], this.dfn.p[0]];
                             }
                         }
@@ -215,8 +295,10 @@ geometry.prototype.calcData = function () {
                         this.data.r = [x1, x2];
                         this.data.d = y1 - this.data.c * x1;
                         if (x1 < x2) {
+                            this.data.dr = 1;
                             this.cache.p = [this.dfn.p[0], this.dfn.p[1]];
                         } else {
+                            this.data.dr = -1;
                             this.cache.p = [this.dfn.p[1], this.dfn.p[0]];
                         }
                     }
@@ -238,8 +320,10 @@ geometry.prototype.calcData = function () {
                             this.data.d = 0;
                             this.data.r = [-Infinity, Infinity];
                             if (y1 < y2) {
+                                this.data.dr = 1;
                                 this.cache.p = [this.dfn.p[0], this.dfn.p[1]];
                             } else {
+                                this.data.dr = -1;
                                 this.cache.p = [this.dfn.p[1], this.dfn.p[0]];
                             }
                         }
@@ -251,8 +335,10 @@ geometry.prototype.calcData = function () {
                         this.data.r = [-Infinity, Infinity];
                         this.data.d = y1 - this.data.c * x1;
                         if (x1 < x2) {
+                            this.data.dr = 1;
                             this.cache.p = [this.dfn.p[0], this.dfn.p[1]];
                         } else {
+                            this.data.dr = -1;
                             this.cache.p = [this.dfn.p[1], this.dfn.p[0]];
                         }
                     }
@@ -275,9 +361,11 @@ geometry.prototype.calcData = function () {
                             this.data.d = 0;
                             if (y1 < y2) {
                                 this.data.r = [y1, Infinity];
+                                this.data.dr = 1;
                                 this.cache.p = [this.dfn.p[0], this.dfn.p[1]];
                             } else {
                                 this.data.r = [-Infinity, y1];
+                                this.data.dr = -1;
                                 this.cache.p = [this.dfn.p[1], this.dfn.p[0]];
                             }
                         }
@@ -289,9 +377,11 @@ geometry.prototype.calcData = function () {
                         this.data.d = y1 - this.data.c * x1;
                         if (x1 < x2) {
                             this.data.r = [x1, Infinity];
+                            this.data.dr = 1;
                             this.cache.p = [this.dfn.p[0], this.dfn.p[1]];
                         } else {
                             this.data.r = [-Infinity, x1];
+                            this.data.dr = -1;
                             this.cache.p = [this.dfn.p[1], this.dfn.p[0]];
                         }
                     }
@@ -367,17 +457,19 @@ geometry.prototype.pInit = function (initData) {
             break;
 
         case 4://两圆的第一个交点
+        case 5://两圆的第二个交点
             this.dfn.c[0].children.push(this);
             this.dfn.c[1].children.push(this);
 
             this.parents = [this.dfn.c[0], this.dfn.c[1]];
             break;
 
-        case 5://两圆的第二个交点
-            this.dfn.c[0].children.push(this);
-            this.dfn.c[1].children.push(this);
+        case 6://圆与线的第一个交点
+        case 7://圆与线的第二个交点
+            this.dfn.l.children.push(this);
+            this.dfn.c.children.push(this);
 
-            this.parents = [this.dfn.c[0], this.dfn.c[1]];
+            this.parents = [this.dfn.l, this.dfn.c];
             break;
 
         default:
@@ -469,6 +561,8 @@ geometry.prototype.beginDrag = function (pos) {
                 case 3:
                 case 4:
                 case 5:
+                case 6:
+                case 7:
                     this.beginMove(pos);
                     break;
 
@@ -533,13 +627,15 @@ geometry.prototype.beginMove = function (pos) {
                     break;
 
                 case 4:
+                case 5:
                     this.dfn.c[0].beginMove(pos);
                     this.dfn.c[1].beginMove(pos);
                     break;
 
-                case 5:
-                    this.dfn.c[0].beginMove(pos);
-                    this.dfn.c[1].beginMove(pos);
+                case 6:
+                case 7:
+                    this.dfn.l.beginMove(pos);
+                    this.dfn.c.beginMove(pos);
                     break;
 
                 default:
@@ -601,6 +697,8 @@ geometry.prototype.updDrag = function (pos) {
                 case 3:
                 case 4:
                 case 5:
+                case 6:
+                case 7:
                     this.updMove(pos);
                     break;
 
@@ -661,13 +759,15 @@ geometry.prototype.updMove = function (pos) {
                     break;
 
                 case 4:
+                case 5:
                     this.dfn.c[0].updMove(pos);
                     this.dfn.c[1].updMove(pos);
                     break;
 
-                case 5:
-                    this.dfn.c[0].updMove(pos);
-                    this.dfn.c[1].updMove(pos);
+                case 6:
+                case 7:
+                    this.dfn.l.updMove(pos);
+                    this.dfn.c.updMove(pos);
                     break;
 
                 default:
