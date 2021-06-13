@@ -108,20 +108,52 @@ function changeMode(newMode) {
                         if (chooseObjs[0].geometry.type == 0) {
                             console.log("not supported");
                             chooseObjs.pop();
+                        } else {
+                            chooseObjs[0].GFD.changeStyleMode(1);
                         }
-                        chooseObjs[0].GFD.changeStyleMode(1);
                         break;
 
                     case 2:
-                        if (chooseObjs[1].geometry.type != chooseObjs[0].geometry.type) {
+                        if (chooseObjs[1].geometry.type == 0) {
                             console.log("not supported");
                             chooseObjs.pop();
                         } else {
-                            if (chooseObjs[0].geometry.type == 1) {//两线交点
-                                new obj(0, 3, { l: [chooseObjs[0].geometry, chooseObjs[1].geometry] }, {});
-                            } else {//两圆交点
-                                new obj(0, 4, { c: [chooseObjs[0].geometry, chooseObjs[1].geometry] }, {});
-                                new obj(0, 5, { c: [chooseObjs[0].geometry, chooseObjs[1].geometry] }, {});
+                            switch (chooseObjs[0].geometry.type) {
+                                case 1:
+                                    switch (chooseObjs[1].geometry.type) {
+                                        case 1://线-线
+                                            new obj(0, 3, { l: [chooseObjs[0].geometry, chooseObjs[1].geometry]},{});
+                                            break;
+
+                                        case 2://线-圆
+                                            new obj(0, 6, { l: chooseObjs[0].geometry, c: chooseObjs[1].geometry }, {});
+                                            new obj(0, 7, { l: chooseObjs[0].geometry, c: chooseObjs[1].geometry }, {});
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                    break;
+
+                                case 2:
+                                    switch (chooseObjs[1].geometry.type) {
+                                        case 1://圆-线
+                                            new obj(0, 6, { l: chooseObjs[1].geometry, c: chooseObjs[0].geometry }, {});
+                                            new obj(0, 7, { l: chooseObjs[1].geometry, c: chooseObjs[0].geometry }, {});
+                                            break;
+
+                                        case 2://圆-圆
+                                            new obj(0, 4, { c: [chooseObjs[0].geometry, chooseObjs[1].geometry] }, {});
+                                            new obj(0, 5, { c: [chooseObjs[0].geometry, chooseObjs[1].geometry] }, {});
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                    break;
+                            
+                                default:
+                                    break;
                             }
                             clearChooseList();
                         }
