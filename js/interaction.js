@@ -108,6 +108,17 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerdown", (event) => {
             }
             O[O.length - 1].geometry.beginDraw(pos);
             break;
+        case 6://½»µã
+            if (FI == -1) {
+                clearChooseList();
+            } else {
+                O[FI].GFD.changeStyleMode(1);
+                chooseObjs.push(O[FI]);
+                if (processFn()) {
+                    clearChooseList();
+                }
+            }
+            break;
         default:
             break;
     }

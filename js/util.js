@@ -84,3 +84,56 @@ function _l(a, b, c, d, r, dr) {
 function _c(x, y, r) {
     return { x: x, y: y, r: r };
 }
+
+function changeMode(newMode) {
+    mode = newMode;
+    switch (mode) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+            break;
+
+        case 6://两对象交点
+            processFn = () => {
+                switch (chooseObjs.length) {
+                    case 0:
+                        //Nothing to do
+                        break;
+
+                    case 1:
+                        if (chooseObjs[0].geometry.type != 1) {
+                            console.log("not supported");
+                            chooseObjs.pop();
+                        }
+                        break;
+
+                    case 2:
+                        if (chooseObjs[1].geometry.type != 1) {
+                            console.log("not supported");
+                            chooseObjs.pop();
+                        } else {
+                            new obj(0, 3, { l: [chooseObjs[0].geometry, chooseObjs[1].geometry]},{});
+                            return true;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+                return false;
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+function clearChooseList() {
+    for (var i in chooseObjs) {
+        chooseObjs[i].GFD.changeStyleMode(0);
+    }
+    chooseObjs.length = 0;
+}

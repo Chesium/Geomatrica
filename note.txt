@@ -1,0 +1,15 @@
+添加新功能时要改的地方
+
+in geometry.js
+
+_init()
+
+beginDraw()
+
+beginDrag()
+
+beginMove()
+
+updDrag()
+
+updMove()

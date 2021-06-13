@@ -1,15 +1,16 @@
-//主体对象列表
+//对象列表们
 var O = [];
 var pO = [];
 var dO = [];
 var IAseq = [[[], []], [[], []]];
 
-//unused
 var Status = 0;
-//0:default 1:moving 2:choosing
-// var moving = false;
+//0:default 1:moving
+
+var chooseObjs=[];
+var processFn;
+
 var F = -1;
 var mode = 1;
-var showBoundBox = true;
-// var stageBound = [[30, 30], [300, 300]];
+var showBoundBox = false;
 var stageBound = [[0, 0], [mainCanvasApp.view.width, mainCanvasApp.view.height]];
