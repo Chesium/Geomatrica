@@ -1,10 +1,12 @@
 function chooseByGlobalPos(pos) {
-    var poIAAs = IAseq[0].flat(Infinity);
-    for (var i in poIAAs) {
-        if (!poIAAs[i].removed) {
-            if (poIAAs[i].bound[0][0] <= pos.x && pos.x <= poIAAs[i].bound[1][0] && poIAAs[i].bound[0][1] <= pos.y && pos.y <= poIAAs[i].bound[1][1]) {
-                if (poIAAs[i].checkBitmap(pos)) {
-                    return poIAAs[i].obj.toObj();
+    if (mode != 0) {
+        var poIAAs = IAseq[0].flat(Infinity);
+        for (var i in poIAAs) {
+            if (!poIAAs[i].removed) {
+                if (poIAAs[i].bound[0][0] <= pos.x && pos.x <= poIAAs[i].bound[1][0] && poIAAs[i].bound[0][1] <= pos.y && pos.y <= poIAAs[i].bound[1][1]) {
+                    if (poIAAs[i].checkBitmap(pos)) {
+                        return poIAAs[i].obj.toObj();
+                    }
                 }
             }
         }
