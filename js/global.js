@@ -5,7 +5,7 @@ var dO = [];
 var IAseq = [[[], []], [[], []]];
 
 var Status = 0;
-//0:default 1:moving
+//0:default 1:moving 2:which is the one you want?
 
 var chooseObjs=[];
 var processFn;

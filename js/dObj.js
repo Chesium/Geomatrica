@@ -16,5 +16,12 @@ dObj.prototype.distance = function () {
 }
 
 dObj.prototype.remove = function () {
-
+    this.GFD.remove();
+    this.removed = true;
 }
+
+dObj.prototype.toObj = function () {
+    new obj(this.geometry.type, this.geometry.dfnType, this.geometry.dfn, {});
+    this.remove();
+}
+

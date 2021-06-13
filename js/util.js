@@ -87,6 +87,7 @@ function _c(x, y, r) {
 
 function changeMode(newMode) {
     mode = newMode;
+    clearChooseList();
     switch (mode) {
         case 0:
         case 1:
@@ -104,26 +105,31 @@ function changeMode(newMode) {
                         break;
 
                     case 1:
-                        if (chooseObjs[0].geometry.type != 1) {
+                        if (chooseObjs[0].geometry.type == 0) {
                             console.log("not supported");
                             chooseObjs.pop();
                         }
+                        chooseObjs[0].GFD.changeStyleMode(1);
                         break;
 
                     case 2:
-                        if (chooseObjs[1].geometry.type != 1) {
+                        if (chooseObjs[1].geometry.type != chooseObjs[0].geometry.type) {
                             console.log("not supported");
                             chooseObjs.pop();
                         } else {
-                            new obj(0, 3, { l: [chooseObjs[0].geometry, chooseObjs[1].geometry]},{});
-                            return true;
+                            if (chooseObjs[0].geometry.type == 1) {//两线交点
+                                new obj(0, 3, { l: [chooseObjs[0].geometry, chooseObjs[1].geometry] }, {});
+                            } else {//两圆交点
+                                new obj(0, 4, { c: [chooseObjs[0].geometry, chooseObjs[1].geometry] }, {});
+                                new obj(0, 5, { c: [chooseObjs[0].geometry, chooseObjs[1].geometry] }, {});
+                            }
+                            clearChooseList();
                         }
                         break;
 
                     default:
                         break;
                 }
-                return false;
             }
             break;
         default:

@@ -2,7 +2,7 @@ const Dfsty = [
     {//[0]Default
         p: {
             radius: 5,
-            color: 0xff0000,
+            color: 0x1565c0,
             alpha: 1,
             ol: {
                 width: 1,
@@ -18,8 +18,8 @@ const Dfsty = [
         },
         l: {
             body: {
-                width: 5,
-                color: 0x000000,
+                width: 2.5,
+                color: 0x7b7b7b,
                 alpha: 1,
                 cap: PIXI.LINE_CAP.ROUND
             },
@@ -34,7 +34,7 @@ const Dfsty = [
     {//[0]choose
         p: {
             radius: 5,
-            color: 0xff0000,
+            color: 0x1565c0,
             alpha: 1,
             ol: {
                 width: 1,
@@ -50,15 +50,15 @@ const Dfsty = [
         },
         l: {
             body: {
-                width: 5,
-                color: 0x000000,
+                width: 2.5,
+                color: 0x7b7b7b,
                 alpha: 1,
                 cap: PIXI.LINE_CAP.ROUND
             },
             margin: {
-                width: 10,
-                color: 0x000000,
-                alpha: 0.2,
+                width: 7,
+                color: 0xdfdfdf,
+                alpha: 1,
                 cap: PIXI.LINE_CAP.ROUND
             }
         }

@@ -34,9 +34,9 @@ geometry.prototype.init = function (initData) {
 }
 
 geometry.prototype.calcData = function () {
-    for(var i in this.parents){//如果对象的某一父对象不存在，那它自己也不存在
-        if(!this.parents[i].data.exist){
-            this.data.exist=false;
+    for (var i in this.parents) {//如果对象的某一父对象不存在，那它自己也不存在
+        if (!this.parents[i].data.exist) {
+            this.data.exist = false;
             return;
         }
     }
@@ -130,6 +130,52 @@ geometry.prototype.calcData = function () {
                     this.data.exist = true;
                     this.data.x = a1 * t1 + b1;
                     this.data.y = c1 * t1 + d1;
+                    break;
+
+                case 4://两圆的第一个交点
+                    var x1 = this.dfn.c[0].data.x,
+                        y1 = this.dfn.c[0].data.y,
+                        r1 = this.dfn.c[0].data.r,
+                        x2 = this.dfn.c[1].data.x,
+                        y2 = this.dfn.c[1].data.y,
+                        r2 = this.dfn.c[1].data.r;
+                    var k = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+                    var s = Math.sqrt(k);
+                    if(s>r1+r2){
+                        this.data.exist=false;
+                        return;
+                    }
+                    var n = (r1 * r1 - r2 * r2) / (2 * k) + 0.5;
+                    var p = s * n;
+                    var xM = x1 + n * (x2 - x1),
+                        yM = y1 + n * (y2 - y1);
+                    var q = Math.sqrt(r1 * r1 - p * p) / p;
+                    this.data.exist = true;
+                    this.data.x = xM + q * (y1 - yM);
+                    this.data.y = yM - q * (x1 - xM);
+                    break;
+
+                case 5://两圆的第二个交点
+                    var x1 = this.dfn.c[0].data.x,
+                        y1 = this.dfn.c[0].data.y,
+                        r1 = this.dfn.c[0].data.r,
+                        x2 = this.dfn.c[1].data.x,
+                        y2 = this.dfn.c[1].data.y,
+                        r2 = this.dfn.c[1].data.r;
+                    var k = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+                    var s = Math.sqrt(k);
+                    if (s > r1 + r2) {
+                        this.data.exist = false;
+                        return;
+                    }
+                    var n = (r1 * r1 - r2 * r2) / (2 * k) + 0.5;
+                    var p = s * n;
+                    var xM = x1 + n * (x2 - x1),
+                        yM = y1 + n * (y2 - y1);
+                    var q = Math.sqrt(r1 * r1 - p * p) / p;
+                    this.data.exist = true;
+                    this.data.x = xM - q * (y1 - yM);
+                    this.data.y = yM + q * (x1 - xM);
                     break;
 
                 default:
@@ -320,6 +366,20 @@ geometry.prototype.pInit = function (initData) {
             this.parents = [this.dfn.l[0], this.dfn.l[1]];
             break;
 
+        case 4://两圆的第一个交点
+            this.dfn.c[0].children.push(this);
+            this.dfn.c[1].children.push(this);
+
+            this.parents = [this.dfn.c[0], this.dfn.c[1]];
+            break;
+
+        case 5://两圆的第二个交点
+            this.dfn.c[0].children.push(this);
+            this.dfn.c[1].children.push(this);
+
+            this.parents = [this.dfn.c[0], this.dfn.c[1]];
+            break;
+
         default:
             break;
     }
@@ -407,6 +467,8 @@ geometry.prototype.beginDrag = function (pos) {
                     break;
 
                 case 3:
+                case 4:
+                case 5:
                     this.beginMove(pos);
                     break;
 
@@ -470,6 +532,16 @@ geometry.prototype.beginMove = function (pos) {
                     this.dfn.l[1].beginMove(pos);
                     break;
 
+                case 4:
+                    this.dfn.c[0].beginMove(pos);
+                    this.dfn.c[1].beginMove(pos);
+                    break;
+
+                case 5:
+                    this.dfn.c[0].beginMove(pos);
+                    this.dfn.c[1].beginMove(pos);
+                    break;
+
                 default:
                     break;
             }
@@ -527,6 +599,8 @@ geometry.prototype.updDrag = function (pos) {
                     break;
 
                 case 3:
+                case 4:
+                case 5:
                     this.updMove(pos);
                     break;
 
@@ -584,6 +658,16 @@ geometry.prototype.updMove = function (pos) {
                 case 3:
                     this.dfn.l[0].updMove(pos);
                     this.dfn.l[1].updMove(pos);
+                    break;
+
+                case 4:
+                    this.dfn.c[0].updMove(pos);
+                    this.dfn.c[1].updMove(pos);
+                    break;
+
+                case 5:
+                    this.dfn.c[0].updMove(pos);
+                    this.dfn.c[1].updMove(pos);
                     break;
 
                 default:

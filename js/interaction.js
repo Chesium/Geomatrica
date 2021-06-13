@@ -112,11 +112,8 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerdown", (event) => {
             if (FI == -1) {
                 clearChooseList();
             } else {
-                O[FI].GFD.changeStyleMode(1);
                 chooseObjs.push(O[FI]);
-                if (processFn()) {
-                    clearChooseList();
-                }
+                processFn();
             }
             break;
         default:
