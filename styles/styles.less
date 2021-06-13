@@ -29,11 +29,11 @@ body {
     width: 100%;
 }
 
-.Cmode-switch {
+.mode-switch {
     /* border: 2px solid #4CAF50; */
     border: none;
     outline: none;
-    transition-duration: 0.2s;
+    transition-duration: 0.5s;
     background-image: url(../assets/circleA0.svg);
     background-position: center center;
     background-repeat: no-repeat;
@@ -54,11 +54,11 @@ each(@icons, {
         }
 
         .button-@{index}:hover {
-            background-image: url("../assets/@{value}1.svg") !important
+            background-image: url("../assets/@{value}1.svg")
         }
 
         .button-@{index}[activated=true] {
-            background-image: url("../assets/@{value}2.svg")
+            background-image: url("../assets/@{value}2.svg") !important
         }
     }
 

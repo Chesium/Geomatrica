@@ -2,7 +2,7 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerdown", (event) => {
     let pos = { x: event.data.global.x, y: event.data.global.y };
     var FI = chooseByGlobalPos(pos);
     // console.log("Focus on Object No.", FI);
-    switch (Cmode) {
+    switch (mode) {
         case 0://ÍÏ¶¯Ä£Ê½
             if (FI != -1) {
                 // console.log(O[FI].geometry);
