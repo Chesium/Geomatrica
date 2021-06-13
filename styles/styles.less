@@ -8,7 +8,7 @@
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 60px;
+    width: 70px;
     height: 100%;
     overflow: hidden;
     background-color: rgb(160, 160, 160);
@@ -23,7 +23,7 @@ body {
 #workarea-container {
     position: absolute;
     top: 0px;
-    left: 60px;
+    left: 70px;
     overflow: hidden;
     height: 100%;
     width: 100%;
@@ -32,33 +32,42 @@ body {
 .mode-switch {
     /* border: 2px solid #4CAF50; */
     border: none;
+    border-radius: 5px;
+    // h-shadow v-shadow blur spread color inset;
+    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition-timing-function: ease;
     outline: none;
     transition-duration: 0.5s;
+    transition-delay: 0s;
+    background-color: white;
     background-image: url(../assets/circleA0.svg);
-    background-position: center center;
+    background-position: center right;
     background-repeat: no-repeat;
-    background-size: 50px 50px;
-    height: 50px;
-    width: 50px;
+    background-size: 50px 25px;
+    height: 25px;
+    width: 70px;
+    margin: 3px 0px 3px 0px;
 
     position: relative;
     top: 5px;
-    left: 5px;
+    left: -20px;
 }
 
-@icons: "moveA", "segmentA", "pointA", "circleA", "lineA", "halflineA", "intersectionA";
+@icons: "move", "segment", "point", "circle", "line", "halfline", "intersection";
 
 each(@icons, {
         .button-@{index} {
-            background-image: url("../assets/@{value}0.svg")
+            background-image: url("../assets/@{value}.svg")
         }
 
         .button-@{index}:hover {
-            background-image: url("../assets/@{value}1.svg")
+            box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            transform: translateX(8px);
         }
 
         .button-@{index}[activated=true] {
-            background-image: url("../assets/@{value}2.svg") !important
+            box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            transform: translateX(15px);
         }
     }
 

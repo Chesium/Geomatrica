@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="512px" height="256px" viewBox="0 0 512 256" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <rect width="512" height="256" id="artboard_1" />
+    <clipPath id="clip_1">
+      <use xlink:href="#artboard_1" clip-rule="evenodd" />
+    </clipPath>
+  </defs>
+  <g id="circle" clip-path="url(#clip_1)">
+    <use xlink:href="#artboard_1" stroke="none" fill="#FFFFFF" />
+    <path d="M0 100C0 44.7715 44.7715 0 100 0C155.228 0 200 44.7715 200 100C200 155.228 155.228 200 100 200C44.7715 200 0 155.228 0 100Z" transform="translate(156 28.5)" id="Ellipse-5" fill="#D3D3D3" fill-opacity="0" fill-rule="evenodd" stroke="#000000" stroke-width="15" />
+    <path d="M0 22.5C0 10.0736 10.0736 0 22.5 0C34.9264 0 45 10.0736 45 22.5C45 34.9264 34.9264 45 22.5 45C10.0736 45 0 34.9264 0 22.5Z" transform="translate(234 106)" id="Ellipse-3" fill="#FF0000" fill-rule="evenodd" stroke="#000000" stroke-width="4.5" />
+    <path d="M0 22.5C0 10.0736 10.0736 0 22.5 0C34.9264 0 45 10.0736 45 22.5C45 34.9264 34.9264 45 22.5 45C10.0736 45 0 34.9264 0 22.5Z" transform="translate(311 44)" id="Ellipse-4" fill="#FF0000" fill-rule="evenodd" stroke="#000000" stroke-width="4.5" />
+  </g>
+</svg>

@@ -3,12 +3,12 @@ const buttonN = 7;
 const buttonsMode = [0, 1, 2, 3, 4, 5, 6];
 const buttonTitles = [
     "移动",
-    "两点连线段",
     "画点",
-    "圆心和圆上一点",
-    "过两点的直线",
+    "线段",
+    "画圆",
+    "直线",
     "射线",
-    "两对象的交点"
+    "交点"
 ];
 
 var buttons = [];
@@ -21,7 +21,6 @@ for (let i = 0; i < buttonN; i++) {
     buttons[i].setAttribute("activated", "false");
     buttons[i].onclick=function () {
         changeMode(buttonsMode[i]);
-        // mode=buttonsMode[i];
         for(let i in buttons){
             buttons[i].setAttribute("activated", "false");
         }
