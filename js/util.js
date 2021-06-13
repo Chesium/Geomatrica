@@ -189,7 +189,7 @@ function clearChooseList() {
 function haveEqualIndex(arr1, arr2) {
     for (let i = 0; i < arr2.length; i++) {
         for (let j = 0; j < arr1.length; j++) {
-            if (arr1[j].index == arr2[i].index) {
+            if (arr1[j].obj.index == arr2[i].obj.index) {
                 return true;
             }
         }

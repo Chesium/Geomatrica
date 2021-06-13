@@ -819,15 +819,15 @@ geometry.prototype.preDifine=function () {
                 break;
 
             case 1:
-                if (haveEqualIndex(this.parents, O[i].geometry.parents)) {
-                    continue;
-                }
                 switch (O[i].geometry.type) {
                     case 0:
                         //Nothing to do
                         break;
 
                     case 1:
+                        if (haveEqualIndex(this.parents, O[i].geometry.parents)) {
+                            continue;
+                        }
                         this.obj.pObjs.push(new pObj(0, 3, { l: [this, O[i].geometry] }, {}));
                         break;
 

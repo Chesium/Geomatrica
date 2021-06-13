@@ -129,6 +129,7 @@ mainCanvasApp.renderer.plugins.interaction.on("pointermove", (event) => {
 });
 
 mainCanvasApp.renderer.plugins.interaction.on("pointerup", (event) => {
+    console.time();
     let pos = { x: event.data.global.x, y: event.data.global.y };
     if (F != -1) {
         if (O[F].geometry.initializing) {
@@ -179,4 +180,5 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerup", (event) => {
     }
     F = -1;
     Status = 0;
+    console.timeEnd();
 });
