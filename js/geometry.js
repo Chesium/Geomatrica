@@ -806,4 +806,64 @@ geometry.prototype.updMove = function (pos) {
         default:
             break;
     }
-}
+};
+
+geometry.prototype.preDifine=function () {
+    for(var i in O){
+        if(O[i].removed||O[i].index==this.obj.index){
+            continue;
+        }
+        switch (this.type) {
+            case 0:
+                //Nothing to do
+                break;
+
+            case 1:
+                if (haveEqualIndex(this.parents, O[i].geometry.parents)) {
+                    continue;
+                }
+                switch (O[i].geometry.type) {
+                    case 0:
+                        //Nothing to do
+                        break;
+
+                    case 1:
+                        this.obj.pObjs.push(new pObj(0, 3, { l: [this, O[i].geometry] }, {}));
+                        break;
+
+                    case 2:
+                        this.obj.pObjs.push(new pObj(0, 6, { l: this, c: O[i].geometry }, {}));
+                        this.obj.pObjs.push(new pObj(0, 7, { l: this, c: O[i].geometry }, {}));
+                        break;
+
+                    default:
+                        break;
+                }
+                break;
+
+            case 2:
+                switch (O[i].geometry.type) {
+                    case 0:
+                        //Nothing to do
+                        break;
+
+                    case 1:
+                        this.obj.pObjs.push(new pObj(0, 6, { l: O[i].geometry, c: this }, {}));
+                        this.obj.pObjs.push(new pObj(0, 7, { l: O[i].geometry, c: this }, {}));
+                        break;
+
+                    case 2:
+                        this.obj.pObjs.push(new pObj(0, 4, { c: [this, O[i].geometry] }, {}));
+                        this.obj.pObjs.push(new pObj(0, 5, { c: [this, O[i].geometry] }, {}));
+                        break;
+
+                    default:
+                        break;
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+};

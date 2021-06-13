@@ -12,5 +12,5 @@ var processFn;
 
 var F = -1;
 var mode = 1;
-var showBoundBox = false;
+var showBoundBox = true;
 var stageBound = [[0, 0], [mainCanvasApp.view.width, mainCanvasApp.view.height]];

@@ -14,5 +14,12 @@ pObj.prototype.update = function () {
 }
 
 pObj.prototype.remove = function () {
+    this.IAA.remove();
+    this.removed = true;
+}
 
+pObj.prototype.toObj = function () {
+    var i = new obj(this.geometry.type, this.geometry.dfnType, this.geometry.dfn, {}).index;
+    this.remove();
+    return i;
 }

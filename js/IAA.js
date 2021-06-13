@@ -30,6 +30,9 @@ function IAA(type, data,obj) {// interactive areas
 }
 
 IAA.prototype.update = function () {
+    if(this.removed){
+        return;
+    }
     this.Graphic.clear();
     if (this.data.exist) {
         switch (this.type) {

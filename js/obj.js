@@ -5,8 +5,11 @@ function obj(type, dfnType, dfn, initData) {// interactive areas
     this.IAA = new IAA(type, this.geometry.data,this);
     this.GFD = new GFD(type, this.geometry.data,this);
     this.removed = false;
+    this.pObjs=[];
 
     IAseq[1][type == 0 ? 0 : 1].push(this.IAA);
+
+    this.geometry.preDifine();
 }
 
 obj.prototype.update = function () {
@@ -15,6 +18,11 @@ obj.prototype.update = function () {
     this.IAA.update();
     for(var i in this.geometry.children){
         this.geometry.children[i].obj.update();
+    }
+    for (var i in this.pObjs) {
+        if (!this.pObjs[i].removed) {
+            this.pObjs[i].update();
+        }
     }
 }
 

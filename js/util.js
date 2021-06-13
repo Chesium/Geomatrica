@@ -1,10 +1,20 @@
 function chooseByGlobalPos(pos) {
-    var IAAs = IAseq.flat(Infinity);
-    for (var i in IAAs) {
-        if (!IAAs[i].removed) {
-            if (IAAs[i].bound[0][0] <= pos.x && pos.x <= IAAs[i].bound[1][0] && IAAs[i].bound[0][1] <= pos.y && pos.y <= IAAs[i].bound[1][1]) {
-                if (IAAs[i].checkBitmap(pos)) {
-                    return IAAs[i].obj.index;
+    var poIAAs = IAseq[0].flat(Infinity);
+    for (var i in poIAAs) {
+        if (!poIAAs[i].removed) {
+            if (poIAAs[i].bound[0][0] <= pos.x && pos.x <= poIAAs[i].bound[1][0] && poIAAs[i].bound[0][1] <= pos.y && pos.y <= poIAAs[i].bound[1][1]) {
+                if (poIAAs[i].checkBitmap(pos)) {
+                    return poIAAs[i].obj.toObj();
+                }
+            }
+        }
+    }
+    var oIAAs = IAseq[1].flat(Infinity);
+    for (var i in oIAAs) {
+        if (!oIAAs[i].removed) {
+            if (oIAAs[i].bound[0][0] <= pos.x && pos.x <= oIAAs[i].bound[1][0] && oIAAs[i].bound[0][1] <= pos.y && pos.y <= oIAAs[i].bound[1][1]) {
+                if (oIAAs[i].checkBitmap(pos)) {
+                    return oIAAs[i].obj.index;
                 }
             }
         }
@@ -174,4 +184,15 @@ function clearChooseList() {
         chooseObjs[i].GFD.changeStyleMode(0);
     }
     chooseObjs.length = 0;
+}
+
+function haveEqualIndex(arr1, arr2) {
+    for (let i = 0; i < arr2.length; i++) {
+        for (let j = 0; j < arr1.length; j++) {
+            if (arr1[j].index == arr2[i].index) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
