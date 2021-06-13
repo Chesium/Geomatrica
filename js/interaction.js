@@ -115,7 +115,7 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerdown", (event) => {
 
 mainCanvasApp.renderer.plugins.interaction.on("pointermove", (event) => {
     let pos = { x: event.data.global.x, y: event.data.global.y };
-    if (moving) {
+    if (Status == 1) {
         O[F].geometry.updDrag(pos);
     }
 });
@@ -170,5 +170,5 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerup", (event) => {
         }
     }
     F = -1;
-    moving = false;
+    Status = 0;
 });

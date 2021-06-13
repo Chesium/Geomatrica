@@ -360,7 +360,7 @@ geometry.prototype.beginDrag = function (pos) {
                 case 1:
                 case 2:
                     F = this.obj.index;
-                    moving = true;
+                    Status = 1;
                     break;
 
                 default:
@@ -399,7 +399,7 @@ geometry.prototype.beginDrag = function (pos) {
 
 geometry.prototype.beginMove = function (pos) {
     F = this.obj.index;
-    moving = true;
+    Status = 1;
     switch (this.type) {
         case 0:
             switch (this.dfnType) {
@@ -454,7 +454,7 @@ geometry.prototype.beginMove = function (pos) {
             break;
     }
     F = this.obj.index;
-    moving = true;
+    Status = 1;
 }
 
 geometry.prototype.updDrag = function (pos) {

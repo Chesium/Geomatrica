@@ -19,8 +19,8 @@ obj.prototype.update = function () {
 }
 
 obj.prototype.remove = function () {
-    F=-1;
-    moving=false;
+    F = -1;
+    Status = 0;
     this.IAA.remove();
     this.GFD.remove();
     this.removed = true;

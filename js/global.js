@@ -5,7 +5,9 @@ var dO = [];
 var IAseq = [[[], []], [[], []]];
 
 //unused
-var moving = false;
+var Status = 0;
+//0:default 1:moving 2:choosing
+// var moving = false;
 var F = -1;
 var mode = 1;
 var showBoundBox = true;
