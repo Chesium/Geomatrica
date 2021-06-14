@@ -3,24 +3,24 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerdown", (event) => {
     var FI = chooseByGlobalPos(pos);
     // console.log("Focus on Object No.", FI);
     switch (mode) {
-        case 0://ÍÏ¶¯Ä£Ê½
+        case 0://æ‹–åŠ¨æ¨¡å¼
             if (FI != -1) {
                 // console.log(O[FI].geometry);
                 O[FI].geometry.beginDrag(pos);
             }
             break;
-        case 1://»­ÏßÄ£Ê½
+        case 1://ç”»çº¿æ¨¡å¼
             if (FI == -1) {
                 new obj(1, 0, { p: [(new obj(0, 0, {}, { pos: pos })).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
             } else {
                 switch (O[FI].geometry.type) {
-                    case 0://´ÓÒÑÓĞµã¿ªÊ¼»­Ïß
+                    case 0://ä»å·²æœ‰ç‚¹å¼€å§‹ç”»çº¿
                         new obj(1, 0, { p: [O[FI].geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
-                    case 1://»­ÏßÊ±µãµ½Ïß
+                    case 1://ç”»çº¿æ—¶ç‚¹åˆ°çº¿
                         new obj(1, 0, { p: [new obj(0, 1, { l: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
-                    case 2://»­ÏßÊ±µãµ½Ô²
+                    case 2://ç”»çº¿æ—¶ç‚¹åˆ°åœ†
                         new obj(1, 0, { p: [new obj(0, 2, { c: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
                     default:
@@ -29,18 +29,18 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerdown", (event) => {
             }
             O[O.length - 1].geometry.beginDraw(pos);
             break;
-        case 2://»­µãÄ£Ê½
+        case 2://ç”»ç‚¹æ¨¡å¼
             if (FI == -1) {
                 new obj(0, 0, {}, { pos: pos });
             } else {
                 switch (O[FI].geometry.type) {
-                    case 0://»­µãÊ±µã»÷µã
+                    case 0://ç”»ç‚¹æ—¶ç‚¹å‡»ç‚¹
 
                         break;
-                    case 1://»­µãÊ±µãµ½Ïß
+                    case 1://ç”»ç‚¹æ—¶ç‚¹åˆ°çº¿
                         new obj(0, 1, { l: O[FI].geometry }, { pos: pos });
                         break;
-                    case 2://»­µãÊ±µãµ½Ô²
+                    case 2://ç”»ç‚¹æ—¶ç‚¹åˆ°åœ†
                         new obj(0, 2, { c: O[FI].geometry }, { pos: pos });
                         break;
                     default:
@@ -48,18 +48,18 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerdown", (event) => {
                 }
             }
             break;
-        case 3://»­Ô²Ä£Ê½
+        case 3://ç”»åœ†æ¨¡å¼
             if (FI == -1) {
                 new obj(2, 0, { p: [(new obj(0, 0, {}, { pos: pos })).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] },{});
             } else {
                 switch (O[FI].geometry.type) {
-                    case 0://´ÓÒÑÓĞµã¿ªÊ¼»­Ô²
+                    case 0://ä»å·²æœ‰ç‚¹å¼€å§‹ç”»åœ†
                         new obj(2, 0, { p: [O[FI].geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
-                    case 1://»­Ô²Ê±µãµ½Ïß
+                    case 1://ç”»åœ†æ—¶ç‚¹åˆ°çº¿
                         new obj(2, 0, { p: [new obj(0, 1, { l: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
-                    case 2://»­Ô²Ê±µãµ½Ô²
+                    case 2://ç”»åœ†æ—¶ç‚¹åˆ°åœ†
                         new obj(2, 0, { p: [new obj(0, 2, { c: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
                     default:
@@ -68,18 +68,18 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerdown", (event) => {
             }
             O[O.length - 1].geometry.beginDraw(pos);
             break;
-        case 4://»­Ö±ÏßÄ£Ê½
+        case 4://ç”»ç›´çº¿æ¨¡å¼
             if (FI == -1) {
                 new obj(1, 1, { p: [(new obj(0, 0, {}, { pos: pos })).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
             } else {
                 switch (O[FI].geometry.type) {
-                    case 0://´ÓÒÑÓĞµã¿ªÊ¼»­Ïß
+                    case 0://ä»å·²æœ‰ç‚¹å¼€å§‹ç”»çº¿
                         new obj(1, 1, { p: [O[FI].geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
-                    case 1://»­ÏßÊ±µãµ½Ïß
+                    case 1://ç”»çº¿æ—¶ç‚¹åˆ°çº¿
                         new obj(1, 1, { p: [new obj(0, 1, { l: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
-                    case 2://»­ÏßÊ±µãµ½Ô²
+                    case 2://ç”»çº¿æ—¶ç‚¹åˆ°åœ†
                         new obj(1, 1, { p: [new obj(0, 2, { c: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
                     default:
@@ -88,18 +88,18 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerdown", (event) => {
             }
             O[O.length - 1].geometry.beginDraw(pos);
             break;
-        case 5://»­ÉäÏßÄ£Ê½
+        case 5://ç”»å°„çº¿æ¨¡å¼
             if (FI == -1) {
                 new obj(1, 2, { p: [(new obj(0, 0, {}, { pos: pos })).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
             } else {
                 switch (O[FI].geometry.type) {
-                    case 0://´ÓÒÑÓĞµã¿ªÊ¼»­Ïß
+                    case 0://ä»å·²æœ‰ç‚¹å¼€å§‹ç”»çº¿
                         new obj(1, 2, { p: [O[FI].geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
-                    case 1://»­ÏßÊ±µãµ½Ïß
+                    case 1://ç”»çº¿æ—¶ç‚¹åˆ°çº¿
                         new obj(1, 2, { p: [new obj(0, 1, { l: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
-                    case 2://»­ÏßÊ±µãµ½Ô²
+                    case 2://ç”»çº¿æ—¶ç‚¹åˆ°åœ†
                         new obj(1, 2, { p: [new obj(0, 2, { c: O[FI].geometry }, { pos: pos }).geometry, (new obj(0, 0, {}, { pos: pos }).geometry)] }, {});
                         break;
                     default:
@@ -108,7 +108,7 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerdown", (event) => {
             }
             O[O.length - 1].geometry.beginDraw(pos);
             break;
-        case 6://½»µã
+        case 6://äº¤ç‚¹
             if (FI == -1) {
                 clearChooseList();
             } else {
@@ -139,15 +139,15 @@ mainCanvasApp.renderer.plugins.interaction.on("pointerup", (event) => {
             if (FI != -1) {
                 var stickP;
                 switch (O[FI].geometry.type) {
-                    case 0://ÔÚµãÉÏËÉÊÖ
+                    case 0://åœ¨ç‚¹ä¸Šæ¾æ‰‹
                         stickP = O[FI].geometry;
                         break;
 
-                    case 1://ÔÚÏßÉÏËÉÊÖ
+                    case 1://åœ¨çº¿ä¸Šæ¾æ‰‹
                         stickP = new obj(0, 1, { l: O[FI].geometry }, { pos: pos }).geometry;
                         break;
 
-                    case 2://ÔÚÔ²ÉÏËÉÊÖ
+                    case 2://åœ¨åœ†ä¸Šæ¾æ‰‹
                         stickP = new obj(0, 2, { c: O[FI].geometry }, { pos: pos }).geometry;
                         break;
 

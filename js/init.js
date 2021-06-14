@@ -12,7 +12,7 @@ const mainCanvasApp = new PIXI.Application({
 
 const mainCanvas = mainCanvasApp.stage;
 
-//Խ��Խ��ǰ
+//越大越靠前
 const zIofT=[10,5,5];
 // var stageBound = [[30, 30], [800, 800]];
 

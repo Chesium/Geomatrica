@@ -34,20 +34,20 @@ geometry.prototype.init = function (initData) {
 }
 
 geometry.prototype.calcData = function () {
-    for (var i in this.parents) {//Èç¹û¶ÔÏóµÄÄ³Ò»¸¸¶ÔÏó²»´æÔÚ£¬ÄÇËü×Ô¼ºÒ²²»´æÔÚ
+    for (var i in this.parents) {//å¦‚æœå¯¹è±¡çš„æŸä¸€çˆ¶å¯¹è±¡ä¸å­˜åœ¨ï¼Œé‚£å®ƒè‡ªå·±ä¹Ÿä¸å­˜åœ¨
         if (!this.parents[i].data.exist) {
             this.data.exist = false;
             return;
         }
     }
     switch (this.type) {
-        case 0://µã
+        case 0://ç‚¹
             switch (this.dfnType) {
-                case 0://×ÔÓÉµã
+                case 0://è‡ªç”±ç‚¹
                     //Nothing to do
                     break;
 
-                case 1://ÏßÉÏµÄµã
+                case 1://çº¿ä¸Šçš„ç‚¹
                     var a = this.dfn.l.data.a,
                         b = this.dfn.l.data.b,
                         c = this.dfn.l.data.c,
@@ -84,7 +84,7 @@ geometry.prototype.calcData = function () {
                     }
                     break;
 
-                case 2://Ô²ÉÏµÄµã
+                case 2://åœ†ä¸Šçš„ç‚¹
                     var x0 = this.dfn.c.data.x,
                         y0 = this.dfn.c.data.y,
                         r = this.dfn.c.data.r;
@@ -102,7 +102,7 @@ geometry.prototype.calcData = function () {
                     this.data.y = y0 + r * this.cache.sine;
                     break;
 
-                case 3://Á½Ïß½»µã
+                case 3://ä¸¤çº¿äº¤ç‚¹
                     // console.log("calc intersections");
                     var a1 = this.dfn.l[0].data.a,
                         b1 = this.dfn.l[0].data.b,
@@ -114,7 +114,7 @@ geometry.prototype.calcData = function () {
                         c2 = this.dfn.l[1].data.c,
                         d2 = this.dfn.l[1].data.d,
                         r2 = this.dfn.l[1].data.r;
-                    if (a1 * c2 == a2 * c1) {//Á½ÏßÆ½ĞĞÎŞ½»µã
+                    if (a1 * c2 == a2 * c1) {//ä¸¤çº¿å¹³è¡Œæ— äº¤ç‚¹
                         this.data.exist = false;
                         return;
                     }
@@ -132,7 +132,7 @@ geometry.prototype.calcData = function () {
                     this.data.y = c1 * t1 + d1;
                     break;
 
-                case 4://Á½Ô²µÄµÚÒ»¸ö½»µã
+                case 4://ä¸¤åœ†çš„ç¬¬ä¸€ä¸ªäº¤ç‚¹
                     var x1 = this.dfn.c[0].data.x,
                         y1 = this.dfn.c[0].data.y,
                         r1 = this.dfn.c[0].data.r,
@@ -155,7 +155,7 @@ geometry.prototype.calcData = function () {
                     this.data.y = yM - q * (x1 - xM);
                     break;
 
-                case 5://Á½Ô²µÄµÚ¶ş¸ö½»µã
+                case 5://ä¸¤åœ†çš„ç¬¬äºŒä¸ªäº¤ç‚¹
                     var x1 = this.dfn.c[0].data.x,
                         y1 = this.dfn.c[0].data.y,
                         r1 = this.dfn.c[0].data.r,
@@ -178,7 +178,7 @@ geometry.prototype.calcData = function () {
                     this.data.y = yM + q * (x1 - xM);
                     break;
 
-                case 6://Ô²ÓëÏßµÄµÚÒ»¸ö½»µã
+                case 6://åœ†ä¸çº¿çš„ç¬¬ä¸€ä¸ªäº¤ç‚¹
                     var a = this.dfn.l.data.a,
                         b = this.dfn.l.data.b,
                         c = this.dfn.l.data.c,
@@ -190,7 +190,7 @@ geometry.prototype.calcData = function () {
                     var A = a * a + c * c,
                         B = 2 * (a * (b - x) + c * (d - y)),
                         C = b * b + d * d + x * x + y * y - r * r - 2 * (b * x + d * y);
-                    var delta = B * B - 4 * A * C;//ÅĞ±ğÊ½¦¤
+                    var delta = B * B - 4 * A * C;//åˆ¤åˆ«å¼Î”
                     if (delta < 0) {
                         this.data.exist = false;
                         return;
@@ -217,7 +217,7 @@ geometry.prototype.calcData = function () {
                     this.data.y = c * t + d;
                     break;
 
-                case 7://Ô²ÓëÏßµÄµÚ¶ş¸ö½»µã
+                case 7://åœ†ä¸çº¿çš„ç¬¬äºŒä¸ªäº¤ç‚¹
                     var a = this.dfn.l.data.a,
                         b = this.dfn.l.data.b,
                         c = this.dfn.l.data.c,
@@ -229,7 +229,7 @@ geometry.prototype.calcData = function () {
                     var A = a * a + c * c,
                         B = 2 * (a * (b - x) + c * (d - y)),
                         C = b * b + d * d + x * x + y * y - r * r - 2 * (b * x + d * y);
-                    var delta = B * B - 4 * A * C;//ÅĞ±ğÊ½¦¤
+                    var delta = B * B - 4 * A * C;//åˆ¤åˆ«å¼Î”
                     if (delta < 0) {
                         this.data.exist = false;
                         return;
@@ -261,10 +261,10 @@ geometry.prototype.calcData = function () {
             }
             break;
 
-        case 1://Ïß
+        case 1://çº¿
             // console.log(this.dfn);
             switch (this.dfnType) {
-                case 0://Ïß¶Î
+                case 0://çº¿æ®µ
                     var x1 = this.dfn.p[0].data.x,
                         y1 = this.dfn.p[0].data.y,
                         x2 = this.dfn.p[1].data.x,
@@ -304,7 +304,7 @@ geometry.prototype.calcData = function () {
                     }
                     break;
 
-                case 1://Ö±Ïß
+                case 1://ç›´çº¿
                     var x1 = this.dfn.p[0].data.x,
                         y1 = this.dfn.p[0].data.y,
                         x2 = this.dfn.p[1].data.x,
@@ -344,7 +344,7 @@ geometry.prototype.calcData = function () {
                     }
                     break;
 
-                case 2://ÉäÏß
+                case 2://å°„çº¿
                     this.data.exist = true;
                     var x1 = this.dfn.p[0].data.x,
                         y1 = this.dfn.p[0].data.y,
@@ -392,9 +392,9 @@ geometry.prototype.calcData = function () {
             }
             break;
 
-        case 2://Ô²
+        case 2://åœ†
             switch (this.dfnType) {
-                case 0://Ô²ĞÄºÍÔ²ÉÏÒ»µã
+                case 0://åœ†å¿ƒå’Œåœ†ä¸Šä¸€ç‚¹
                     var x1 = this.dfn.p[0].data.x,
                         y1 = this.dfn.p[0].data.y,
                         x2 = this.dfn.p[1].data.x,
@@ -418,54 +418,54 @@ geometry.prototype.calcData = function () {
 geometry.prototype.pInit = function (initData) {
     this.seqI = 0;
     switch (this.dfnType) {
-        case 0://×ÔÓÉµã
+        case 0://è‡ªç”±ç‚¹
             this.data.exist = true;
             this.data.x = initData.pos.x;
             this.data.y = initData.pos.y;
             break;
 
-        case 1://ÏßÉÏµÄµã
+        case 1://çº¿ä¸Šçš„ç‚¹
             this.dfn.l.children.push(this);
             this.parents = [this.dfn.l];
             //init cache
-            this.cache.proportion = 0.5;//±ÈÀıÄ¬ÈÏÖµ
-            this.cache.following = true;//ÊÇ·ñ¸úËæÊó±ê
+            this.cache.proportion = 0.5;//æ¯”ä¾‹é»˜è®¤å€¼
+            this.cache.following = true;//æ˜¯å¦è·Ÿéšé¼ æ ‡
 
             //Actually not real
             this.data.x = initData.pos.x;
             this.data.y = initData.pos.y;
             break;
 
-        case 2://Ô²ÉÏµÄµã
+        case 2://åœ†ä¸Šçš„ç‚¹
             this.dfn.c.children.push(this);
             this.parents = [this.dfn.c];
             //init cache
-            this.cache.cosine = 0;//¦¤X
-            this.cache.sine = 0;//¦¤Y
-            this.cache.following = true;//ÊÇ·ñ¸úËæÊó±ê
+            this.cache.cosine = 0;//Î”X
+            this.cache.sine = 0;//Î”Y
+            this.cache.following = true;//æ˜¯å¦è·Ÿéšé¼ æ ‡
 
             //Actually not real
             this.data.x = initData.pos.x;
             this.data.y = initData.pos.y;
             break;
 
-        case 3://Á½Ïß½»µã
+        case 3://ä¸¤çº¿äº¤ç‚¹
             this.dfn.l[0].children.push(this);
             this.dfn.l[1].children.push(this);
 
             this.parents = [this.dfn.l[0], this.dfn.l[1]];
             break;
 
-        case 4://Á½Ô²µÄµÚÒ»¸ö½»µã
-        case 5://Á½Ô²µÄµÚ¶ş¸ö½»µã
+        case 4://ä¸¤åœ†çš„ç¬¬ä¸€ä¸ªäº¤ç‚¹
+        case 5://ä¸¤åœ†çš„ç¬¬äºŒä¸ªäº¤ç‚¹
             this.dfn.c[0].children.push(this);
             this.dfn.c[1].children.push(this);
 
             this.parents = [this.dfn.c[0], this.dfn.c[1]];
             break;
 
-        case 6://Ô²ÓëÏßµÄµÚÒ»¸ö½»µã
-        case 7://Ô²ÓëÏßµÄµÚ¶ş¸ö½»µã
+        case 6://åœ†ä¸çº¿çš„ç¬¬ä¸€ä¸ªäº¤ç‚¹
+        case 7://åœ†ä¸çº¿çš„ç¬¬äºŒä¸ªäº¤ç‚¹
             this.dfn.l.children.push(this);
             this.dfn.c.children.push(this);
 
@@ -480,9 +480,9 @@ geometry.prototype.pInit = function (initData) {
 geometry.prototype.lInit = function (initData) {
     this.seqI = 1;
     switch (this.dfnType) {
-        case 0://Ïß¶Î
-        case 1://Ö±Ïß
-        case 2://ÉäÏß
+        case 0://çº¿æ®µ
+        case 1://ç›´çº¿
+        case 2://å°„çº¿
             this.dfn.p[0].children.push(this);
             this.dfn.p[1].children.push(this);
             this.parents = [this.dfn.p[0], this.dfn.p[1]];
@@ -496,7 +496,7 @@ geometry.prototype.lInit = function (initData) {
 geometry.prototype.cInit = function (initData) {
     this.seqI = 1;
     switch (this.dfnType) {
-        case 0://Ô²ĞÄºÍÔ²ÉÏÒ»µã
+        case 0://åœ†å¿ƒå’Œåœ†ä¸Šä¸€ç‚¹
             this.dfn.p[0].children.push(this);
             this.dfn.p[1].children.push(this);
             this.parents = [this.dfn.p[0], this.dfn.p[1]];
@@ -510,7 +510,7 @@ geometry.prototype.cInit = function (initData) {
 geometry.prototype.beginDraw = function (pos) {
     switch (this.type) {
         case 0:
-            //ÎŞĞè¡°»­¡±µã
+            //æ— éœ€â€œç”»â€ç‚¹
             break;
 
         case 1:
@@ -546,7 +546,7 @@ geometry.prototype.beginDraw = function (pos) {
 
 geometry.prototype.beginDrag = function (pos) {
     switch (this.type) {
-        case 0://µã
+        case 0://ç‚¹
             switch (this.dfnType) {
                 case 0:
                     this.beginMove(pos);
@@ -604,7 +604,7 @@ geometry.prototype.beginMove = function (pos) {
     F = this.obj.index;
     Status = 1;
     switch (this.type) {
-        case 0://µã
+        case 0://ç‚¹
             switch (this.dfnType) {
                 case 0:
                     this.dragOffset = {

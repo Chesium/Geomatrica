@@ -10,7 +10,7 @@ const IAAl = {
 
 function IAA(type, data,obj) {// interactive areas
     this.type = type;
-    this.data = data;//»á±ä¸ü
+    this.data = data;//ä¼šå˜æ›´
     this.obj=obj;
     this.Graphic = new PIXI.Graphics();
     this.boundBox = new PIXI.Graphics();

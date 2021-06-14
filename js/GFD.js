@@ -1,6 +1,6 @@
 function GFD(type, data,obj) {// graphics/geometry for displaying
     this.type = type;
-    this.data = data;//»á±ä¸ü
+    this.data = data;//ä¼šå˜æ›´
     this.obj = obj;
     // this.style = Dfsty[0];
     this.styleMode=0;

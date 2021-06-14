@@ -109,7 +109,7 @@ function changeMode(newMode) {
         case 5:
             break;
 
-        case 6://Á½¶ÔÏó½»µã
+        case 6://ä¸¤å¯¹è±¡äº¤ç‚¹
             processFn = () => {
                 switch (chooseObjs.length) {
                     case 0:
@@ -133,11 +133,11 @@ function changeMode(newMode) {
                             switch (chooseObjs[0].geometry.type) {
                                 case 1:
                                     switch (chooseObjs[1].geometry.type) {
-                                        case 1://Ïß-Ïß
+                                        case 1://çº¿-çº¿
                                             new obj(0, 3, { l: [chooseObjs[0].geometry, chooseObjs[1].geometry]},{});
                                             break;
 
-                                        case 2://Ïß-Ô²
+                                        case 2://çº¿-åœ†
                                             new obj(0, 6, { l: chooseObjs[0].geometry, c: chooseObjs[1].geometry }, {});
                                             new obj(0, 7, { l: chooseObjs[0].geometry, c: chooseObjs[1].geometry }, {});
                                             break;
@@ -149,12 +149,12 @@ function changeMode(newMode) {
 
                                 case 2:
                                     switch (chooseObjs[1].geometry.type) {
-                                        case 1://Ô²-Ïß
+                                        case 1://åœ†-çº¿
                                             new obj(0, 6, { l: chooseObjs[1].geometry, c: chooseObjs[0].geometry }, {});
                                             new obj(0, 7, { l: chooseObjs[1].geometry, c: chooseObjs[0].geometry }, {});
                                             break;
 
-                                        case 2://Ô²-Ô²
+                                        case 2://åœ†-åœ†
                                             new obj(0, 4, { c: [chooseObjs[0].geometry, chooseObjs[1].geometry] }, {});
                                             new obj(0, 5, { c: [chooseObjs[0].geometry, chooseObjs[1].geometry] }, {});
                                             break;
