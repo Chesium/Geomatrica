@@ -1,5 +1,5 @@
 function importJS(name) {
-    document.write("<script type='text/javascript' src='js/"+name+".js'></script>");
+    document.write("<script type='text/javascript' src='src/"+name+".js'></script>");
 }
 
 const JSs = [
