@@ -16,6 +16,7 @@ html,
 body {
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 #workarea-container {
   position: absolute;
@@ -26,7 +27,9 @@ body {
   width: 100%;
 }
 .mode-switch {
-  /* border: 2px solid #4CAF50; */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   border: none;
   border-radius: 5px;
   box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -46,80 +49,80 @@ body {
   top: 5px;
   left: -20px;
 }
-.button-1 {
+#button-1 {
   background-image: url("../assets/move.svg");
 }
-.button-1:hover {
+#button-1:hover {
   box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(8px);
 }
-.button-1[activated=true] {
+#button-1:checked {
   box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(15px);
 }
-.button-2 {
+#button-2 {
   background-image: url("../assets/segment.svg");
 }
-.button-2:hover {
+#button-2:hover {
   box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(8px);
 }
-.button-2[activated=true] {
+#button-2:checked {
   box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(15px);
 }
-.button-3 {
+#button-3 {
   background-image: url("../assets/point.svg");
 }
-.button-3:hover {
+#button-3:hover {
   box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(8px);
 }
-.button-3[activated=true] {
+#button-3:checked {
   box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(15px);
 }
-.button-4 {
+#button-4 {
   background-image: url("../assets/circle.svg");
 }
-.button-4:hover {
+#button-4:hover {
   box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(8px);
 }
-.button-4[activated=true] {
+#button-4:checked {
   box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(15px);
 }
-.button-5 {
+#button-5 {
   background-image: url("../assets/line.svg");
 }
-.button-5:hover {
+#button-5:hover {
   box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(8px);
 }
-.button-5[activated=true] {
+#button-5:checked {
   box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(15px);
 }
-.button-6 {
+#button-6 {
   background-image: url("../assets/halfline.svg");
 }
-.button-6:hover {
+#button-6:hover {
   box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(8px);
 }
-.button-6[activated=true] {
+#button-6:checked {
   box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(15px);
 }
-.button-7 {
+#button-7 {
   background-image: url("../assets/intersection.svg");
 }
-.button-7:hover {
+#button-7:hover {
   box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(8px);
 }
-.button-7[activated=true] {
+#button-7:checked {
   box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(15px);
 }

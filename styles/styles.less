@@ -18,6 +18,7 @@ html,
 body {
     height: 100%;
     width: 100%;
+    overflow: hidden;
 }
 
 #workarea-container {
@@ -30,10 +31,11 @@ body {
 }
 
 .mode-switch {
-    /* border: 2px solid #4CAF50; */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     border: none;
     border-radius: 5px;
-    // h-shadow v-shadow blur spread color inset;
     box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     transition-timing-function: ease;
     outline: none;
@@ -56,16 +58,16 @@ body {
 @icons: "move", "segment", "point", "circle", "line", "halfline", "intersection";
 
 each(@icons, {
-        .button-@{index} {
+        #button-@{index} {
             background-image: url("../assets/@{value}.svg")
         }
 
-        .button-@{index}:hover {
+        #button-@{index}:hover {
             box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             transform: translateX(8px);
         }
 
-        .button-@{index}[activated=true] {
+        #button-@{index}:checked {
             box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             transform: translateX(15px);
         }
