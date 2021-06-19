@@ -1,7 +1,7 @@
 import { obj } from "./obj.js";
 
 export class canvas {
-  PIXIappSetting = {
+  static PIXIappSetting = {
     antialias: true,
     resolution: window.devicePixelRatio || 1,
     autoDensity: true,
@@ -11,7 +11,7 @@ export class canvas {
     backgroundColor: 0x000000,
     backgroundAlpha: 0,
   };
-  zIofT = [10, 5, 5];
+  static zIofT = [10, 5, 5];
   /**
    * ## 创建一个画板
    * 画板的构造函数
@@ -171,7 +171,7 @@ export class canvas {
      *
      * ---
      *
-     * 用于在计算直线、射线等无限图形时确认显示范围  
+     * 用于在计算直线、射线等无限图形时确认显示范围
      * 格式:`[[xmin,ymin],[xmax,ymax]]`
      *
      * ---
@@ -182,6 +182,8 @@ export class canvas {
       [0, 0],
       [this.PIXIapp.view.width, this.PIXIapp.view.height],
     ];
+
+    this.tr = [20, 300, 300];
 
     this.PIXIapp.renderer.plugins.interaction.on("pointerdown", (event) => {
       let pos = { x: event.data.global.x, y: event.data.global.y };
@@ -601,6 +603,20 @@ export class canvas {
       this.Status = 0;
       console.timeEnd();
     });
+  }
+
+  tran(pos) {
+    return {
+      x: pos.x * this.tr[0] + this.tr[1],
+      y: -pos.y * this.tr[0] + this.tr[2]
+    };
+  }
+
+  revTran(pos) {
+    return {
+      x: (pos.x - this.tr[1]) / this.tr[0],
+      y: -(pos.y - this.tr[2]) / this.tr[0]
+    };
   }
 
   chooseByGlobalPos(pos) {
