@@ -12,22 +12,172 @@ export class canvas {
     backgroundAlpha: 0,
   };
   zIofT = [10, 5, 5];
+  /**
+   * ## 创建一个画板
+   * 画板的构造函数
+   * @constructor
+   */
   constructor() {
+    /**
+     * ## PIXI对象
+     * 画板所用的`PIXI.Application`对象
+     *
+     * ---
+     *
+     * @member {object}
+     */
     this.PIXIapp = new PIXI.Application(this.PIXIappSetting);
+
+    /**
+     * ## PIXI舞台
+     * 画板所用`PIXI.Application`对象的`stage`成员
+     *
+     * ---
+     *
+     * 在`PIXI`内作为所有图形对象的父对象
+     * 一般调用其`addChild()`、`removeChild()`方法
+     *
+     * ---
+     *
+     * @member {object}
+     */
     this.stage = this.PIXIapp.stage;
+
+    /**
+     * ## 图形对象列表
+     * 画板中所有正式图形对象被存储在这里
+     *
+     * ---
+     *
+     * @member {Array}
+     */
     this.O = [];
+
+    /**
+     * ## 预定义图形对象列表
+     * 画板中所有预定义(predefine)图形对象被存储在这里
+     *
+     * ---
+     *
+     * @member {Array}
+     */
     this.pO = [];
-    this.dO = [];
+
+    /**
+     * ## 交互区域响应序列
+     * 画板中各可点击图形对象交互区域的响应序列
+     *
+     * ---
+     *
+     * 存储IAA类(Interaction Area)
+     * 列表中位置越前的对象权重越高且点击时越先被判定
+     * 使用前先展开（用`.flat(Infinity)`）
+     *
+     * ---
+     *
+     * @member {Array}
+     */
     this.IAseq = [
       [[], []],
       [[], []],
     ];
+
+    /**
+     * ## 画板状态
+     * 区别与于mode（画板模式）的一个值
+     *
+     * ---
+     *
+     * 目前只有两种可能的值:
+     * `1` : 空闲
+     * `2` : 正在拖动图形对象
+     *
+     * ---
+     *
+     * @member {number}
+     */
     this.Status = 0;
+
+    /**
+     * ## 选中的图形对象列表
+     * 多选时选中的图形对象列表
+     *
+     * ---
+     *
+     * 对于某些模式需要同时选中多个图形对象
+     * 此时选中的图形对象存放在这里
+     *
+     * ---
+     *
+     * @member {Array}
+     */
     this.chooseObjs = [];
-    // this.processFn;
+
+    /**
+     * ## 获得焦点的图形对象
+     * 目前获得焦点的图形对象在`O`（）中的索引
+     *
+     * ---
+     *
+     * 若无获得焦点的图形对象则为`-1`
+     *
+     * ---
+     *
+     * @member {Array}
+     */
     this.F = -1;
+
+    /**
+     * ## 绘图模式
+     * 决定鼠标操作在画板上画的图形类型
+     *
+     * ---
+     *
+     * 现有7种取值:
+     * `0` : 移动图形对象
+     * `1` : 画线段(默认)
+     * `2` : 画点
+     * `3` : 画圆(圆心和圆上一点)
+     * `4` : 画直线
+     * `5` : 画射线
+     * `6` : 选中两个不为点的对象作其交点
+     *
+     * ---
+     *
+     * @member {number}
+     */
     this.mode = 1;
+
+    /**
+     * ## 显示边界盒
+     * 是否显示图形对象的`boundbox`（边界盒）
+     *
+     * ---
+     *
+     * 判定点击时先会判断鼠标位置在哪些图形对象的边界盒内
+     * 再对照该图形对象的`bitmap`数组进一步确认
+     * 若为`true`则会在每一个图形对象后显示一个半透明的灰色矩形
+     * 标识其边界盒
+     *
+     * ---
+     *
+     * @member {boolean}
+     */
     this.showBoundBox = false;
+
+    /**
+     * ## 画板区域
+     * 当前画板的范围
+     *
+     * ---
+     *
+     * 用于在计算直线、射线等无限图形时确认显示范围  
+     * 格式:`[[xmin,ymin],[xmax,ymax]]`
+     *
+     * ---
+     *
+     * @member {Array}
+     */
     this.stageBound = [
       [0, 0],
       [this.PIXIapp.view.width, this.PIXIapp.view.height],
