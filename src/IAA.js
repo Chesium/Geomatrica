@@ -7,7 +7,7 @@
 //     color: 0xffffff,
 //     alpha: 2e-3
 // };
-import {L_DpData_To_epCrd} from "./util.js";
+import { L_DpData_To_epCrd } from "./util.js";
 
 export class IAA {
   IAApAlpha = 2e-3;
@@ -52,23 +52,32 @@ export class IAA {
       switch (this.type) {
         case 0: //point
           this.Graphic.beginFill(this.IAApColor, this.IAApAlpha);
-          this.Graphic.drawCircle(this.data.x, this.data.y, this.IAApRadius);
+          this.Graphic.drawCircle(
+            ...this.obj.canvas.tran(this.data),
+            this.IAApRadius
+          );
           break;
 
         case 1: //line
-          var crd = L_DpData_To_epCrd(this.data, this.obj.canvas.stageBound);
+          var crd = L_DpData_To_epCrd(this.data, [
+            this.obj.canvas.revTran(this.obj.canvas.stageBound[0]),
+            this.obj.canvas.revTran(this.obj.canvas.stageBound[1]),
+          ]);
           // console.log(crd);
           if (!crd[0]) {
             return;
           }
           this.Graphic.lineStyle(this.IAAl);
-          this.Graphic.moveTo(crd[1][0], crd[1][1]);
-          this.Graphic.lineTo(crd[2][0], crd[2][1]);
+          this.Graphic.moveTo(...this.obj.canvas.tran(crd[1]));
+          this.Graphic.lineTo(...this.obj.canvas.tran(crd[2]));
           break;
 
         case 2: //circle
           this.Graphic.lineStyle(this.IAAl);
-          this.Graphic.drawCircle(this.data.x, this.data.y, this.data.r);
+          this.Graphic.drawCircle(
+            ...this.obj.canvas.tran(this.data),
+            this.data.r * this.obj.canvas.tr[0]
+          );
           break;
 
         default:
@@ -79,6 +88,7 @@ export class IAA {
     this.needUpdBound = true;
   }
   updBound() {
+    //ABSL
     let localBounds = this.Graphic.getLocalBounds();
     this.bound = [
       [Math.floor(localBounds.x), Math.floor(localBounds.y)],
@@ -106,6 +116,7 @@ export class IAA {
     this.needUpdBound = false;
   }
   updBitmap() {
+    //ABSL
     let px = this.obj.canvas.PIXIapp.renderer.plugins.extract.pixels(
       this.Graphic
     );
@@ -121,6 +132,7 @@ export class IAA {
     this.needUpdBitmap = false;
   }
   checkBitmap(pos) {
+    //ABSL
     return (
       this.bitmap[Math.floor(pos.y) - this.bound[0][1]][
         Math.floor(pos.x) - this.bound[0][0]

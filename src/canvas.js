@@ -1,7 +1,7 @@
 import { obj } from "./obj.js";
 
 export class canvas {
-  static PIXIappSetting = {
+  PIXIappSetting = {
     antialias: true,
     resolution: window.devicePixelRatio || 1,
     autoDensity: true,
@@ -11,13 +11,14 @@ export class canvas {
     backgroundColor: 0x000000,
     backgroundAlpha: 0,
   };
-  static zIofT = [10, 5, 5];
+  zIofT = [10, 5, 5];
   /**
    * ## 创建一个画板
    * 画板的构造函数
    * @constructor
    */
   constructor() {
+    // console.log("sss");
     /**
      * ## PIXI对象
      * 画板所用的`PIXI.Application`对象
@@ -185,14 +186,34 @@ export class canvas {
 
     this.tr = [20, 300, 300];
 
+    this.rootObjs = [];
+
+    this.dragOffset = { x: 0, y: 0 }; //ABSL
+
     this.PIXIapp.renderer.plugins.interaction.on("pointerdown", (event) => {
-      let pos = { x: event.data.global.x, y: event.data.global.y };
-      var FI = this.chooseByGlobalPos(pos);
+      let pos = this.revTran(
+        {
+          x: event.data.global.x,
+          y: event.data.global.y,
+        },
+        true
+      );
+      // console.log(pos);
+      var FI = this.chooseByGlobalPos({
+        x: event.data.global.x,
+        y: event.data.global.y,
+      });
+      // console.log(`FI=${FI}`);
       switch (this.mode) {
         case 0: //拖动模式
           if (FI != -1) {
             // console.log(this.O[FI].geometry);
             this.O[FI].geometry.beginDrag(pos);
+          } else {
+            //begin drag canvas
+            this.dragOffset.x = this.tr[1] - event.data.global.x;
+            this.dragOffset.y = this.tr[2] - event.data.global.y;
+            this.Status = 2;
           }
           break;
         case 1: //画线模式
@@ -531,19 +552,51 @@ export class canvas {
     });
 
     this.PIXIapp.renderer.plugins.interaction.on("pointermove", (event) => {
-      let pos = { x: event.data.global.x, y: event.data.global.y };
-      if (this.Status == 1) {
-        this.O[this.F].geometry.updDrag(pos);
+      // let pos = { x: event.data.global.x, y: event.data.global.y };
+      let pos = this.revTran(
+        {
+          x: event.data.global.x,
+          y: event.data.global.y,
+        },
+        true
+      );
+      switch (this.Status) {
+        case 0:
+          break;
+
+        case 1:
+          this.O[this.F].geometry.updDrag(pos);
+          break;
+
+        case 2:
+          //Move the canvas
+          this.tr[1] = event.data.global.x + this.dragOffset.x;
+          this.tr[2] = event.data.global.y + this.dragOffset.y;
+          this.updAll();
+          break;
+
+        default:
+          break;
       }
     });
 
     this.PIXIapp.renderer.plugins.interaction.on("pointerup", (event) => {
-      console.time();
-      let pos = { x: event.data.global.x, y: event.data.global.y };
+      // console.time();
+      let pos = this.revTran(
+        {
+          x: event.data.global.x,
+          y: event.data.global.y,
+        },
+        true
+      );
+      // let pos = { x: event.data.global.x, y: event.data.global.y };
       if (this.F != -1) {
         if (this.O[this.F].geometry.initializing) {
           this.O[this.F].geometry.initializing = false;
-          var FI = this.chooseByGlobalPos(pos);
+          var FI = this.chooseByGlobalPos({
+            x: event.data.global.x,
+            y: event.data.global.y,
+          });
           // console.log(`FI:${FI}`);
           if (FI != -1) {
             var stickP;
@@ -601,25 +654,52 @@ export class canvas {
       }
       this.F = -1;
       this.Status = 0;
-      console.timeEnd();
+      // console.timeEnd();
     });
   }
 
-  tran(pos) {
-    return {
-      x: pos.x * this.tr[0] + this.tr[1],
-      y: -pos.y * this.tr[0] + this.tr[2]
-    };
+  tran(pos, posForm = false) {
+    if (typeof pos[0] != "undefined") {
+      pos = { x: pos[0], y: pos[1] };
+    }
+    if (posForm) {
+      return {
+        x: pos.x * this.tr[0] + this.tr[1],
+        y: -pos.y * this.tr[0] + this.tr[2],
+      };
+    } else {
+      return [
+        pos.x * this.tr[0] + this.tr[1],
+        -pos.y * this.tr[0] + this.tr[2],
+      ];
+    }
   }
 
-  revTran(pos) {
-    return {
-      x: (pos.x - this.tr[1]) / this.tr[0],
-      y: -(pos.y - this.tr[2]) / this.tr[0]
-    };
+  revTran(pos, posForm = false) {
+    if (typeof pos[0] != "undefined") {
+      pos = { x: pos[0], y: pos[1] };
+    }
+    if (posForm) {
+      return {
+        x: (pos.x - this.tr[1]) / this.tr[0],
+        y: -(pos.y - this.tr[2]) / this.tr[0],
+      };
+    } else {
+      return [
+        (pos.x - this.tr[1]) / this.tr[0],
+        -(pos.y - this.tr[2]) / this.tr[0],
+      ];
+    }
+  }
+
+  updAll() {
+    for (var i in this.rootObjs) {
+      this.rootObjs[i].update();
+    }
   }
 
   chooseByGlobalPos(pos) {
+    //ABSL
     if (this.mode != 0) {
       var poIAAs = this.IAseq[0].flat(Infinity);
       for (var i in poIAAs) {

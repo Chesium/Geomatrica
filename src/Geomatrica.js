@@ -1,6 +1,9 @@
+
+
 PIXI.settings.SORTABLE_CHILDREN = true;
 import { canvas } from "./canvas.js";
 var cv = new canvas();
+// console.log(cv);
 
 //////////////////////////////////////////////////////////////////////////////
 const toolbar = document.getElementById("toolbar");

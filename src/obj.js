@@ -15,6 +15,11 @@ export class obj {
 
     canvas.IAseq[1][type == 0 ? 0 : 1].push(this.IAA);
 
+    if (type == 0 && dfnType == 0) {
+      //自由点
+      this.canvas.rootObjs.push(this);
+    }
+
     this.geometry.preDifine();
   }
   update() {
