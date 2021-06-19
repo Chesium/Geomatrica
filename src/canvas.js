@@ -134,13 +134,13 @@ export class canvas {
      *
      * ---
      *
-     * 现有7种取值:
-     * `0` : 移动图形对象
-     * `1` : 画线段(默认)
-     * `2` : 画点
-     * `3` : 画圆(圆心和圆上一点)
-     * `4` : 画直线
-     * `5` : 画射线
+     * 现有7种取值:  
+     * `0` : 移动图形对象  
+     * `1` : 画线段(默认)  
+     * `2` : 画点  
+     * `3` : 画圆(圆心和圆上一点)  
+     * `4` : 画直线  
+     * `5` : 画射线  
      * `6` : 选中两个不为点的对象作其交点
      *
      * ---
@@ -656,6 +656,23 @@ export class canvas {
       this.Status = 0;
       // console.timeEnd();
     });
+
+    this.PIXIapp.view.onwheel = (event) => {
+      if (event.wheelDelta > 0) {
+        this.tr[0] *= 1.1;
+        this.tr[1] =
+          event.offsetX + (this.tr[1] - event.offsetX) * 1.1;
+        this.tr[2] =
+          event.offsetY + (this.tr[2] - event.offsetY) * 1.1;
+      } else {
+        this.tr[0] /= 1.1;
+        this.tr[1] =
+          event.offsetX + (this.tr[1] - event.offsetX) / 1.1;
+        this.tr[2] =
+          event.offsetY + (this.tr[2] - event.offsetY) / 1.1;
+      }
+      this.updAll();
+    };
   }
 
   tran(pos, posForm = false) {
@@ -694,7 +711,9 @@ export class canvas {
 
   updAll() {
     for (var i in this.rootObjs) {
-      this.rootObjs[i].update();
+      if(!this.rootObjs[i].removed){
+        this.rootObjs[i].update();
+      }
     }
   }
 
