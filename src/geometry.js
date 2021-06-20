@@ -16,10 +16,11 @@ export class geometry {
     this.initializing = false;
 
     this.init(initData);
+    // console.log(this);
   }
   init(initData) {
     switch (this.type) {
-      case 0:
+      case 0: //点
         this.seqI = 0;
         switch (this.dfnType) {
           case 0: //自由点
@@ -81,7 +82,7 @@ export class geometry {
         }
         break;
 
-      case 1:
+      case 1: //线
         this.seqI = 1;
         switch (this.dfnType) {
           case 0: //线段
@@ -92,12 +93,19 @@ export class geometry {
             this.parents = [this.dfn.p[0], this.dfn.p[1]];
             break;
 
+          case 3: //垂线
+          case 4: //平行线
+            this.dfn.p.children.push(this);
+            this.dfn.l.children.push(this);
+            this.parents = [this.dfn.p, this.dfn.l];
+            break;
+
           default:
             break;
         }
         break;
 
-      case 2:
+      case 2: //圆
         this.seqI = 1;
         switch (this.dfnType) {
           case 0: //圆心和圆上一点
@@ -115,6 +123,9 @@ export class geometry {
         break;
     }
     this.calcData();
+    if (this.cache.following === true) {
+      this.cache.following = false;
+    }
   }
   calcData() {
     for (var i in this.parents) {
@@ -136,9 +147,12 @@ export class geometry {
               b = this.dfn.l.data.b,
               c = this.dfn.l.data.c,
               d = this.dfn.l.data.d,
-              r = this.dfn.l.data.r;
+              r = this.dfn.l.data.r,
+              t1 = Math.max(...this.dfn.l.cache.p),
+              t2 = Math.min(...this.dfn.l.cache.p);
             if (!this.cache.following) {
-              var t = (r[1] - r[0]) * this.cache.proportion + r[0];
+              console.log(this.cache.proportion);
+              var t = (t2 - t1) * this.cache.proportion + t1;
               this.data.exist = true;
               this.data.x = a * t + b;
               this.data.y = c * t + d;
@@ -152,19 +166,20 @@ export class geometry {
               (a * (this.data.x - b) + c * (this.data.y - d)) / (a * a + c * c);
             if (t < Math.min(r[0], r[1])) {
               this.data.exist = true;
-              this.data.x = this.dfn.l.cache.p[0].data.x;
-              this.data.y = this.dfn.l.cache.p[0].data.y;
+              this.data.x = a*t1+b;
+              this.data.y = c*t1+d;
               this.cache.proportion = 0;
             } else if (t > Math.max(r[0], r[1])) {
               this.data.exist = true;
-              this.data.x = this.dfn.l.cache.p[1].data.x;
-              this.data.y = this.dfn.l.cache.p[1].data.y;
+              this.data.x = a * t2 + b;
+              this.data.y = c * t2 + d;
               this.cache.proportion = 1;
             } else {
               this.data.exist = true;
               this.data.x = a * t + b;
               this.data.y = c * t + d;
-              this.cache.proportion = (t - r[0]) / (r[1] - r[0]);
+              this.cache.proportion = (t - t1) / (t2 - t1);
+              console.log("ppt=", this.cache.proportion);
             }
             break;
 
@@ -365,7 +380,7 @@ export class geometry {
             if (x1 == x2) {
               if (y1 == y2) {
                 this.data.exist = false;
-              } else {
+              } else {//[|]
                 this.data.exist = true;
                 this.data.a = 0;
                 this.data.b = x1;
@@ -374,10 +389,10 @@ export class geometry {
                 this.data.r = [y1, y2];
                 if (y1 < y2) {
                   this.data.dr = 1;
-                  this.cache.p = [this.dfn.p[0], this.dfn.p[1]];
+                  this.cache.p = [y1, y2];
                 } else {
                   this.data.dr = -1;
-                  this.cache.p = [this.dfn.p[1], this.dfn.p[0]];
+                  this.cache.p = [y2, y1];
                 }
               }
             } else {
@@ -389,10 +404,10 @@ export class geometry {
               this.data.d = y1 - this.data.c * x1;
               if (x1 < x2) {
                 this.data.dr = 1;
-                this.cache.p = [this.dfn.p[0], this.dfn.p[1]];
+                this.cache.p = [x1, x2];
               } else {
                 this.data.dr = -1;
-                this.cache.p = [this.dfn.p[1], this.dfn.p[0]];
+                this.cache.p = [x2, x1];
               }
             }
             break;
@@ -414,10 +429,10 @@ export class geometry {
                 this.data.r = [-Infinity, Infinity];
                 if (y1 < y2) {
                   this.data.dr = 1;
-                  this.cache.p = [this.dfn.p[0], this.dfn.p[1]];
+                  this.cache.p = [y1, y2];
                 } else {
                   this.data.dr = -1;
-                  this.cache.p = [this.dfn.p[1], this.dfn.p[0]];
+                  this.cache.p = [y2, y1];
                 }
               }
             } else {
@@ -429,10 +444,10 @@ export class geometry {
               this.data.d = y1 - this.data.c * x1;
               if (x1 < x2) {
                 this.data.dr = 1;
-                this.cache.p = [this.dfn.p[0], this.dfn.p[1]];
+                this.cache.p = [x1, x2];
               } else {
                 this.data.dr = -1;
-                this.cache.p = [this.dfn.p[1], this.dfn.p[0]];
+                this.cache.p = [x2, x1];
               }
             }
             break;
@@ -455,11 +470,11 @@ export class geometry {
                 if (y1 < y2) {
                   this.data.r = [y1, Infinity];
                   this.data.dr = 1;
-                  this.cache.p = [this.dfn.p[0], this.dfn.p[1]];
+                  this.cache.p = [y1, y2];
                 } else {
                   this.data.r = [-Infinity, y1];
                   this.data.dr = -1;
-                  this.cache.p = [this.dfn.p[1], this.dfn.p[0]];
+                  this.cache.p = [y2, y1];
                 }
               }
             } else {
@@ -471,13 +486,89 @@ export class geometry {
               if (x1 < x2) {
                 this.data.r = [x1, Infinity];
                 this.data.dr = 1;
-                this.cache.p = [this.dfn.p[0], this.dfn.p[1]];
+                this.cache.p = [x1, x2];
               } else {
                 this.data.r = [-Infinity, x1];
                 this.data.dr = -1;
-                this.cache.p = [this.dfn.p[1], this.dfn.p[0]];
+                this.cache.p = [x2, x1];
               }
             }
+            break;
+
+          case 3: //垂线
+            var x = this.dfn.p.data.x,
+              y = this.dfn.p.data.y,
+              a = this.dfn.l.data.a,
+              b = this.dfn.l.data.b,
+              c = this.dfn.l.data.c,
+              d = this.dfn.l.data.d;
+            if (c == 0) {
+              //[-]->[|]
+              this.data.exist = true;
+              this.data.a = 0;
+              this.data.b = x;
+              this.data.c = 1;
+              this.data.d = 0;
+              if (y <= d) {
+                //have problems future (maybe)
+                this.data.dr = 1;
+              } else {
+                this.data.dr = -1;
+              }
+            } else {
+              //[/][|]->[\][-]
+              var k = -a / c;
+              this.data.exist = true;
+              this.data.a = 1;
+              this.data.b = 0;
+              this.data.c = k;
+              this.data.d = y - k * x;
+              if (x <= b) {
+                //have problems future (maybe)
+                this.data.dr = 1;
+              } else {
+                this.data.dr = -1;
+              }
+            }
+            this.cache.p = [
+              { x: x, y: y },
+              { x: this.data.b, y: this.data.d },
+            ];
+            this.data.r = [-Infinity, Infinity];
+            break;
+
+          case 4: //平行线
+            var x = this.dfn.p.data.x,
+              y = this.dfn.p.data.y,
+              a = this.dfn.l.data.a,
+              b = this.dfn.l.data.b,
+              c = this.dfn.l.data.c,
+              d = this.dfn.l.data.d,
+              dr = this.dfn.l.data.dr;
+
+            if (a == 0) {
+              //[|]->[|]
+              this.data.exist = true;
+              this.data.a = 0;
+              this.data.b = x;
+              this.data.c = 1;
+              this.data.d = 0;
+            } else {
+              //[/][-]->[/][-]
+              var k = c / a;
+              this.data.exist = true;
+              this.data.a = 1;
+              this.data.b = 0;
+              this.data.c = k;
+              this.data.d = y - k * x;
+            }
+
+            this.data.dr = dr;
+            this.cache.p = [
+              { x: x, y: y },
+              { x: this.data.b, y: this.data.d },
+            ];
+            this.data.r = [-Infinity, Infinity];
             break;
 
           default:
@@ -522,6 +613,10 @@ export class geometry {
           case 2:
             this.dfn.p[1].beginDrag(pos);
             this.dfn.p[1].initializing = true;
+            break;
+
+          case 3:
+          case 4:
             break;
 
           default:
@@ -577,6 +672,8 @@ export class geometry {
           case 0:
           case 1:
           case 2:
+          case 3:
+          case 4:
             this.beginMove(pos);
             break;
 
@@ -653,6 +750,12 @@ export class geometry {
             this.dfn.p[1].beginMove(pos);
             break;
 
+          case 3:
+          case 4:
+            this.dfn.p.beginMove(pos);
+            this.dfn.l.beginMove(pos);
+            break;
+
           default:
             break;
         }
@@ -711,6 +814,8 @@ export class geometry {
           case 0:
           case 1:
           case 2:
+          case 3:
+          case 4:
             this.updMove(pos);
             break;
 
@@ -782,6 +887,12 @@ export class geometry {
             // console.log("geometry updMove 1.0/1/2");
             this.dfn.p[0].updMove(pos);
             this.dfn.p[1].updMove(pos);
+            break;
+
+          case 3:
+          case 4:
+            this.dfn.p.updMove(pos);
+            this.dfn.l.updMove(pos);
             break;
 
           default:

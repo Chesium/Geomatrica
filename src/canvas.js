@@ -134,13 +134,13 @@ export class canvas {
      *
      * ---
      *
-     * 现有7种取值:  
-     * `0` : 移动图形对象  
-     * `1` : 画线段(默认)  
-     * `2` : 画点  
-     * `3` : 画圆(圆心和圆上一点)  
-     * `4` : 画直线  
-     * `5` : 画射线  
+     * 现有7种取值:
+     * `0` : 移动图形对象
+     * `1` : 画线段(默认)
+     * `2` : 画点
+     * `3` : 画圆(圆心和圆上一点)
+     * `4` : 画直线
+     * `5` : 画射线
      * `6` : 选中两个不为点的对象作其交点
      *
      * ---
@@ -539,6 +539,7 @@ export class canvas {
           this.O[this.O.length - 1].geometry.beginDraw(pos);
           break;
         case 6: //交点
+        case 7: //垂线
           if (FI == -1) {
             this.clearChooseList();
           } else {
@@ -660,16 +661,12 @@ export class canvas {
     this.PIXIapp.view.onwheel = (event) => {
       if (event.wheelDelta > 0) {
         this.tr[0] *= 1.1;
-        this.tr[1] =
-          event.offsetX + (this.tr[1] - event.offsetX) * 1.1;
-        this.tr[2] =
-          event.offsetY + (this.tr[2] - event.offsetY) * 1.1;
+        this.tr[1] = event.offsetX + (this.tr[1] - event.offsetX) * 1.1;
+        this.tr[2] = event.offsetY + (this.tr[2] - event.offsetY) * 1.1;
       } else {
         this.tr[0] /= 1.1;
-        this.tr[1] =
-          event.offsetX + (this.tr[1] - event.offsetX) / 1.1;
-        this.tr[2] =
-          event.offsetY + (this.tr[2] - event.offsetY) / 1.1;
+        this.tr[1] = event.offsetX + (this.tr[1] - event.offsetX) / 1.1;
+        this.tr[2] = event.offsetY + (this.tr[2] - event.offsetY) / 1.1;
       }
       this.updAll();
     };
@@ -711,7 +708,7 @@ export class canvas {
 
   updAll() {
     for (var i in this.rootObjs) {
-      if(!this.rootObjs[i].removed){
+      if (!this.rootObjs[i].removed) {
         this.rootObjs[i].update();
       }
     }
@@ -798,6 +795,7 @@ export class canvas {
                   case 1:
                     switch (this.chooseObjs[1].geometry.type) {
                       case 1: //线-线
+                      // console.log("error");
                         new obj(
                           this,
                           0,
@@ -890,6 +888,95 @@ export class canvas {
                           },
                           {}
                         );
+                        break;
+
+                      default:
+                        break;
+                    }
+                    break;
+
+                  default:
+                    break;
+                }
+                this.clearChooseList();
+              }
+              break;
+
+            default:
+              break;
+          }
+        };
+        break;
+
+      case 7: //垂线
+        this.processFn = () => {
+          switch (this.chooseObjs.length) {
+            case 0:
+              //Nothing to do
+              break;
+
+            case 1:
+              if (this.chooseObjs[0].geometry.type == 2) {
+                //画垂线时点到圆
+                console.log("not supported");
+                this.chooseObjs.pop();
+              } else {
+                this.chooseObjs[0].GFD.changeStyleMode(1);
+              }
+              break;
+
+            case 2:
+              if (this.chooseObjs[1].geometry.type == 2) {
+                //画垂线时点到圆
+                console.log("not supported");
+                this.chooseObjs.pop();
+              } else {
+                //结算
+                switch (this.chooseObjs[0].geometry.type) {
+                  case 0: //[点][...]
+                    switch (this.chooseObjs[1].geometry.type) {
+                      case 0: //点-点
+                        console.log("not supported");
+                        this.chooseObjs.pop();
+                        break;
+
+                      case 1: //点-线
+                        // debugger;
+                        new obj(
+                          this,
+                          1,
+                          3,
+                          {
+                            p: this.chooseObjs[0].geometry,
+                            l: this.chooseObjs[1].geometry,
+                          },
+                          {}
+                        );
+                        break;
+
+                      default:
+                        break;
+                    }
+                    break;
+
+                  case 1: //[线][...]
+                    switch (this.chooseObjs[1].geometry.type) {
+                      case 0: //线-点
+                        new obj(
+                          this,
+                          1,
+                          3,
+                          {
+                            p: this.chooseObjs[1].geometry,
+                            l: this.chooseObjs[0].geometry,
+                          },
+                          {}
+                        );
+                        break;
+
+                      case 1: //线-线
+                        console.log("not supported");
+                        this.chooseObjs.pop();
                         break;
 
                       default:

@@ -1,5 +1,3 @@
-
-
 PIXI.settings.SORTABLE_CHILDREN = true;
 import { canvas } from "./canvas.js";
 var cv = new canvas();
@@ -7,9 +5,19 @@ var cv = new canvas();
 
 //////////////////////////////////////////////////////////////////////////////
 const toolbar = document.getElementById("toolbar");
-const buttonN = 7;
-const buttonsMode = [0, 1, 2, 3, 4, 5, 6];
-const buttonTitles = ["移动", "线段", "画点", "画圆", "直线", "射线", "交点"];
+const buttonN = 9;
+const buttonsMode = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+const buttonTitles = [
+  "移动",
+  "线段",
+  "画点",
+  "画圆",
+  "直线",
+  "射线",
+  "交点",
+  "垂线",
+  "平行线",
+];
 
 var buttons = [];
 

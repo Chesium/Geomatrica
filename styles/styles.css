@@ -126,3 +126,25 @@ body {
   box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(15px);
 }
+#button-8 {
+  background-image: url("../assets/perpendicular.svg");
+}
+#button-8:hover {
+  box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(8px);
+}
+#button-8:checked {
+  box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(15px);
+}
+#button-9 {
+  background-image: url("../assets/parallel.svg");
+}
+#button-9:hover {
+  box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(8px);
+}
+#button-9:checked {
+  box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(15px);
+}
