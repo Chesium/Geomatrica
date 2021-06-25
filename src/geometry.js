@@ -531,8 +531,6 @@ export class geometry {
                   x + 1 / Math.sqrt(1 + k * k),
                 ];
               }
-
-              this.data.dr = -this.dfn.l.data.dr;
             } else {
               //[/][|]->[\][-]
               var k = -a / c;
@@ -581,8 +579,7 @@ export class geometry {
               a = this.dfn.l.data.a,
               b = this.dfn.l.data.b,
               c = this.dfn.l.data.c,
-              d = this.dfn.l.data.d,
-              dr = this.dfn.l.data.dr;
+              d = this.dfn.l.data.d;
 
             if (a == 0) {
               //[|]->[|]
@@ -601,11 +598,18 @@ export class geometry {
               this.data.d = y - k * x;
             }
 
-            this.data.dr = dr;
-            this.cache.p = [
-              { x: x, y: y },
-              { x: this.data.b, y: this.data.d },
-            ];
+            this.data.dr = this.dfn.l.data.dr;
+            if (this.data.dr == 1) {
+              this.cache.p = [
+                x + 1 / Math.sqrt(1 + k * k),
+                x - 1 / Math.sqrt(1 + k * k),
+              ];
+            } else {
+              this.cache.p = [
+                x - 1 / Math.sqrt(1 + k * k),
+                x + 1 / Math.sqrt(1 + k * k),
+              ];
+            }
             this.data.r = [-Infinity, Infinity];
             break;
 

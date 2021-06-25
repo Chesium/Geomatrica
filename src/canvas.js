@@ -540,6 +540,7 @@ export class canvas {
           break;
         case 6: //交点
         case 7: //垂线
+        case 8: //平行线
           if (FI == -1) {
             this.clearChooseList();
           } else {
@@ -966,6 +967,94 @@ export class canvas {
                           this,
                           1,
                           3,
+                          {
+                            p: this.chooseObjs[1].geometry,
+                            l: this.chooseObjs[0].geometry,
+                          },
+                          {}
+                        );
+                        break;
+
+                      case 1: //线-线
+                        console.log("not supported");
+                        this.chooseObjs.pop();
+                        break;
+
+                      default:
+                        break;
+                    }
+                    break;
+
+                  default:
+                    break;
+                }
+                this.clearChooseList();
+              }
+              break;
+
+            default:
+              break;
+          }
+        };
+        break;
+      case 8: //平行线
+        this.processFn = () => {
+          switch (this.chooseObjs.length) {
+            case 0:
+              //Nothing to do
+              break;
+
+            case 1:
+              if (this.chooseObjs[0].geometry.type == 2) {
+                //画平行线时点到圆
+                console.log("not supported");
+                this.chooseObjs.pop();
+              } else {
+                this.chooseObjs[0].GFD.changeStyleMode(1);
+              }
+              break;
+
+            case 2:
+              if (this.chooseObjs[1].geometry.type == 2) {
+                //画平行线时点到圆
+                console.log("not supported");
+                this.chooseObjs.pop();
+              } else {
+                //结算
+                switch (this.chooseObjs[0].geometry.type) {
+                  case 0: //[点][...]
+                    switch (this.chooseObjs[1].geometry.type) {
+                      case 0: //点-点
+                        console.log("not supported");
+                        this.chooseObjs.pop();
+                        break;
+
+                      case 1: //点-线
+                        // debugger;
+                        new obj(
+                          this,
+                          1,
+                          4,
+                          {
+                            p: this.chooseObjs[0].geometry,
+                            l: this.chooseObjs[1].geometry,
+                          },
+                          {}
+                        );
+                        break;
+
+                      default:
+                        break;
+                    }
+                    break;
+
+                  case 1: //[线][...]
+                    switch (this.chooseObjs[1].geometry.type) {
+                      case 0: //线-点
+                        new obj(
+                          this,
+                          1,
+                          4,
                           {
                             p: this.chooseObjs[1].geometry,
                             l: this.chooseObjs[0].geometry,
