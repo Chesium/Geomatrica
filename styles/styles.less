@@ -1,17 +1,30 @@
+@titlebarHeight: 80px;
+@toolbarWidth: 70px;
+
 #workarea,
-#toolbar {
+#toolbar,
+#titlebar {
     image-rendering: -webkit-optimize-contrast;
 }
 
-#toolbar-container,
 #toolbar {
     position: absolute;
-    top: 0px;
+    top: @titlebarHeight;
     left: 0px;
-    width: 70px;
+    width: @toolbarWidth;
     height: 100%;
     overflow: hidden;
     background-color: rgb(160, 160, 160);
+}
+
+#titlebar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: @titlebarHeight;
+    overflow: hidden;
+    background-color: rgb(88, 88, 88);
 }
 
 html,
@@ -23,8 +36,8 @@ body {
 
 #workarea-container {
     position: absolute;
-    top: 0px;
-    left: 70px;
+    top: @titlebarHeight;
+    left: @toolbarWidth;
     overflow: hidden;
     height: 100%;
     width: 100%;
@@ -55,7 +68,7 @@ body {
     left: -20px;
 }
 
-@icons: "move", "segment", "point", "circle", "line", "halfline", "intersection","perpendicular","parallel";
+@icons: "move", "segment", "point", "circle", "line", "halfline", "intersection", "perpendicular", "parallel";
 
 each(@icons, {
         #button-@{index} {
