@@ -12,9 +12,9 @@ export function L_DpData_To_epCrd(l, VF) {
   // console.log(l,VF);
   //visual field
   var Xm = VF[0][0],
-    Ym = VF[0][1],
+    Yn = VF[0][1],//changed
     Xn = VF[1][0],
-    Yn = VF[1][1];
+    Ym = VF[1][1];//changed ^ swapped
   if (l.a == 0) {
     if (l.c == 0) {
       console.log("ERROR in L_DpData_To_epCrd: the line doesn't exist.");
@@ -30,9 +30,11 @@ export function L_DpData_To_epCrd(l, VF) {
       t2 = Math.min(Math.max(l.r[0], l.r[1]), Math.max(tM, tN));
   } else if (l.c == 0) {
     //[-]
+    // console.log("c==0", l.d, Ym, Yn);
     if (l.d < Ym || l.d > Yn) {
       return [false, [0, 0], [0, 0]];
     }
+    // console.log("access");
     var tM = (Xm - l.b) / l.a,
       tN = (Xn - l.b) / l.a;
     var t1 = Math.max(Math.min(l.r[0], l.r[1]), Math.min(tM, tN)),
