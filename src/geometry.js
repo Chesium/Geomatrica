@@ -148,10 +148,9 @@ export class geometry {
               c = this.dfn.l.data.c,
               d = this.dfn.l.data.d,
               r = this.dfn.l.data.r,
-              t1 = Math.max(...this.dfn.l.cache.p),
-              t2 = Math.min(...this.dfn.l.cache.p);
+              t1 = this.dfn.l.cache.p[0],
+              t2 = this.dfn.l.cache.p[1];
             if (!this.cache.following) {
-              console.log(this.cache.proportion);
               var t = (t2 - t1) * this.cache.proportion + t1;
               this.data.exist = true;
               this.data.x = a * t + b;
@@ -166,8 +165,8 @@ export class geometry {
               (a * (this.data.x - b) + c * (this.data.y - d)) / (a * a + c * c);
             if (t < Math.min(r[0], r[1])) {
               this.data.exist = true;
-              this.data.x = a*t1+b;
-              this.data.y = c*t1+d;
+              this.data.x = a * t1 + b;
+              this.data.y = c * t1 + d;
               this.cache.proportion = 0;
             } else if (t > Math.max(r[0], r[1])) {
               this.data.exist = true;
@@ -179,7 +178,7 @@ export class geometry {
               this.data.x = a * t + b;
               this.data.y = c * t + d;
               this.cache.proportion = (t - t1) / (t2 - t1);
-              console.log("ppt=", this.cache.proportion);
+              // console.log("ppt=", this.cache.proportion);
             }
             break;
 
@@ -380,19 +379,19 @@ export class geometry {
             if (x1 == x2) {
               if (y1 == y2) {
                 this.data.exist = false;
-              } else {//[|]
+              } else {
+                //[|]
                 this.data.exist = true;
                 this.data.a = 0;
                 this.data.b = x1;
                 this.data.c = 1;
                 this.data.d = 0;
                 this.data.r = [y1, y2];
+                this.cache.p = [y1, y2]; //t
                 if (y1 < y2) {
                   this.data.dr = 1;
-                  this.cache.p = [y1, y2];
                 } else {
                   this.data.dr = -1;
-                  this.cache.p = [y2, y1];
                 }
               }
             } else {
@@ -402,12 +401,11 @@ export class geometry {
               this.data.c = (y1 - y2) / (x1 - x2);
               this.data.r = [x1, x2];
               this.data.d = y1 - this.data.c * x1;
+              this.cache.p = [x1, x2]; //t
               if (x1 < x2) {
                 this.data.dr = 1;
-                this.cache.p = [x1, x2];
               } else {
                 this.data.dr = -1;
-                this.cache.p = [x2, x1];
               }
             }
             break;
@@ -427,12 +425,11 @@ export class geometry {
                 this.data.c = 1;
                 this.data.d = 0;
                 this.data.r = [-Infinity, Infinity];
+                this.cache.p = [y1, y2];
                 if (y1 < y2) {
                   this.data.dr = 1;
-                  this.cache.p = [y1, y2];
                 } else {
                   this.data.dr = -1;
-                  this.cache.p = [y2, y1];
                 }
               }
             } else {
@@ -442,12 +439,11 @@ export class geometry {
               this.data.c = (y1 - y2) / (x1 - x2);
               this.data.r = [-Infinity, Infinity];
               this.data.d = y1 - this.data.c * x1;
+              this.cache.p = [x1, x2];
               if (x1 < x2) {
                 this.data.dr = 1;
-                this.cache.p = [x1, x2];
               } else {
                 this.data.dr = -1;
-                this.cache.p = [x2, x1];
               }
             }
             break;
@@ -467,14 +463,13 @@ export class geometry {
                 this.data.b = x1;
                 this.data.c = 1;
                 this.data.d = 0;
+                this.cache.p = [y1, y2];
                 if (y1 < y2) {
                   this.data.r = [y1, Infinity];
                   this.data.dr = 1;
-                  this.cache.p = [y1, y2];
                 } else {
                   this.data.r = [-Infinity, y1];
                   this.data.dr = -1;
-                  this.cache.p = [y2, y1];
                 }
               }
             } else {
@@ -483,14 +478,13 @@ export class geometry {
               this.data.b = 0;
               this.data.c = (y1 - y2) / (x1 - x2);
               this.data.d = y1 - this.data.c * x1;
+              this.cache.p = [x1, x2];
               if (x1 < x2) {
                 this.data.r = [x1, Infinity];
                 this.data.dr = 1;
-                this.cache.p = [x1, x2];
               } else {
                 this.data.r = [-Infinity, x1];
                 this.data.dr = -1;
-                this.cache.p = [x2, x1];
               }
             }
             break;
@@ -509,12 +503,36 @@ export class geometry {
               this.data.b = x;
               this.data.c = 1;
               this.data.d = 0;
-              if (y <= d) {
-                //have problems future (maybe)
-                this.data.dr = 1;
+              // this.cache.p = [y, y + 1]; //(x,y)->t1 (x,y+1)->t2
+
+              /**
+               *
+               *   +-------------+ ↻ +-------------+
+               *   |             | ↻ |             |
+               *   |             | ↻ |      |      |
+               *   |   ------>   | ↻ |      |      |
+               *   |             | ↻ |      ↓      |
+               *   |             | ↻ |             |
+               *   +-------------+ ↻ +-------------+
+               *
+               */
+
+              //clockwise 90°
+              this.data.dr = -this.dfn.l.data.dr;
+
+              if (this.data.dr == 1) {
+                this.cache.p = [
+                  x + 1 / Math.sqrt(1 + k * k),
+                  x - 1 / Math.sqrt(1 + k * k),
+                ];
               } else {
-                this.data.dr = -1;
+                this.cache.p = [
+                  x - 1 / Math.sqrt(1 + k * k),
+                  x + 1 / Math.sqrt(1 + k * k),
+                ];
               }
+
+              this.data.dr = -this.dfn.l.data.dr;
             } else {
               //[/][|]->[\][-]
               var k = -a / c;
@@ -523,17 +541,37 @@ export class geometry {
               this.data.b = 0;
               this.data.c = k;
               this.data.d = y - k * x;
-              if (x <= b) {
-                //have problems future (maybe)
-                this.data.dr = 1;
+
+              /**
+               *
+               *   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ↻ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+               *   █     *       █ ↻ █             █
+               *   █    /        █ ↻ █  ██\        █
+               *   █   /         █ ↻ █     ██\     █
+               *   █  /          █ ↻ █        █*   █
+               *   █             █ ↻ █             █
+               *   ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ↻ ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+               *
+               */
+
+              //clockwise 90°
+              if (k > 0) {
+                this.data.dr = -this.dfn.l.data.dr;
               } else {
-                this.data.dr = -1;
+                this.data.dr = this.dfn.l.data.dr;
+              }
+              if (this.data.dr == 1) {
+                this.cache.p = [
+                  x + 1 / Math.sqrt(1 + k * k),
+                  x - 1 / Math.sqrt(1 + k * k),
+                ];
+              } else {
+                this.cache.p = [
+                  x - 1 / Math.sqrt(1 + k * k),
+                  x + 1 / Math.sqrt(1 + k * k),
+                ];
               }
             }
-            this.cache.p = [
-              { x: x, y: y },
-              { x: this.data.b, y: this.data.d },
-            ];
             this.data.r = [-Infinity, Infinity];
             break;
 
