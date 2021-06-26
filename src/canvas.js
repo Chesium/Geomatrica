@@ -181,10 +181,13 @@ export class canvas {
      */
     this.stageBound = [
       [0, 0],
-      [this.PIXIapp.view.width, this.PIXIapp.view.height],
+      [
+        this.PIXIapp.view.offsetWidth - getOffsetLeft(this.PIXIapp.view),
+        this.PIXIapp.view.offsetHeight - getOffsetTop(this.PIXIapp.view),
+      ],
     ];
 
-    this.tr = [20, 300, 300];
+    this.tr = [50, 400, 400];
 
     this.rootObjs = [];
 
@@ -193,6 +196,28 @@ export class canvas {
     this.names = [];
 
     this.nextNameI = [0, 0, 0];
+
+    this.axisXtype = 2;
+    this.axisYtype = 2;
+
+    this.axisStyle = {
+      width: 1,
+      color: 0x00000,
+      alpha: 1,
+      cap: PIXI.LINE_CAP.ROUND,
+    };
+
+    this.Xscale = [];
+    this.Yscale = [];
+
+    this.scaleFont = new PIXI.TextStyle({
+      fontFamily: "cambria",
+      fontSize: 12,
+    });
+
+    this.axis = new PIXI.Graphics();
+    this.stage.addChild(this.axis);
+    this.updAxes();
 
     // this.ObyN={};
 
@@ -731,6 +756,7 @@ export class canvas {
   }
 
   updAll() {
+    this.updAxes();
     for (var i in this.rootObjs) {
       if (!this.rootObjs[i].removed) {
         this.rootObjs[i].update();
@@ -1110,6 +1136,158 @@ export class canvas {
         break;
       default:
         break;
+    }
+  }
+
+  //     y
+  //     ^
+  // +-------N
+  // |*******|
+  // |*******|  > x
+  // M-------+
+
+  //[[dp_Xm, dp_Ym],[dp_Xn, dp_Yn]]
+  //  00  01   10   11
+  updAxes() {
+    this.axis.clear();
+    var origin = this.tran([0, 0], true),
+      dp_Xm = this.stageBound[0][0],
+      dp_Ym = this.stageBound[0][1],
+      dp_Xn = this.stageBound[1][0],
+      dp_Yn = this.stageBound[1][1],
+      minCrd = this.revTran(this.stageBound[0], true),
+      maxCrd = this.revTran(this.stageBound[1], true);
+    // console.log(minCrd, maxCrd);
+    this.axis.lineStyle(this.axisStyle);
+    if (this.axisXtype != 0) {
+      if (origin.y < dp_Ym || origin.y > dp_Yn) {
+        //invisible
+      } else {
+        //X轴可见 画直线
+        this.axis.moveTo(dp_Xm, origin.y);
+        this.axis.lineTo(dp_Xn, origin.y);
+        //画箭头
+        this.axis.lineTo(dp_Xn - 8, origin.y - 5);
+        this.axis.moveTo(dp_Xn, origin.y);
+        this.axis.lineTo(dp_Xn - 8, origin.y + 5);
+
+        if (this.axisXtype > 1) {
+          //画刻度
+          for (let I = Math.ceil(minCrd.x); I <= Math.floor(maxCrd.x); I += 1) {
+            if (I == 0) {
+              continue;
+            }
+            var DPcrd_t = this.tran([I, 0]);
+            this.axis.moveTo(...DPcrd_t);
+            this.axis.lineTo(DPcrd_t[0], origin.y + 3);
+          }
+        }
+      }
+      //添加刻度文字
+      //清空先前的
+      for (let i in this.Xscale) {
+        this.Xscale[i].text = "";
+      }
+      for (
+        let I = Math.ceil(minCrd.x), i = 0;
+        I <= Math.floor(maxCrd.x);
+        I += 1
+      ) {
+        if (I == 0) {
+          continue;
+        }
+        var DPcrd_t = this.tran([I, 0]);
+
+        //若Text对象不够了则新建一个作为stage的子对象之一
+        if (this.Xscale[i] === undefined) {
+          this.Xscale[i] = new PIXI.Text("", this.scaleFont);
+          this.stage.addChild(this.Xscale[i]);
+        }
+
+        //更改文字 移动
+        this.Xscale[i].text = I + "";
+        this.Xscale[i].x = DPcrd_t[0] - this.Xscale[i].width / 2;
+        this.Xscale[i].y = origin.y + 2;
+
+        //特殊情况
+        if (this.Xscale[i].y < dp_Ym) {
+          //X轴隐藏在屏幕上方
+          this.Xscale[i].y = dp_Ym;
+        }
+        if (this.Xscale[i].y > dp_Yn - this.Xscale[i].height) {
+          //X轴隐藏在屏幕下方
+          this.Xscale[i].y = dp_Yn - this.Xscale[i].height;
+        }
+
+        i++;
+      }
+    }
+    if (this.axisYtype != 0) {
+      if (origin.x < dp_Xm || origin.x > dp_Xn) {
+        //invisible
+      } else {
+        //visible
+        this.axis.moveTo(origin.x, dp_Yn);
+        this.axis.lineTo(origin.x, dp_Ym);
+        //画箭头
+        this.axis.lineTo(origin.x - 5, dp_Ym + 8);
+        this.axis.moveTo(origin.x, dp_Ym);
+        this.axis.lineTo(origin.x + 5, dp_Ym + 8);
+
+        if (this.axisYtype > 1) {
+          //画刻度
+          for (
+            let I = Math.ceil(maxCrd.y);
+            I <= Math.floor(minCrd.y);
+            I += 1
+          ) {
+            if (I == 0) {
+              continue;
+            }
+            var DPcrd_t = this.tran([0, I]);
+            this.axis.moveTo(...DPcrd_t);
+            this.axis.lineTo(origin.x - 3, DPcrd_t[1]);
+          }
+        }
+      }
+      //添加刻度文字
+      //清空先前的
+      for (let i in this.Yscale) {
+        this.Yscale[i].text = "";
+      }
+      for (
+        let I = Math.ceil(maxCrd.y), i = 0;
+        I <= Math.floor(minCrd.y);
+        I += 1
+      ) {
+        if (I == 0) {
+          continue;
+        }
+        var DPcrd_t = this.tran([0, I]);
+
+        //若Text对象不够了则新建一个作为stage的子对象之一
+        if (this.Yscale[i] === undefined) {
+          this.Yscale[i] = new PIXI.Text("", this.scaleFont);
+          this.stage.addChild(this.Yscale[i]);
+        }
+
+        //更改文字 移动
+        this.Yscale[i].text = I + "";
+        this.Yscale[i].x = origin.x - this.Yscale[i].width - 4;
+        this.Yscale[i].y = DPcrd_t[1] - this.Yscale[i].height / 2;
+
+        // 特殊情况
+        if (this.Yscale[i].x < dp_Xm) {
+          //Y轴隐藏在屏幕左方
+          this.Yscale[i].x = dp_Xm;
+        }
+        if (this.Yscale[i].x > dp_Xn - this.Yscale[i].width) {
+          //Y轴隐藏在屏幕右方
+          this.Yscale[i].x = dp_Xn - this.Yscale[i].width;
+        }
+
+        i++;
+      }
     }
   }
 }
