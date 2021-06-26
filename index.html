@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 
 <html>
-
-<head>
-    <title>GM 210619</title>
+  <head>
+    <title>GM 210626</title>
+    <link rel="stylesheet" href="lib/katex/katex.min.css" />
+    <script src="lib/katex/katex.min.js"></script>
     <script src="lib/pixi.js"></script>
-    <link rel="stylesheet" href="styles/styles.css">
-</head>
 
-<body>
-    <div id="titlebar"></div>
-    <div id="workarea-container">
-        <canvas id="workarea"></canvas>
-    </div>
+    <link rel="stylesheet" href="styles/styles.css" />
+  </head>
+
+  <body>
     <div id="toolbar"></div>
+    <img id="icon" alt="Geomatrica" src="assets/Geomatrica-icon.svg" />
+    <div id="header">
+      <div id="headerID">
+        <img alt="Geomatrica" src="assets/GeomatricA.svg" />
+      </div>
+    </div>
+    <div id="workarea-container">
+      <canvas id="workarea"></canvas>
+    </div>
     <script type="module" src="src/Geomatrica.js"></script>
-</body>
-
+  </body>
 </html>

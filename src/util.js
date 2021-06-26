@@ -12,9 +12,9 @@ export function L_DpData_To_epCrd(l, VF) {
   // console.log(l,VF);
   //visual field
   var Xm = VF[0][0],
-    Yn = VF[0][1],//changed
+    Yn = VF[0][1], //changed
     Xn = VF[1][0],
-    Ym = VF[1][1];//changed ^ swapped
+    Ym = VF[1][1]; //changed ^ swapped
   if (l.a == 0) {
     if (l.c == 0) {
       console.log("ERROR in L_DpData_To_epCrd: the line doesn't exist.");
@@ -76,4 +76,44 @@ export function haveEqualIndex(arr1, arr2) {
     }
   }
   return false;
+}
+
+export function generateName(type, index) {
+  //latex
+  const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  switch (type) {
+    case 0: //point
+      var name = upper[index % 26];
+      var subscript = parseInt(index / 26);
+      return subscript > 0 ? name + "_{" + subscript + "}" : name;
+
+    case 1: //line
+      return "l" + "_{" + (index + 1) + "}";
+
+    case 2: //circle
+      return "c" + "_{" + (index + 1) + "}";
+
+    default:
+      break;
+  }
+}
+
+export function getOffsetLeft(obj) {
+  var tmp = obj.offsetLeft;
+  var node = obj.offsetParent;
+  while (node != null) {
+    tmp += node.offsetLeft;
+    node = node.offsetParent;
+  }
+  return tmp;
+}
+
+export function getOffsetTop(obj) {
+  var tmp = obj.offsetTop;
+  var node = obj.offsetParent;
+  while (node != null) {
+    tmp += node.offsetTop;
+    node = node.offsetParent;
+  }
+  return tmp;
 }

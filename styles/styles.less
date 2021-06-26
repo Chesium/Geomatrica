@@ -1,74 +1,105 @@
-@titlebarHeight: 80px;
+@headerHeight: 60px;
 @toolbarWidth: 70px;
 
 #workarea,
 #toolbar,
-#titlebar {
-    image-rendering: -webkit-optimize-contrast;
+#header {
+  image-rendering: -webkit-optimize-contrast;
 }
 
 #toolbar {
-    position: absolute;
-    top: @titlebarHeight;
-    left: 0px;
-    width: @toolbarWidth;
-    height: 100%;
-    overflow: hidden;
-    background-color: rgb(160, 160, 160);
+  position: absolute;
+  top: @headerHeight;
+  left: 0px;
+  width: @toolbarWidth;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 5px 0px 10px 2px rgba(0, 0, 0, 0.1);
 }
 
-#titlebar {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: @titlebarHeight;
-    overflow: hidden;
-    background-color: rgb(88, 88, 88);
+#icon {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 70px;
+  height: 70px;
+}
+
+#header {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: @headerHeight;
+  overflow: hidden;
+  box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.4);
+  background-color: rgb(255, 255, 255);
+}
+
+#headerID {
+  top: 0px;
+  left: 0px;
+  width: 180px;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+}
+
+#headerID img {
+  width: 180px;
+  height: 70%;
 }
 
 html,
 body {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 #workarea-container {
-    position: absolute;
-    top: @titlebarHeight;
-    left: @toolbarWidth;
-    overflow: hidden;
-    height: 100%;
-    width: 100%;
+  position: absolute;
+  top: @headerHeight;
+  left: @toolbarWidth;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 .mode-switch {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    transition-timing-function: ease;
-    outline: none;
-    transition-duration: 0.5s;
-    transition-delay: 0s;
-    background-color: white;
-    background-image: url(../assets/circleA0.svg);
-    background-position: center right;
-    background-repeat: no-repeat;
-    background-size: 50px 25px;
-    height: 25px;
-    width: 70px;
-    margin: 3px 0px 3px 0px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transition-timing-function: ease;
+  outline: none;
+  transition-duration: 0.5s;
+  transition-delay: 0s;
+  background-color: white;
+  background-image: url(../assets/circleA0.svg);
+  background-position: center right;
+  background-repeat: no-repeat;
+  background-size: 50px 25px;
+  height: 25px;
+  width: 70px;
+  margin: 3px 0px 3px 0px;
 
-    position: relative;
-    top: 5px;
-    left: -20px;
+  position: relative;
+  top: 5px;
+  left: -20px;
 }
 
-@icons: "move", "segment", "point", "circle", "line", "halfline", "intersection", "perpendicular", "parallel";
+.graphic-tag {
+    user-select:none;
+}
+
+@icons: "move", "segment", "point", "circle", "line", "halfline", "intersection",
+  "perpendicular", "parallel";
 
 each(@icons, {
         #button-@{index} {
@@ -76,12 +107,12 @@ each(@icons, {
         }
 
         #button-@{index}:hover {
-            box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             transform: translateX(8px);
         }
 
         #button-@{index}:checked {
-            box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             transform: translateX(15px);
         }
     }

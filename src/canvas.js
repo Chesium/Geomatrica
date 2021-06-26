@@ -190,6 +190,12 @@ export class canvas {
 
     this.dragOffset = { x: 0, y: 0 }; //ABSL
 
+    this.names=[];
+
+    this.nextNameI=[0,0,0];
+
+    // this.ObyN={};
+
     this.PIXIapp.renderer.plugins.interaction.on("pointerdown", (event) => {
       let pos = this.revTran(
         {

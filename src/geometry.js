@@ -522,13 +522,13 @@ export class geometry {
 
               if (this.data.dr == 1) {
                 this.cache.p = [
-                  x + 1 / Math.sqrt(1 + k * k),
-                  x - 1 / Math.sqrt(1 + k * k),
+                  x + 10 / Math.sqrt(1 + k * k),
+                  x - 10 / Math.sqrt(1 + k * k),
                 ];
               } else {
                 this.cache.p = [
-                  x - 1 / Math.sqrt(1 + k * k),
-                  x + 1 / Math.sqrt(1 + k * k),
+                  x - 10 / Math.sqrt(1 + k * k),
+                  x + 10 / Math.sqrt(1 + k * k),
                 ];
               }
             } else {
@@ -1079,6 +1079,53 @@ export class geometry {
         default:
           break;
       }
+    }
+  }
+  generateRefCrd() {
+    if (!this.data.exist) {
+      return { x: undefined, y: undefined };
+    }
+    switch (this.type) {
+      case 0:
+        return this.data;
+
+      case 1:
+        // console.log(this.cache);
+        switch (this.dfnType) {
+          case 0:
+          case 1:
+          case 2:
+            var t = (this.cache.p[0] + this.cache.p[1]) / 2;
+            break;
+
+          case 3:
+          case 4:
+            var t = (this.cache.p[1] - this.cache.p[0]) * 2 + this.cache.p[0];
+            break;
+
+          default:
+            break;
+        }
+        return {
+          x: this.data.a * t + this.data.b,
+          y: this.data.c * t + this.data.d,
+        };
+
+      case 2:
+        switch (this.dfnType) {
+          case 0:
+            return {
+              x: this.data.x + this.data.r / 1.4142135623730951,
+              y: this.data.y + this.data.r / 1.4142135623730951,
+            };
+
+          default:
+            break;
+        }
+        break;
+
+      default:
+        break;
     }
   }
 }
