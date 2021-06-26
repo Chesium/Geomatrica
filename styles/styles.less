@@ -95,26 +95,26 @@ body {
 }
 
 .graphic-tag {
-    user-select:none;
+  user-select: none;
 }
 
 @icons: "move", "segment", "point", "circle", "line", "halfline", "intersection",
   "perpendicular", "parallel";
 
 each(@icons, {
-        #button-@{index} {
-            background-image: url("../assets/@{value}.svg")
-        }
-
-        #button-@{index}:hover {
-            box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            transform: translateX(8px);
-        }
-
-        #button-@{index}:checked {
-            box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            transform: translateX(15px);
-        }
+    #button-@{index} {
+      background-image: url("../assets/@{value}.svg")
     }
+
+    #button-@{index}:hover {
+      box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      transform: translateX(8px);
+    }
+
+    #button-@{index}:checked {
+      box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      transform: translateX(15px);
+    }
+  }
 
 );
