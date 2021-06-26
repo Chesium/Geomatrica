@@ -5,8 +5,8 @@ var cv = new canvas();
 
 //////////////////////////////////////////////////////////////////////////////
 const toolbar = document.getElementById("toolbar");
-const buttonN = 9;
-const buttonsMode = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+const buttonN = 15;
+const buttonsMode = [0, 1, 2, 3, 4, 5, 6, 7, 8,9,10,11,12,13,14];
 const buttonTitles = [
   "移动",
   "线段",
@@ -17,6 +17,12 @@ const buttonTitles = [
   "交点",
   "垂线",
   "平行线",
+  "延长线",
+  "角平分线",
+  "切线",
+  "中垂线",
+  "中点",
+  "外接圆",
 ];
 
 var buttons = [];

@@ -183,3 +183,69 @@ body {
   box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(15px);
 }
+#button-10 {
+  background-image: url("../assets/extensionLine.svg");
+}
+#button-10:hover {
+  box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(8px);
+}
+#button-10:checked {
+  box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(15px);
+}
+#button-11 {
+  background-image: url("../assets/angleBisector.svg");
+}
+#button-11:hover {
+  box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(8px);
+}
+#button-11:checked {
+  box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(15px);
+}
+#button-12 {
+  background-image: url("../assets/tangent.svg");
+}
+#button-12:hover {
+  box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(8px);
+}
+#button-12:checked {
+  box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(15px);
+}
+#button-13 {
+  background-image: url("../assets/perpendicularBisector.svg");
+}
+#button-13:hover {
+  box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(8px);
+}
+#button-13:checked {
+  box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(15px);
+}
+#button-14 {
+  background-image: url("../assets/midPoint.svg");
+}
+#button-14:hover {
+  box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(8px);
+}
+#button-14:checked {
+  box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(15px);
+}
+#button-15 {
+  background-image: url("../assets/circumcircle.svg");
+}
+#button-15:hover {
+  box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(8px);
+}
+#button-15:checked {
+  box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: translateX(15px);
+}
