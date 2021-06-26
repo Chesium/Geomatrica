@@ -1,5 +1,5 @@
 import { obj } from "./obj.js";
-import { getOffsetLeft, getOffsetTop } from "./util.js";
+import { getOffsetLeft, getOffsetTop, floatAdd, floatMul } from "./util.js";
 export class canvas {
   PIXIappSetting = {
     antialias: true,
@@ -1159,6 +1159,29 @@ export class canvas {
       maxCrd = this.revTran(this.stageBound[1], true);
     // console.log(minCrd, maxCrd);
     this.axis.lineStyle(this.axisStyle);
+    var rsl = 1;
+    var wtt = new PIXI.Text("1", this.scaleFont); //widthTestText
+    while (this.tr[0] * rsl < 1.5*(wtt.width+10)) {
+      if ((rsl + "")[0] == "2") {
+        rsl /= 2;
+        rsl *= 5;
+      } else {
+        rsl *= 2;
+      }
+      wtt.text = rsl + "";
+      // console.log("|-><-|移除");
+    }
+    while (this.tr[0] * rsl > 5 * (wtt.width+10)) {
+      if ((rsl + "")[(rsl + "").length - 1] == "5") {
+        rsl *= 2;
+        rsl /= 5;
+      } else {
+        rsl /= 2;
+      }
+      wtt.text = rsl + "";
+      // console.log("<-|->新增");
+    }
+    // console.log("rsl:", rsl);
     if (this.axisXtype != 0) {
       if (origin.y < dp_Ym || origin.y > dp_Yn) {
         //invisible
@@ -1173,7 +1196,11 @@ export class canvas {
 
         if (this.axisXtype > 1) {
           //画刻度
-          for (let I = Math.ceil(minCrd.x); I <= Math.floor(maxCrd.x); I += 1) {
+          for (
+            let I = floatMul(Math.ceil(minCrd.x / rsl), rsl);
+            I <= floatMul(Math.floor(maxCrd.x / rsl), rsl);
+            I = floatAdd(I, rsl)
+          ) {
             if (I == 0) {
               continue;
             }
@@ -1190,13 +1217,14 @@ export class canvas {
           this.Xscale[i].text = "";
         }
         for (
-          let I = Math.ceil(minCrd.x), i = 1; //i = 0用于原点
-          I <= Math.floor(maxCrd.x);
-          I += 1
+          let I = floatMul(Math.ceil(minCrd.x / rsl), rsl), i = 1; //i = 0用于原点
+          I <= floatMul(Math.floor(maxCrd.x / rsl), rsl);
+          I = floatAdd(I, rsl)
         ) {
           if (I == 0) {
             continue;
           }
+          // console.log(I);
           var DPcrd_t = this.tran([I, 0]);
 
           //若Text对象不够了则新建一个作为stage的子对象之一
@@ -1238,7 +1266,11 @@ export class canvas {
 
         if (this.axisYtype > 1) {
           //画刻度
-          for (let I = Math.ceil(maxCrd.y); I <= Math.floor(minCrd.y); I += 1) {
+          for (
+            let I = floatMul(Math.ceil(maxCrd.y / rsl), rsl);
+            I <= floatMul(Math.floor(minCrd.y / rsl), rsl);
+            I = floatAdd(I, rsl)
+          ) {
             if (I == 0) {
               continue;
             }
@@ -1255,9 +1287,9 @@ export class canvas {
           this.Yscale[i].text = "";
         }
         for (
-          let I = Math.ceil(maxCrd.y), i = 0;
-          I <= Math.floor(minCrd.y);
-          I += 1
+          let I = floatMul(Math.ceil(maxCrd.y / rsl), rsl), i = 0;
+          I <= floatMul(Math.floor(minCrd.y / rsl), rsl);
+          I = floatAdd(I, rsl)
         ) {
           if (I == 0) {
             continue;
@@ -1299,7 +1331,7 @@ export class canvas {
 
       //更改文字 移动
       this.Xscale[0].text = "0";
-      this.Xscale[0].x = origin.x - this.Xscale[0].width-2;
+      this.Xscale[0].x = origin.x - this.Xscale[0].width - 2;
       this.Xscale[0].y = origin.y;
 
       if (
