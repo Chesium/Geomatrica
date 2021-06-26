@@ -1,5 +1,5 @@
 import { obj } from "./obj.js";
-
+import { getOffsetLeft, getOffsetTop } from "./util.js";
 export class canvas {
   PIXIappSetting = {
     antialias: true,
@@ -190,9 +190,9 @@ export class canvas {
 
     this.dragOffset = { x: 0, y: 0 }; //ABSL
 
-    this.names=[];
+    this.names = [];
 
-    this.nextNameI=[0,0,0];
+    this.nextNameI = [0, 0, 0];
 
     // this.ObyN={};
 
@@ -568,6 +568,7 @@ export class canvas {
         },
         true
       );
+      // console.log("status:",this.Status);
       switch (this.Status) {
         case 0:
           break;
@@ -581,6 +582,22 @@ export class canvas {
           this.tr[1] = event.data.global.x + this.dragOffset.x;
           this.tr[2] = event.data.global.y + this.dragOffset.y;
           this.updAll();
+          break;
+
+        case 3:
+          // console.log("status3", this.F);
+          this.O[this.F].tag.offset.x =
+            event.data.global.x +
+            getOffsetLeft(this.PIXIapp.resizeTo) -
+            this.O[this.F].tag.dragPos[0] +
+            this.O[this.F].tag.dragBeginOffset.x;
+          this.O[this.F].tag.offset.y =
+            event.data.global.y +
+            getOffsetTop(this.PIXIapp.resizeTo) -
+            this.O[this.F].tag.dragPos[1] +
+            this.O[this.F].tag.dragBeginOffset.y;
+          // console.log(this.O[this.F].tag.offset);
+          this.O[this.F].tag.update();
           break;
 
         default:
@@ -802,7 +819,7 @@ export class canvas {
                   case 1:
                     switch (this.chooseObjs[1].geometry.type) {
                       case 1: //线-线
-                      // console.log("error");
+                        // console.log("error");
                         new obj(
                           this,
                           0,
