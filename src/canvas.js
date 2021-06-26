@@ -1183,43 +1183,45 @@ export class canvas {
           }
         }
       }
-      //添加刻度文字
-      //清空先前的
-      for (let i in this.Xscale) {
-        this.Xscale[i].text = "";
-      }
-      for (
-        let I = Math.ceil(minCrd.x), i = 0;
-        I <= Math.floor(maxCrd.x);
-        I += 1
-      ) {
-        if (I == 0) {
-          continue;
+      if (this.axisXtype > 1) {
+        //添加刻度文字
+        //清空先前的
+        for (let i in this.Xscale) {
+          this.Xscale[i].text = "";
         }
-        var DPcrd_t = this.tran([I, 0]);
+        for (
+          let I = Math.ceil(minCrd.x), i = 1; //i = 0用于原点
+          I <= Math.floor(maxCrd.x);
+          I += 1
+        ) {
+          if (I == 0) {
+            continue;
+          }
+          var DPcrd_t = this.tran([I, 0]);
 
-        //若Text对象不够了则新建一个作为stage的子对象之一
-        if (this.Xscale[i] === undefined) {
-          this.Xscale[i] = new PIXI.Text("", this.scaleFont);
-          this.stage.addChild(this.Xscale[i]);
+          //若Text对象不够了则新建一个作为stage的子对象之一
+          if (this.Xscale[i] === undefined) {
+            this.Xscale[i] = new PIXI.Text("", this.scaleFont);
+            this.stage.addChild(this.Xscale[i]);
+          }
+
+          //更改文字 移动
+          this.Xscale[i].text = I + "";
+          this.Xscale[i].x = DPcrd_t[0] - this.Xscale[i].width / 2;
+          this.Xscale[i].y = origin.y + 2;
+
+          //特殊情况
+          if (this.Xscale[i].y < dp_Ym) {
+            //X轴隐藏在屏幕上方
+            this.Xscale[i].y = dp_Ym;
+          }
+          if (this.Xscale[i].y > dp_Yn - this.Xscale[i].height) {
+            //X轴隐藏在屏幕下方
+            this.Xscale[i].y = dp_Yn - this.Xscale[i].height;
+          }
+
+          i++;
         }
-
-        //更改文字 移动
-        this.Xscale[i].text = I + "";
-        this.Xscale[i].x = DPcrd_t[0] - this.Xscale[i].width / 2;
-        this.Xscale[i].y = origin.y + 2;
-
-        //特殊情况
-        if (this.Xscale[i].y < dp_Ym) {
-          //X轴隐藏在屏幕上方
-          this.Xscale[i].y = dp_Ym;
-        }
-        if (this.Xscale[i].y > dp_Yn - this.Xscale[i].height) {
-          //X轴隐藏在屏幕下方
-          this.Xscale[i].y = dp_Yn - this.Xscale[i].height;
-        }
-
-        i++;
       }
     }
     if (this.axisYtype != 0) {
@@ -1236,11 +1238,7 @@ export class canvas {
 
         if (this.axisYtype > 1) {
           //画刻度
-          for (
-            let I = Math.ceil(maxCrd.y);
-            I <= Math.floor(minCrd.y);
-            I += 1
-          ) {
+          for (let I = Math.ceil(maxCrd.y); I <= Math.floor(minCrd.y); I += 1) {
             if (I == 0) {
               continue;
             }
@@ -1250,43 +1248,68 @@ export class canvas {
           }
         }
       }
-      //添加刻度文字
-      //清空先前的
-      for (let i in this.Yscale) {
-        this.Yscale[i].text = "";
+      if (this.axisYtype > 1) {
+        //添加刻度文字
+        //清空先前的
+        for (let i in this.Yscale) {
+          this.Yscale[i].text = "";
+        }
+        for (
+          let I = Math.ceil(maxCrd.y), i = 0;
+          I <= Math.floor(minCrd.y);
+          I += 1
+        ) {
+          if (I == 0) {
+            continue;
+          }
+          var DPcrd_t = this.tran([0, I]);
+
+          //若Text对象不够了则新建一个作为stage的子对象之一
+          if (this.Yscale[i] === undefined) {
+            this.Yscale[i] = new PIXI.Text("", this.scaleFont);
+            this.stage.addChild(this.Yscale[i]);
+          }
+
+          //更改文字 移动
+          this.Yscale[i].text = I + "";
+          this.Yscale[i].x = origin.x - this.Yscale[i].width - 4;
+          this.Yscale[i].y = DPcrd_t[1] - this.Yscale[i].height / 2;
+
+          // 特殊情况
+          if (this.Yscale[i].x < dp_Xm) {
+            //Y轴隐藏在屏幕左方
+            this.Yscale[i].x = dp_Xm;
+          }
+          if (this.Yscale[i].x > dp_Xn - this.Yscale[i].width) {
+            //Y轴隐藏在屏幕右方
+            this.Yscale[i].x = dp_Xn - this.Yscale[i].width;
+          }
+
+          i++;
+        }
       }
-      for (
-        let I = Math.ceil(maxCrd.y), i = 0;
-        I <= Math.floor(minCrd.y);
-        I += 1
+    }
+    if (this.axisXtype > 1 || this.axisYtype > 1) {
+      //画原点的"0"标识
+
+      if (this.Xscale[0] === undefined) {
+        this.Xscale[0] = new PIXI.Text("", this.scaleFont);
+        this.stage.addChild(this.Xscale[0]);
+      }
+
+      //更改文字 移动
+      this.Xscale[0].text = "0";
+      this.Xscale[0].x = origin.x - this.Xscale[0].width-2;
+      this.Xscale[0].y = origin.y;
+
+      if (
+        this.Xscale[0].x < dp_Xm ||
+        this.Xscale[0].x > dp_Xn ||
+        this.Xscale[0].y < dp_Ym ||
+        this.Xscale[0].y > dp_Yn
       ) {
-        if (I == 0) {
-          continue;
-        }
-        var DPcrd_t = this.tran([0, I]);
-
-        //若Text对象不够了则新建一个作为stage的子对象之一
-        if (this.Yscale[i] === undefined) {
-          this.Yscale[i] = new PIXI.Text("", this.scaleFont);
-          this.stage.addChild(this.Yscale[i]);
-        }
-
-        //更改文字 移动
-        this.Yscale[i].text = I + "";
-        this.Yscale[i].x = origin.x - this.Yscale[i].width - 4;
-        this.Yscale[i].y = DPcrd_t[1] - this.Yscale[i].height / 2;
-
-        // 特殊情况
-        if (this.Yscale[i].x < dp_Xm) {
-          //Y轴隐藏在屏幕左方
-          this.Yscale[i].x = dp_Xm;
-        }
-        if (this.Yscale[i].x > dp_Xn - this.Yscale[i].width) {
-          //Y轴隐藏在屏幕右方
-          this.Yscale[i].x = dp_Xn - this.Yscale[i].width;
-        }
-
-        i++;
+        //原点在屏幕之外
+        this.Xscale[0].text = "";
       }
     }
   }
