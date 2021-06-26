@@ -579,6 +579,82 @@ export class canvas {
             this.processFn();
           }
           break;
+        case 9://画延长线模式
+          if (FI == -1) {
+            new obj(
+              this,
+              1,
+              5,
+              {
+                p: [
+                  new obj(this, 0, 0, {}, { pos: pos }).geometry,
+                  new obj(this, 0, 0, {}, { pos: pos }).geometry,
+                ],
+              },
+              {}
+            );
+          } else {
+            switch (this.O[FI].geometry.type) {
+              case 0: //从已有点开始画线
+                new obj(
+                  this,
+                  1,
+                  5,
+                  {
+                    p: [
+                      this.O[FI].geometry,
+                      new obj(this, 0, 0, {}, { pos: pos }).geometry,
+                    ],
+                  },
+                  {}
+                );
+                break;
+              case 1: //画线时点到线
+                new obj(
+                  this,
+                  1,
+                  5,
+                  {
+                    p: [
+                      new obj(
+                        this,
+                        0,
+                        1,
+                        { l: this.O[FI].geometry },
+                        { pos: pos }
+                      ).geometry,
+                      new obj(this, 0, 0, {}, { pos: pos }).geometry,
+                    ],
+                  },
+                  {}
+                );
+                break;
+              case 2: //画线时点到圆
+                new obj(
+                  this,
+                  1,
+                  5,
+                  {
+                    p: [
+                      new obj(
+                        this,
+                        0,
+                        2,
+                        { c: this.O[FI].geometry },
+                        { pos: pos }
+                      ).geometry,
+                      new obj(this, 0, 0, {}, { pos: pos }).geometry,
+                    ],
+                  },
+                  {}
+                );
+                break;
+              default:
+                break;
+            }
+          }
+          this.O[this.O.length - 1].geometry.beginDraw(pos);
+          break;
         default:
           break;
       }
@@ -1139,15 +1215,6 @@ export class canvas {
     }
   }
 
-  //     y
-  //     ^
-  // +-------N
-  // |*******|
-  // |*******|  > x
-  // M-------+
-
-  //[[dp_Xm, dp_Ym],[dp_Xn, dp_Yn]]
-  //  00  01   10   11
   updAxes() {
     this.axis.clear();
     var origin = this.tran([0, 0], true),

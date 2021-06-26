@@ -88,6 +88,7 @@ export class geometry {
           case 0: //线段
           case 1: //直线
           case 2: //射线
+          case 5: //延长线
             this.dfn.p[0].children.push(this);
             this.dfn.p[1].children.push(this);
             this.parents = [this.dfn.p[0], this.dfn.p[1]];
@@ -613,6 +614,47 @@ export class geometry {
             this.data.r = [-Infinity, Infinity];
             break;
 
+          case 5: //延长线
+            this.data.exist = true;
+            var x1 = this.dfn.p[0].data.x,
+              y1 = this.dfn.p[0].data.y,
+              x2 = this.dfn.p[1].data.x,
+              y2 = this.dfn.p[1].data.y;
+            if (x1 == x2) {
+              if (y1 == y2) {
+                this.data.exist = false;
+              } else {
+                this.data.exist = true;
+                this.data.a = 0;
+                this.data.b = x1;
+                this.data.c = 1;
+                this.data.d = 0;
+                this.cache.p = [y1, y2];
+                if (y1 < y2) {
+                  this.data.r = [y2, Infinity];
+                  this.data.dr = 1;
+                } else {
+                  this.data.r = [-Infinity, y2];
+                  this.data.dr = -1;
+                }
+              }
+            } else {
+              this.data.exist = true;
+              this.data.a = 1;
+              this.data.b = 0;
+              this.data.c = (y1 - y2) / (x1 - x2);
+              this.data.d = y1 - this.data.c * x1;
+              this.cache.p = [x1, x2];
+              if (x1 < x2) {
+                this.data.r = [x2, Infinity];
+                this.data.dr = 1;
+              } else {
+                this.data.r = [-Infinity, x2];
+                this.data.dr = -1;
+              }
+            }
+            break;
+
           default:
             break;
         }
@@ -653,6 +695,7 @@ export class geometry {
           case 0:
           case 1:
           case 2:
+          case 5:
             this.dfn.p[1].beginDrag(pos);
             this.dfn.p[1].initializing = true;
             break;
@@ -716,6 +759,7 @@ export class geometry {
           case 2:
           case 3:
           case 4:
+          case 5:
             this.beginMove(pos);
             break;
 
@@ -787,6 +831,7 @@ export class geometry {
           case 0:
           case 1:
           case 2:
+          case 5:
             // console.log("object");
             this.dfn.p[0].beginMove(pos);
             this.dfn.p[1].beginMove(pos);
@@ -858,6 +903,7 @@ export class geometry {
           case 2:
           case 3:
           case 4:
+          case 5:
             this.updMove(pos);
             break;
 
@@ -926,6 +972,7 @@ export class geometry {
           case 0:
           case 1:
           case 2:
+          case 5:
             // console.log("geometry updMove 1.0/1/2");
             this.dfn.p[0].updMove(pos);
             this.dfn.p[1].updMove(pos);
@@ -1100,6 +1147,7 @@ export class geometry {
 
           case 3:
           case 4:
+          case 5:
             var t = (this.cache.p[1] - this.cache.p[0]) * 2 + this.cache.p[0];
             break;
 
