@@ -1,5 +1,5 @@
-import { pObj } from "./pObj.js";
-import { haveEqualIndex } from "./util.js";
+import { pObj } from "../pObj.js";
+import { haveEqualIndex } from "../util.js";
 
 export class geometry {
   constructor(type, dfnType, dfn, initData, obj) {

@@ -1,4 +1,4 @@
-import { geometry } from "./geometry.js";
+import { geometry } from "./geometry/geometry.js";
 import { GFD } from "./GFD.js";
 import { IAA } from "./IAA.js";
 import { generateName } from "./util.js";
