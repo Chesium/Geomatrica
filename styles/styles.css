@@ -83,6 +83,7 @@ body {
 }
 .graphic-tag {
   user-select: none;
+  pointer-events: none;
 }
 #button-1 {
   background-image: url("../assets/move.svg");
