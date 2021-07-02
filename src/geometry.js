@@ -3,20 +3,8 @@ import { haveEqualIndex } from "./util.js";
 
 export class geometry {
   constructor(type, dfnType, dfn, initData, obj) {
-    this.type = type;
-    this.dfnType = dfnType;
-    this.dfn = { ...dfn };
     this.obj = obj;
-    this.data = { exist: false };
-    this.cache = {};
-    this.parents = [];
-    this.children = [];
-    this.seqI = 0;
-    // this.exist = false;
-    this.initializing = false;
-
-    this.init(initData);
-    // console.log(this);
+    this.define(type, dfnType, dfn, initData);
   }
   init(initData) {
     switch (this.type) {
@@ -128,6 +116,21 @@ export class geometry {
       this.cache.following = false;
     }
   }
+  define(type, dfnType, dfn, initData) {
+    this.type = type;
+    this.dfnType = dfnType;
+    this.dfn = { ...dfn };
+    this.data = { exist: false };
+    this.cache = {};
+    this.parents = [];
+    if (this.children == undefined) {
+      this.children = [];
+    }
+    this.seqI = 0;
+    this.initializing = false;
+
+    this.init(initData);
+  }
   calcData() {
     for (var i in this.parents) {
       //如果对象的某一父对象不存在，那它自己也不存在
@@ -162,8 +165,7 @@ export class geometry {
               console.log("ERROR in calcData:the line doesn't exist.");
               return;
             }
-            var t =
-              (a * (this.data.x - b) + c * (this.data.y - d)) / (a * a + c * c);
+            var t = (a * (this.data.x - b) + c * (this.data.y - d)) / (a * a + c * c);
             if (t < Math.min(r[0], r[1])) {
               this.data.exist = true;
               this.data.x = a * t1 + b;
@@ -218,10 +220,8 @@ export class geometry {
               this.data.exist = false;
               return;
             }
-            var t1 =
-                (b2 * c2 - b1 * c2 + a2 * d1 - a2 * d2) / (a1 * c2 - a2 * c1),
-              t2 =
-                (b2 * c1 - b1 * c1 + a1 * d1 - a1 * d2) / (a1 * c2 - a2 * c1);
+            var t1 = (b2 * c2 - b1 * c2 + a2 * d1 - a2 * d2) / (a1 * c2 - a2 * c1),
+              t2 = (b2 * c1 - b1 * c1 + a1 * d1 - a1 * d2) / (a1 * c2 - a2 * c1);
             if (
               t1 < Math.min(r1[0], r1[1]) ||
               t1 > Math.max(r1[0], r1[1]) ||
@@ -522,15 +522,9 @@ export class geometry {
               this.data.dr = -this.dfn.l.data.dr;
 
               if (this.data.dr == 1) {
-                this.cache.p = [
-                  x + 10 / Math.sqrt(1 + k * k),
-                  x - 10 / Math.sqrt(1 + k * k),
-                ];
+                this.cache.p = [x + 10 / Math.sqrt(1 + k * k), x - 10 / Math.sqrt(1 + k * k)];
               } else {
-                this.cache.p = [
-                  x - 10 / Math.sqrt(1 + k * k),
-                  x + 10 / Math.sqrt(1 + k * k),
-                ];
+                this.cache.p = [x - 10 / Math.sqrt(1 + k * k), x + 10 / Math.sqrt(1 + k * k)];
               }
             } else {
               //[/][|]->[\][-]
@@ -560,15 +554,9 @@ export class geometry {
                 this.data.dr = this.dfn.l.data.dr;
               }
               if (this.data.dr == 1) {
-                this.cache.p = [
-                  x + 1 / Math.sqrt(1 + k * k),
-                  x - 1 / Math.sqrt(1 + k * k),
-                ];
+                this.cache.p = [x + 1 / Math.sqrt(1 + k * k), x - 1 / Math.sqrt(1 + k * k)];
               } else {
-                this.cache.p = [
-                  x - 1 / Math.sqrt(1 + k * k),
-                  x + 1 / Math.sqrt(1 + k * k),
-                ];
+                this.cache.p = [x - 1 / Math.sqrt(1 + k * k), x + 1 / Math.sqrt(1 + k * k)];
               }
             }
             this.data.r = [-Infinity, Infinity];
@@ -601,15 +589,9 @@ export class geometry {
 
             this.data.dr = this.dfn.l.data.dr;
             if (this.data.dr == 1) {
-              this.cache.p = [
-                x + 1 / Math.sqrt(1 + k * k),
-                x - 1 / Math.sqrt(1 + k * k),
-              ];
+              this.cache.p = [x + 1 / Math.sqrt(1 + k * k), x - 1 / Math.sqrt(1 + k * k)];
             } else {
-              this.cache.p = [
-                x - 1 / Math.sqrt(1 + k * k),
-                x + 1 / Math.sqrt(1 + k * k),
-              ];
+              this.cache.p = [x - 1 / Math.sqrt(1 + k * k), x + 1 / Math.sqrt(1 + k * k)];
             }
             this.data.r = [-Infinity, Infinity];
             break;
@@ -670,9 +652,7 @@ export class geometry {
             this.data.exist = true;
             this.data.x = x1;
             this.data.y = y1;
-            this.data.r = Math.sqrt(
-              (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)
-            );
+            this.data.r = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
             break;
 
           default:
@@ -1007,10 +987,7 @@ export class geometry {
   }
   preDifine() {
     for (var i in this.obj.canvas.O) {
-      if (
-        this.obj.canvas.O[i].removed ||
-        this.obj.canvas.O[i].index == this.obj.index
-      ) {
+      if (this.obj.canvas.O[i].removed || this.obj.canvas.O[i].index == this.obj.index) {
         continue;
       }
       switch (this.type) {
@@ -1025,43 +1002,20 @@ export class geometry {
               break;
 
             case 1:
-              if (
-                haveEqualIndex(
-                  this.parents,
-                  this.obj.canvas.O[i].geometry.parents
-                )
-              ) {
+              if (haveEqualIndex(this.parents, this.obj.canvas.O[i].geometry.parents)) {
                 continue;
               }
               this.obj.pObjs.push(
-                new pObj(
-                  this.obj.canvas,
-                  0,
-                  3,
-                  { l: [this, this.obj.canvas.O[i].geometry] },
-                  {}
-                )
+                new pObj(this.obj.canvas, 0, 3, { l: [this, this.obj.canvas.O[i].geometry] }, {})
               );
               break;
 
             case 2:
               this.obj.pObjs.push(
-                new pObj(
-                  this.obj.canvas,
-                  0,
-                  6,
-                  { l: this, c: this.obj.canvas.O[i].geometry },
-                  {}
-                )
+                new pObj(this.obj.canvas, 0, 6, { l: this, c: this.obj.canvas.O[i].geometry }, {})
               );
               this.obj.pObjs.push(
-                new pObj(
-                  this.obj.canvas,
-                  0,
-                  7,
-                  { l: this, c: this.obj.canvas.O[i].geometry },
-                  {}
-                )
+                new pObj(this.obj.canvas, 0, 7, { l: this, c: this.obj.canvas.O[i].geometry }, {})
               );
               break;
 
@@ -1078,43 +1032,19 @@ export class geometry {
 
             case 1:
               this.obj.pObjs.push(
-                new pObj(
-                  this.obj.canvas,
-                  0,
-                  6,
-                  { l: this.obj.canvas.O[i].geometry, c: this },
-                  {}
-                )
+                new pObj(this.obj.canvas, 0, 6, { l: this.obj.canvas.O[i].geometry, c: this }, {})
               );
               this.obj.pObjs.push(
-                new pObj(
-                  this.obj.canvas,
-                  0,
-                  7,
-                  { l: this.obj.canvas.O[i].geometry, c: this },
-                  {}
-                )
+                new pObj(this.obj.canvas, 0, 7, { l: this.obj.canvas.O[i].geometry, c: this }, {})
               );
               break;
 
             case 2:
               this.obj.pObjs.push(
-                new pObj(
-                  this.obj.canvas,
-                  0,
-                  4,
-                  { c: [this, this.obj.canvas.O[i].geometry] },
-                  {}
-                )
+                new pObj(this.obj.canvas, 0, 4, { c: [this, this.obj.canvas.O[i].geometry] }, {})
               );
               this.obj.pObjs.push(
-                new pObj(
-                  this.obj.canvas,
-                  0,
-                  5,
-                  { c: [this, this.obj.canvas.O[i].geometry] },
-                  {}
-                )
+                new pObj(this.obj.canvas, 0, 5, { c: [this, this.obj.canvas.O[i].geometry] }, {})
               );
               break;
 

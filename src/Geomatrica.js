@@ -4,7 +4,6 @@ import { modeSwitch } from "./modeSwitch.js";
 var cv = new canvas();
 // console.log(cv);
 
-//////////////////////////////////////////////////////////////////////////////
 const toolbar = document.getElementById("toolbar");
 
 const adr = (str) => "../assets/" + str;
