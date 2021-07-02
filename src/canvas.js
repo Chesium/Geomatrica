@@ -269,10 +269,7 @@ export class canvas {
                   1,
                   0,
                   {
-                    p: [
-                      this.O[FI].geometry,
-                      new obj(this, 0, 0, {}, { pos: pos }).geometry,
-                    ],
+                    p: [this.O[FI].geometry, new obj(this, 0, 0, {}, { pos: pos }).geometry],
                   },
                   {}
                 );
@@ -284,13 +281,7 @@ export class canvas {
                   0,
                   {
                     p: [
-                      new obj(
-                        this,
-                        0,
-                        1,
-                        { l: this.O[FI].geometry },
-                        { pos: pos }
-                      ).geometry,
+                      new obj(this, 0, 1, { l: this.O[FI].geometry }, { pos: pos }).geometry,
                       new obj(this, 0, 0, {}, { pos: pos }).geometry,
                     ],
                   },
@@ -304,13 +295,7 @@ export class canvas {
                   0,
                   {
                     p: [
-                      new obj(
-                        this,
-                        0,
-                        2,
-                        { c: this.O[FI].geometry },
-                        { pos: pos }
-                      ).geometry,
+                      new obj(this, 0, 2, { c: this.O[FI].geometry }, { pos: pos }).geometry,
                       new obj(this, 0, 0, {}, { pos: pos }).geometry,
                     ],
                   },
@@ -363,10 +348,7 @@ export class canvas {
                   2,
                   0,
                   {
-                    p: [
-                      this.O[FI].geometry,
-                      new obj(this, 0, 0, {}, { pos: pos }).geometry,
-                    ],
+                    p: [this.O[FI].geometry, new obj(this, 0, 0, {}, { pos: pos }).geometry],
                   },
                   {}
                 );
@@ -378,13 +360,7 @@ export class canvas {
                   0,
                   {
                     p: [
-                      new obj(
-                        this,
-                        0,
-                        1,
-                        { l: this.O[FI].geometry },
-                        { pos: pos }
-                      ).geometry,
+                      new obj(this, 0, 1, { l: this.O[FI].geometry }, { pos: pos }).geometry,
                       new obj(this, 0, 0, {}, { pos: pos }).geometry,
                     ],
                   },
@@ -398,13 +374,7 @@ export class canvas {
                   0,
                   {
                     p: [
-                      new obj(
-                        this,
-                        0,
-                        2,
-                        { c: this.O[FI].geometry },
-                        { pos: pos }
-                      ).geometry,
+                      new obj(this, 0, 2, { c: this.O[FI].geometry }, { pos: pos }).geometry,
                       new obj(this, 0, 0, {}, { pos: pos }).geometry,
                     ],
                   },
@@ -439,10 +409,7 @@ export class canvas {
                   1,
                   1,
                   {
-                    p: [
-                      this.O[FI].geometry,
-                      new obj(this, 0, 0, {}, { pos: pos }).geometry,
-                    ],
+                    p: [this.O[FI].geometry, new obj(this, 0, 0, {}, { pos: pos }).geometry],
                   },
                   {}
                 );
@@ -454,13 +421,7 @@ export class canvas {
                   1,
                   {
                     p: [
-                      new obj(
-                        this,
-                        0,
-                        1,
-                        { l: this.O[FI].geometry },
-                        { pos: pos }
-                      ).geometry,
+                      new obj(this, 0, 1, { l: this.O[FI].geometry }, { pos: pos }).geometry,
                       new obj(this, 0, 0, {}, { pos: pos }).geometry,
                     ],
                   },
@@ -474,13 +435,7 @@ export class canvas {
                   1,
                   {
                     p: [
-                      new obj(
-                        this,
-                        0,
-                        2,
-                        { c: this.O[FI].geometry },
-                        { pos: pos }
-                      ).geometry,
+                      new obj(this, 0, 2, { c: this.O[FI].geometry }, { pos: pos }).geometry,
                       new obj(this, 0, 0, {}, { pos: pos }).geometry,
                     ],
                   },
@@ -515,10 +470,7 @@ export class canvas {
                   1,
                   2,
                   {
-                    p: [
-                      this.O[FI].geometry,
-                      new obj(this, 0, 0, {}, { pos: pos }).geometry,
-                    ],
+                    p: [this.O[FI].geometry, new obj(this, 0, 0, {}, { pos: pos }).geometry],
                   },
                   {}
                 );
@@ -530,13 +482,7 @@ export class canvas {
                   2,
                   {
                     p: [
-                      new obj(
-                        this,
-                        0,
-                        1,
-                        { l: this.O[FI].geometry },
-                        { pos: pos }
-                      ).geometry,
+                      new obj(this, 0, 1, { l: this.O[FI].geometry }, { pos: pos }).geometry,
                       new obj(this, 0, 0, {}, { pos: pos }).geometry,
                     ],
                   },
@@ -550,13 +496,7 @@ export class canvas {
                   2,
                   {
                     p: [
-                      new obj(
-                        this,
-                        0,
-                        2,
-                        { c: this.O[FI].geometry },
-                        { pos: pos }
-                      ).geometry,
+                      new obj(this, 0, 2, { c: this.O[FI].geometry }, { pos: pos }).geometry,
                       new obj(this, 0, 0, {}, { pos: pos }).geometry,
                     ],
                   },
@@ -579,7 +519,7 @@ export class canvas {
             this.processFn();
           }
           break;
-        case 9://画延长线模式
+        case 9: //画延长线模式
           if (FI == -1) {
             new obj(
               this,
@@ -601,10 +541,7 @@ export class canvas {
                   1,
                   5,
                   {
-                    p: [
-                      this.O[FI].geometry,
-                      new obj(this, 0, 0, {}, { pos: pos }).geometry,
-                    ],
+                    p: [this.O[FI].geometry, new obj(this, 0, 0, {}, { pos: pos }).geometry],
                   },
                   {}
                 );
@@ -616,13 +553,7 @@ export class canvas {
                   5,
                   {
                     p: [
-                      new obj(
-                        this,
-                        0,
-                        1,
-                        { l: this.O[FI].geometry },
-                        { pos: pos }
-                      ).geometry,
+                      new obj(this, 0, 1, { l: this.O[FI].geometry }, { pos: pos }).geometry,
                       new obj(this, 0, 0, {}, { pos: pos }).geometry,
                     ],
                   },
@@ -636,13 +567,7 @@ export class canvas {
                   5,
                   {
                     p: [
-                      new obj(
-                        this,
-                        0,
-                        2,
-                        { c: this.O[FI].geometry },
-                        { pos: pos }
-                      ).geometry,
+                      new obj(this, 0, 2, { c: this.O[FI].geometry }, { pos: pos }).geometry,
                       new obj(this, 0, 0, {}, { pos: pos }).geometry,
                     ],
                   },
@@ -725,41 +650,28 @@ export class canvas {
           });
           // console.log(`FI:${FI}`);
           if (FI != -1) {
-            var stickP;
             switch (this.O[FI].geometry.type) {
               case 0: //在点上松手
-                stickP = this.O[FI].geometry;
+                var stickP = this.O[FI].geometry;
+                stickP.children.push(this.O[this.F].geometry.children[0]);
+                this.O[this.F].geometry.children[0].parents.pop();
+                this.O[this.F].geometry.children[0].parents.push(stickP);
+                this.O[this.F].geometry.children[0].dfn.p[1] = stickP;
+                this.O[this.F].geometry.children.pop();
+                this.O[this.F].remove();
                 break;
 
               case 1: //在线上松手
-                stickP = new obj(
-                  this,
-                  0,
-                  1,
-                  { l: this.O[FI].geometry },
-                  { pos: pos }
-                ).geometry;
+                this.O[this.F].geometry.define(0, 1, { l: this.O[FI].geometry }, { pos: pos });
                 break;
 
               case 2: //在圆上松手
-                stickP = new obj(
-                  this,
-                  0,
-                  2,
-                  { c: this.O[FI].geometry },
-                  { pos: pos }
-                ).geometry;
+                this.O[this.F].geometry.define(0, 2, { c: this.O[FI].geometry }, { pos: pos });
                 break;
 
               default:
                 break;
             }
-            stickP.children.push(this.O[this.F].geometry.children[0]);
-            this.O[this.F].geometry.children[0].parents.pop();
-            this.O[this.F].geometry.children[0].parents.push(stickP);
-            this.O[this.F].geometry.children[0].dfn.p[1] = stickP;
-            this.O[this.F].geometry.children.pop();
-            this.O[this.F].remove();
           }
         }
       }
@@ -807,10 +719,7 @@ export class canvas {
         y: -pos.y * this.tr[0] + this.tr[2],
       };
     } else {
-      return [
-        pos.x * this.tr[0] + this.tr[1],
-        -pos.y * this.tr[0] + this.tr[2],
-      ];
+      return [pos.x * this.tr[0] + this.tr[1], -pos.y * this.tr[0] + this.tr[2]];
     }
   }
 
@@ -824,10 +733,7 @@ export class canvas {
         y: -(pos.y - this.tr[2]) / this.tr[0],
       };
     } else {
-      return [
-        (pos.x - this.tr[1]) / this.tr[0],
-        -(pos.y - this.tr[2]) / this.tr[0],
-      ];
+      return [(pos.x - this.tr[1]) / this.tr[0], -(pos.y - this.tr[2]) / this.tr[0]];
     }
   }
 
@@ -927,10 +833,7 @@ export class canvas {
                           0,
                           3,
                           {
-                            l: [
-                              this.chooseObjs[0].geometry,
-                              this.chooseObjs[1].geometry,
-                            ],
+                            l: [this.chooseObjs[0].geometry, this.chooseObjs[1].geometry],
                           },
                           {}
                         );
@@ -995,10 +898,7 @@ export class canvas {
                           0,
                           4,
                           {
-                            c: [
-                              this.chooseObjs[0].geometry,
-                              this.chooseObjs[1].geometry,
-                            ],
+                            c: [this.chooseObjs[0].geometry, this.chooseObjs[1].geometry],
                           },
                           {}
                         );
@@ -1007,10 +907,7 @@ export class canvas {
                           0,
                           5,
                           {
-                            c: [
-                              this.chooseObjs[0].geometry,
-                              this.chooseObjs[1].geometry,
-                            ],
+                            c: [this.chooseObjs[0].geometry, this.chooseObjs[1].geometry],
                           },
                           {}
                         );
@@ -1228,7 +1125,7 @@ export class canvas {
     this.axis.lineStyle(this.axisStyle);
     var rsl = 1;
     var wtt = new PIXI.Text("1", this.scaleFont); //widthTestText
-    while (this.tr[0] * rsl < 1.5*(wtt.width+10)) {
+    while (this.tr[0] * rsl < 1.5 * (wtt.width + 10)) {
       if ((rsl + "")[0] == "2") {
         rsl /= 2;
         rsl *= 5;
@@ -1238,7 +1135,7 @@ export class canvas {
       wtt.text = rsl + "";
       // console.log("|-><-|移除");
     }
-    while (this.tr[0] * rsl > 5 * (wtt.width+10)) {
+    while (this.tr[0] * rsl > 5 * (wtt.width + 10)) {
       if ((rsl + "")[(rsl + "").length - 1] == "5") {
         rsl *= 2;
         rsl /= 5;
