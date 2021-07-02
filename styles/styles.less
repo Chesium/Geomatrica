@@ -101,9 +101,13 @@ body {
   transform: translateX(15px);
 }
 
-.graphic-tag {
+.graphic-tagbox {
   user-select: none;
-  pointer-events: none;
+  // pointer-events: none;
+}
+
+.graphic-tag[dragging] {
+  box-shadow: 0 0 10px 0.5px rgba(0, 0, 0, 0.2);
 }
 
 @icons: "move", "segment", "point", "circle", "line", "halfline", "intersection",
