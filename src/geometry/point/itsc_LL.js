@@ -1,4 +1,4 @@
-import geometry from "../geometry.js";
+import geometry from "../geometryBase.js";
 
 export default class itsc_LL extends geometry {
   constructor(dfn, initData, obj) {

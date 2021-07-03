@@ -1,4 +1,4 @@
-import geometry from "../geometry.js";
+import geometry from "../geometryBase.js";
 
 export class itsc_CC_1 extends geometry {
   constructor(dfn, initData, obj) {

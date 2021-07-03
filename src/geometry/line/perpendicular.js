@@ -1,5 +1,6 @@
-import geometry from "../geometry.js";
-
+import geometry from "../geometryBase.js";
+import {haveEqualIndex} from "../../util.js";
+import {pObj} from "../../pObj.js";
 export default class perpendicular extends geometry {
   constructor(dfn, initData, obj) {
     super(1, 3, dfn, initData, obj);
@@ -10,6 +11,7 @@ export default class perpendicular extends geometry {
     this.dfn.p.children.push(this);
     this.dfn.l.children.push(this);
     this.parents = [this.dfn.p, this.dfn.l];
+    this.calcData();
   }
   calcData() {
     if (this.checkHiddenParents()) {
@@ -89,6 +91,7 @@ export default class perpendicular extends geometry {
   //对于垂线，无额外beginDraw()方法
   beginDrag(pos) {
     this.beginMove(pos);
+    this.focusOnIt();
   }
   beginMove(pos) {
     this.dfn.p.beginMove(pos);

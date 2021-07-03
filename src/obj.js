@@ -1,4 +1,4 @@
-import { geometry } from "./geometry/geometry.js";
+import geometryFromType from "./geometry/Geometry.js";
 import { GFD } from "./GFD.js";
 import { IAA } from "./IAA.js";
 import { generateName } from "./util.js";
@@ -9,7 +9,7 @@ export class obj {
     this.canvas = canvas;
     this.index = canvas.O.length;
     canvas.O.push(this);
-    this.geometry = new geometry(type, dfnType, dfn, initData, this);
+    this.geometry = geometryFromType(type, dfnType, dfn, initData, this);
     this.IAA = new IAA(type, this.geometry.data, this);
     this.GFD = new GFD(type, this.geometry.data, this);
     this.removed = false;
@@ -31,7 +31,9 @@ export class obj {
 
     this.tag = new tagbox(this.refCrd, this.name, this);
 
-    this.geometry.preDifine();
+    this.geometry.preDefine();
+
+    // console.log(this);
   }
   update() {
     this.geometry.calcData();

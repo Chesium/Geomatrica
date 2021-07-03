@@ -1,4 +1,4 @@
-import { geometry } from "./geometry.js";
+import geometryFromType from "./geometry/Geometry.js";
 import { IAA } from "./IAA.js";
 import { obj } from "./obj.js";
 export class pObj {
@@ -7,7 +7,7 @@ export class pObj {
     this.canvas = canvas;
     this.index = canvas.pO.length;
     canvas.pO.push(this);
-    this.geometry = new geometry(type, dfnType, dfn, initData, this);
+    this.geometry = geometryFromType(type, dfnType, dfn, initData, this);
     this.IAA = new IAA(type, this.geometry.data, this);
     this.removed = false;
 

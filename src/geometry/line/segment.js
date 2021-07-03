@@ -1,5 +1,6 @@
-import geometry from "../geometry.js";
-
+import geometry from "../geometryBase.js";
+import { haveEqualIndex } from "../../util.js";
+import { pObj } from "../../pObj.js";
 export default class segment extends geometry {
   constructor(dfn, initData, obj) {
     super(1, 0, dfn, initData, obj);
@@ -54,22 +55,25 @@ export default class segment extends geometry {
     }
   }
   beginDraw(pos) {
+    // console.log("segment.beginDraw()");
     this.dfn.p[1].beginDrag(pos);
     this.dfn.p[1].initializing = true;
   }
   beginDrag(pos) {
     this.beginMove(pos);
+    this.focusOnIt();
   }
   beginMove(pos) {
-    // console.log("object");
+    // console.log("segment.beginMove()");
     this.dfn.p[0].beginMove(pos);
     this.dfn.p[1].beginMove(pos);
   }
   updDrag(pos) {
+    // console.log("segment.updDrag()");
     this.updMove(pos);
   }
   updMove(pos) {
-    // console.log("geometry updMove 1.0/1/2");
+    // console.log("segment.updMove()");
     this.dfn.p[0].updMove(pos);
     this.dfn.p[1].updMove(pos);
   }
@@ -110,7 +114,7 @@ export default class segment extends geometry {
     if (!this.data.exist) {
       return { x: undefined, y: undefined };
     }
-    
+
     var t = (this.cache.p[0] + this.cache.p[1]) / 2;
 
     return {

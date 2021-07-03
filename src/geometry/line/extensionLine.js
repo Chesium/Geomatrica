@@ -1,5 +1,6 @@
-import geometry from "../geometry.js";
-
+import geometry from "../geometryBase.js";
+import {haveEqualIndex} from "../../util.js";
+import {pObj} from "../../pObj.js";
 export default class line extends geometry {
   constructor(dfn, initData, obj) {
     super(1, 5, dfn, initData, obj);
@@ -61,6 +62,7 @@ export default class line extends geometry {
   }
   beginDrag(pos) {
     this.beginMove(pos);
+    this.focusOnIt();
   }
   beginMove(pos) {
     // console.log("object");

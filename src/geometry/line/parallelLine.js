@@ -1,5 +1,6 @@
-import geometry from "../geometry.js";
-
+import geometry from "../geometryBase.js";
+import {haveEqualIndex} from "../../util.js";
+import {pObj} from "../../pObj.js";
 export default class parallelLine extends geometry {
   constructor(dfn, initData, obj) {
     super(1, 4, dfn, initData, obj);
@@ -10,47 +11,49 @@ export default class parallelLine extends geometry {
     this.dfn.p.children.push(this);
     this.dfn.l.children.push(this);
     this.parents = [this.dfn.p, this.dfn.l];
+    this.calcData();
   }
   calcData() {
     if (this.checkHiddenParents()) {
       return;
     }
 
-            var x = this.dfn.p.data.x,
-              y = this.dfn.p.data.y,
-              a = this.dfn.l.data.a,
-              b = this.dfn.l.data.b,
-              c = this.dfn.l.data.c,
-              d = this.dfn.l.data.d;
+    var x = this.dfn.p.data.x,
+      y = this.dfn.p.data.y,
+      a = this.dfn.l.data.a,
+      b = this.dfn.l.data.b,
+      c = this.dfn.l.data.c,
+      d = this.dfn.l.data.d;
 
-            if (a == 0) {
-              //[|]->[|]
-              this.data.exist = true;
-              this.data.a = 0;
-              this.data.b = x;
-              this.data.c = 1;
-              this.data.d = 0;
-            } else {
-              //[/][-]->[/][-]
-              var k = c / a;
-              this.data.exist = true;
-              this.data.a = 1;
-              this.data.b = 0;
-              this.data.c = k;
-              this.data.d = y - k * x;
-            }
+    if (a == 0) {
+      //[|]->[|]
+      this.data.exist = true;
+      this.data.a = 0;
+      this.data.b = x;
+      this.data.c = 1;
+      this.data.d = 0;
+    } else {
+      //[/][-]->[/][-]
+      var k = c / a;
+      this.data.exist = true;
+      this.data.a = 1;
+      this.data.b = 0;
+      this.data.c = k;
+      this.data.d = y - k * x;
+    }
 
-            this.data.dr = this.dfn.l.data.dr;
-            if (this.data.dr == 1) {
-              this.cache.p = [x + 1 / Math.sqrt(1 + k * k), x - 1 / Math.sqrt(1 + k * k)];
-            } else {
-              this.cache.p = [x - 1 / Math.sqrt(1 + k * k), x + 1 / Math.sqrt(1 + k * k)];
-            }
-            this.data.r = [-Infinity, Infinity];
+    this.data.dr = this.dfn.l.data.dr;
+    if (this.data.dr == 1) {
+      this.cache.p = [x + 1 / Math.sqrt(1 + k * k), x - 1 / Math.sqrt(1 + k * k)];
+    } else {
+      this.cache.p = [x - 1 / Math.sqrt(1 + k * k), x + 1 / Math.sqrt(1 + k * k)];
+    }
+    this.data.r = [-Infinity, Infinity];
   }
   //对于平行线，无额外beginDraw()方法
   beginDrag(pos) {
     this.beginMove(pos);
+    this.focusOnIt();
   }
   beginMove(pos) {
     this.dfn.p.beginMove(pos);

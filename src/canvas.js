@@ -594,7 +594,7 @@ export class canvas {
         },
         true
       );
-      // console.log("status:",this.Status);
+      // console.log(`status:[${this.Status}], F:[${this.F}]`);
       switch (this.Status) {
         case 0:
           break;

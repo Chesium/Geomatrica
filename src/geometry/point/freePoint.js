@@ -1,4 +1,4 @@
-import geometry from "../geometry.js";
+import geometry from "../geometryBase.js";
 
 export default class freePoint extends geometry {
   constructor(dfn, initData, obj) {
@@ -16,6 +16,7 @@ export default class freePoint extends geometry {
     this.beginMove(pos);
   }
   beginMove(pos) {
+    // console.log("beginMove:",this.obj.index);
     this.focusOnIt();
     this.dragOffset = {
       x: this.data.x - pos.x,
@@ -26,8 +27,12 @@ export default class freePoint extends geometry {
     this.updMove(pos);
   }
   updMove(pos) {
+    // console.log(`freePoint.updMove([${pos.x},${pos.y}])`);
+    // console.log(this.dragOffset);
+    // console.log(`freePoint.move no.${this.obj.index}`);
     this.data.x = pos.x + this.dragOffset.x;
     this.data.y = pos.y + this.dragOffset.y;
+    this.obj.update();
   }
   //对于点，无额外preDefine()方法
   generateRefCrd(){

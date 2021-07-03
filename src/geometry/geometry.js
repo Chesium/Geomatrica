@@ -1,56 +1,58 @@
-export default class geometry {
-  constructor(type, dfnType, dfn, initData, obj) {
-    this.obj = obj;
-    this.define(type, dfnType, dfn, initData);
-  }
-  init(initData) {
-    this.calcData();
-    if (this.cache.following === true) {
-      this.cache.following = false;
-    }
-  }
-  define(type, dfnType, dfn, initData) {
-    this.type = type;
-    this.dfnType = dfnType;
-    this.dfn = { ...dfn };
-    this.data = { exist: false };
-    this.cache = {};
-    this.parents = [];
-    if (this.children == undefined) {
-      this.children = [];
-    }
-    this.seqI = 0;
-    this.initializing = false;
+import * as Points from "./point/Points.js";
+import * as Lines from "./line/Lines.js";
+import * as Circles from "./circle/Circles.js";
 
-    this.init(initData);
-  }
-  calcData() {}
-  beginDraw(pos) {}
-  beginDrag(pos) {}
-  beginMove(pos) {}
-  updDrag(pos) {}
-  updMove(pos) {}
-  preDefine() {}
-  generateRefCrd() {
-    if (!this.data.exist) {
-      return { x: undefined, y: undefined };
-    }
-  }
-
-  focusOnIt() {
-    this.obj.canvas.F = this.obj.index;
-    this.obj.canvas.Status = 1;
-  }
-
-  checkHiddenParents() {
-    for (var i in this.parents) {
-      if (!this.parents[i].data.exist) {
-        this.data.exist = false;
-        return true;
+export default function geometryFromType(type, dfnType, dfn, initData, obj) {
+  switch (type) {
+    case 0: //点
+      switch (dfnType) {
+        case 0:
+          return new Points.freePoint(dfn, initData, obj);
+        case 1:
+          return new Points.pointOnLine(dfn, initData, obj);
+        case 2:
+          return new Points.pointOnCircle(dfn, initData, obj);
+        case 3:
+          return new Points.itsc_LL(dfn, initData, obj);
+        case 4:
+          return new Points.itsc_CC_1(dfn, initData, obj);
+        case 5:
+          return new Points.itsc_CC_2(dfn, initData, obj);
+        case 6:
+          return new Points.itsc_LC_1(dfn, initData, obj);
+        case 7:
+          return new Points.itsc_LC_2(dfn, initData, obj);
+        default:
+          break;
       }
-    }
-    return false;
+      break;
+    case 1: //线
+      switch (dfnType) {
+        case 0:
+          return new Lines.segment(dfn, initData, obj);
+        case 1:
+          return new Lines.line(dfn, initData, obj);
+        case 2:
+          return new Lines.halfLine(dfn, initData, obj);
+        case 3:
+          return new Lines.perpendicular(dfn, initData, obj);
+        case 4:
+          return new Lines.parallelLine(dfn, initData, obj);
+        case 5:
+          return new Lines.extensionLine(dfn, initData, obj);
+        default:
+          break;
+      }
+      break;
+    case 2: //圆
+      switch (dfnType) {
+        case 0:
+          return new Circles.circle(dfn, initData, obj);
+        default:
+          break;
+      }
+      break;
+    default:
+      break;
   }
-
-  //END OF CLASS
 }

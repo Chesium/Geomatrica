@@ -1,4 +1,4 @@
-import geometry from "../geometry.js";
+import geometry from "../geometryBase.js";
 
 export default class pointOnCircle extends geometry {
   constructor(dfn, initData, obj) {
@@ -17,6 +17,8 @@ export default class pointOnCircle extends geometry {
     //Actually not real
     this.data.x = initData.pos.x;
     this.data.y = initData.pos.y;
+    this.calcData();
+    this.cache.following = false;
   }
   calcData() {
     if (this.checkHiddenParents()) {
