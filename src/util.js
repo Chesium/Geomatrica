@@ -84,7 +84,7 @@ export function generateName(type, index) {
   switch (type) {
     case 0: //point
       var name = upper[index % 26];
-      var subscript = parseInt(index / 26);
+      var subscript = parseInt(index / 26+"");
       return subscript > 0 ? name + "_{" + subscript + "}" : name;
 
     case 1: //line

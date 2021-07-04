@@ -1,3 +1,4 @@
+import * as PIXI from "../lib/pixi.js";
 import { L_DpData_To_epCrd } from "./util.js";
 import { Dfsty } from "./style.js";
 

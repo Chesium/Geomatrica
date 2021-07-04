@@ -1,3 +1,4 @@
+import * as PIXI from "../lib/pixi.js";
 PIXI.settings.SORTABLE_CHILDREN = true;
 import { canvas } from "./canvas.js";
 import { modeSwitch } from "./modeSwitch.js";

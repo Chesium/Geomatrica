@@ -1,0 +1,23 @@
+{
+  "name": "geomatrica",
+  "version": "1.0.0",
+  "description": "A Dynamic Geometry Software",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "https://chesium.github.io/Geomatrica"
+  },
+  "author": "Chesium <chesium@hotmail.com>",
+  "license": "MIT",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "katex": "^0.13.11",
+    "pixi.js": "^6.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

@@ -1,3 +1,4 @@
+const PIXI = require("pixi.js");
 const Dfsty = [
   {
     //[0]Default

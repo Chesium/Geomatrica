@@ -1,3 +1,4 @@
+const katex = require("katex");
 export class tagbox {
   constructor(refCrd, content, obj) {
     //引用传参 显示数据

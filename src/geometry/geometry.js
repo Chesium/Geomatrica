@@ -40,6 +40,12 @@ export default function geometryFromType(type, dfnType, dfn, initData, obj) {
           return new Lines.parallelLine(dfn, initData, obj);
         case 5:
           return new Lines.extensionLine(dfn, initData, obj);
+        case 6:
+          return new Lines.angleBisector_1(dfn, initData, obj);
+        case 7:
+          return new Lines.angleBisector_2(dfn, initData, obj);
+        case 8:
+          return new Lines.angleBisector_3(dfn, initData, obj);
         default:
           break;
       }

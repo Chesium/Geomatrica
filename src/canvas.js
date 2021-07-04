@@ -1,3 +1,5 @@
+// import * as PIXI from 'pixi.js';
+const PIXI = require("pixi.js");
 import { obj } from "./obj.js";
 import { getOffsetLeft, getOffsetTop, floatAdd, floatMul } from "./util.js";
 export class canvas {
@@ -9,7 +11,6 @@ export class canvas {
     resizeTo: document.querySelector("#workarea-container"),
     view: document.querySelector("#workarea"),
     backgroundColor: 0x000000,
-    backgroundAlpha: 0,
   };
   zIofT = [10, 5, 5];
   /**
@@ -512,6 +513,7 @@ export class canvas {
         case 6: //交点
         case 7: //垂线
         case 8: //平行线
+        case 10: //角平分线
           if (FI == -1) {
             this.clearChooseList();
           } else {
@@ -800,8 +802,8 @@ export class canvas {
       case 3:
       case 4:
       case 5:
+      case 9:
         break;
-
       case 6: //两对象交点
         this.processFn = () => {
           switch (this.chooseObjs.length) {
@@ -930,7 +932,6 @@ export class canvas {
           }
         };
         break;
-
       case 7: //垂线
         this.processFn = () => {
           switch (this.chooseObjs.length) {
@@ -1098,6 +1099,46 @@ export class canvas {
                   default:
                     break;
                 }
+                this.clearChooseList();
+              }
+              break;
+
+            default:
+              break;
+          }
+        };
+        break;
+      case 10: //角平分线
+        this.processFn = () => {
+          switch (this.chooseObjs.length) {
+            case 1:
+            case 2:
+              if (this.chooseObjs[this.chooseObjs.length - 1].geometry.type != 0) {
+                console.log("not supported");
+                this.chooseObjs.pop();
+              } else {
+                this.chooseObjs[this.chooseObjs.length - 1].GFD.changeStyleMode(1);
+              }
+              break;
+
+            case 3:
+              if (this.chooseObjs[2].geometry.type != 0) {
+                console.log("not supported");
+                this.chooseObjs.pop();
+              } else {
+                new obj(
+                  this,
+                  1,
+                  6,
+                  {
+                    p: [
+                      this.chooseObjs[0].geometry,
+                      this.chooseObjs[1].geometry,
+                      this.chooseObjs[2].geometry,
+                    ],
+                  },
+                  {}
+                );
                 this.clearChooseList();
               }
               break;
