@@ -97,8 +97,8 @@ export class intersection_CC_2 extends intersection {
       yM = y1 + n * (y2 - y1);
     var q = Math.sqrt(r1 * r1 - p * p) / p;
     this.exist = true;
-    this.x = xM + q * (y1 - yM);
-    this.y = yM - q * (x1 - xM);
+    this.x = xM - q * (y1 - yM);
+    this.y = yM + q * (x1 - xM);
   }
   // beginDraw见shape
   // beginDrag见shape

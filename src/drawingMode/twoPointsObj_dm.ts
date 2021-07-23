@@ -55,7 +55,7 @@ export default class twoPointsObj_dm extends drawingMode {
         var new2pObj = finalFn(canvas);
 
         var endListener = (ev: MouseEvent) => {
-          var focus = canvas.chooseByGlobalPos({ x: ev.offsetX, y: ev.offsetY });
+          var focus = canvas.chooseByPos({ x: ev.offsetX, y: ev.offsetY });
           console.log("[drawing 2P obj][mouseup] current focus:", focus);
           if (!isBlank(focus)) {
             if (focus.index == canvas.chooseObjs.point[0].index) {

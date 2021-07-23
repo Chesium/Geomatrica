@@ -69,7 +69,7 @@ export default class MousePoint extends point {
   }
 
   toPoint(): point {
-    var focus = this.canvas.chooseByGlobalPos(this.canvas.toPos(this));
+    var focus = this.canvas.chooseByPos(this.canvas.toPos(this));
     if (isBlank(focus)) {
       return new freepoint(this.canvas, this.x, this.y);
     } else {

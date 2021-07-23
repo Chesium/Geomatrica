@@ -10,29 +10,26 @@ import { toPos, floatAdd, floatMul, toPair, getOffsetLeft, getOffsetTop, isBlank
 import Mode from "./Mode";
 import { defaultStyle, focusStyle } from "./style";
 
-//画板类
+/**
+ * ## 画板
+ * 
+ * ---
+ * 所有的绘图操作都在这里进行
+ */
 export default class canvas {
   /**
    * ## PIXI对象
    * 画板所用的`PIXI.Application`对象
-   *
-   * ---
-   *
-   * @member {object}
    */
   PIXIapp: Application;
   /**
    * ## PIXI舞台
-   * 画板所用`PIXI.Application`对象的`stage`成员
+   * 就是`this.PIXIapp.stage`
    *
    * ---
-   *
    * 在`PIXI`内作为所有图形对象的父对象
+   *
    * 一般调用其`addChild()`、`removeChild()`方法
-   *
-   * ---
-   *
-   * @member {object}
    */
   stage: Container;
   /**
@@ -40,17 +37,15 @@ export default class canvas {
    * 画板中所有正式图形对象被存储在这里
    *
    * ---
-   *
-   * @member {Array}
+   * "objects"的缩写
    */
   O: shape[] = [];
   /**
    * ## 预定义图形对象列表
-   * 画板中所有预定义(predefine)图形对象被存储在这里
+   * 画板中所有预定义(predefined)图形对象被存储在这里
    *
    * ---
-   *
-   * @member {Array}
+   * "predefined objects"的缩写
    */
   pO: shape[] = [];
   /**
@@ -58,14 +53,15 @@ export default class canvas {
    * 画板中各可点击图形对象交互区域的响应序列
    *
    * ---
+   * `IAseq[0]`存储预定义对象
    *
-   * 存储IAA类(Interaction Area)
+   * `IAseq[1]`存储正式对象 `[0][0]`为点类 `[0][1]`为线类（包括圆）
+   *
    * 列表中位置越前的对象权重越高且点击时越先被判定
-   * 使用前先展开（用`.flat(Infinity)`）
    *
-   * ---
+   * 使用前先压平（用`.flat(2)`，需加ES2019列表库）
    *
-   * @member {Array}
+   * "interaction sequence"的简称
    */
   IAseq: [[shape[], shape[]], [shape[], shape[]]] = [
     [[], []],
@@ -73,32 +69,21 @@ export default class canvas {
   ];
   /**
    * ## 画板状态
-   * 区别与于mode（画板模式）的一个值
+   * 区别与于`Mode`（画板模式）、`drawingModeI`（绘图模式编号）的一个值
    *
    * ---
+   * 目前有3种可能的值:
    *
-   * 目前只有两种可能的值:
    * `1` : 空闲
+   *
    * `2` : 正在拖动图形对象
+   *
    * `3` : 正在拖动图形标签
-   *
-   * ---
-   *
-   * @member {number}
    */
   Status: number = 0;
   /**
    * ## 选中的图形对象列表
-   * 多选时选中的图形对象列表
-   *
-   * ---
-   *
-   * 对于某些模式需要同时选中多个图形对象
-   * 此时选中的图形对象存放在这里
-   *
-   * ---
-   *
-   * @member {Array}
+   * 选中的图形对象存放在这里
    */
   chooseObjs: chooseObjs = {
     all: [],
@@ -108,53 +93,38 @@ export default class canvas {
   };
   /**
    * ## 获得焦点的图形对象
-   * 目前获得焦点的图形对象在`O`（）中的索引
+   * 目前获得焦点的图形对象在`this.O`中的索引
    *
    * ---
-   *
    * 若无获得焦点的图形对象则为`-1`
    *
-   * ---
-   *
-   * @member {Array}
+   * "focus"的简称
    */
   F: number = -1;
   /**
-   * ## 绘图模式
+   * ## 绘图模式编号
    * 决定鼠标操作在画板上画的图形类型
    *
    * ---
-   *
-   * 现有7种取值:
-   * `0` : 移动图形对象
-   * `1` : 画线段(默认)
-   * `2` : 画点
-   * `3` : 画圆(圆心和圆上一点)
-   * `4` : 画直线
-   * `5` : 画射线
-   * `6` : 选中两个不为点的对象作其交点
-   *
-   * ---
-   *
-   * @member {number}
+   * 具体指当前绘图模式在`this.Mode.drawingModes`中的索引
    */
   drawingModeI: number;
-
+  /**
+   * ## 画板模式
+   * 决定能在这画板上画什么、怎么画
+   */
   Mode: Mode;
   /**
    * ## 显示边界盒
-   * 是否显示图形对象的`boundbox`（边界盒）
+   * 是否显示图形对象的`boundBox`（边界盒）
    *
    * ---
    *
-   * 判定点击时先会判断鼠标位置在哪些图形对象的边界盒内
-   * 再对照该图形对象的`bitmap`数组进一步确认
-   * 若为`true`则会在每一个图形对象后显示一个半透明的灰色矩形
-   * 标识其边界盒
+   * 判定点击时先会判断鼠标位置在哪些图形对象的边界盒内，
+   * 再对照该图形对象的`bitmap`数组进一步确认，
+   * 若为`true`则会在每一个图形对象后显示一个半透明的灰色矩形标识其边界盒
    *
-   * ---
-   *
-   * @member {boolean}
+   * 边界盒在每次鼠标按下时更新，所以会出现不准的情况
    */
   showBoundBox: boolean = true;
   /**
@@ -162,26 +132,112 @@ export default class canvas {
    * 当前画板的范围
    *
    * ---
-   *
-   * 用于在计算直线、射线等无限图形时确认显示范围
-   * 格式:`[[xmin,ymin],[xmax,ymax]]`
-   *
-   * ---
-   *
-   * @member {Array}
+   * 用于在渲染直线、射线等无限图形时确认显示范围
    */
   stageBound: rect;
-  tr: [number, number, number] = [50, 400, 400];
+  /**
+   * ## 图形渲染变换系数
+   * 指图形数据从计算用`crd`格式转为显示用`pos`数据时的变化量
+   *
+   * ---
+   * `trCoe[0]` : 放大倍数
+   *
+   * `trCoe[1]` : x坐标变化量
+   *
+   * `trCoe[2]` : y坐标变化量
+   */
+  trCoe: [number, number, number] = [50, 400, 400];
+  /**
+   * ## 根对象列表
+   * 存储所有没有父对象的对象
+   *
+   * ---
+   * 所有其他对象都是这些对象的子对象，
+   * 所以在`updAll()`中就更新这些对象就行了
+   *
+   * 目前这些对象都是`freepoint`（自由点）
+   *
+   * 今后的 固定坐标点（定值点）、自定义函数的图像也都是根对象
+   */
   rootObjs: shape[] = [];
+  /**
+   * ## 画板拖动偏移
+   * 存储画板原点位置与拖动起始位置的偏移量
+   *
+   * ---
+   * 用于处理拖动画板的操作
+   */
   dragOffset: pos = { x: 0, y: 0 };
+  /**
+   * ## 对象已用名列表
+   *
+   * ---
+   * 存储全部有对象用过的名称
+   */
   names: string[] = [];
+  /**
+   * ## 下一个默认名字的索引
+   *
+   * ---
+   * 在下一次生成默认图形对象名时作为`generateName()`的参数
+   */
   nextNameI: { [index: string]: number };
+  /**
+   * ## X坐标轴显示类型
+   *
+   * ---
+   * 目前有3种取值:
+   *
+   * `0` : 不显示
+   *
+   * `1` : 只显示轴，没有刻度
+   *
+   * `2` : 显示轴和刻度
+   */
   axisXtype: number = 2;
+  /**
+   * ## Y坐标轴显示类型
+   *
+   * ---
+   * 目前有3种取值:
+   *
+   * `0` : 不显示
+   *
+   * `1` : 只显示轴，没有刻度
+   *
+   * `2` : 显示轴和刻度
+   */
   axisYtype: number = 2;
+  /**
+   * ## 坐标轴样式
+   *
+   * ---
+   * 有4个属性:
+   *
+   * `width` : 线条宽度
+   *
+   * `color` : 线条颜色
+   *
+   * `alpha` : 线条不透明度
+   *
+   * `cap`   : 线条端点样式
+   */
   axisStyle: {
+    /**
+     * ## 线条宽度
+     */
     width: number;
+    /**
+     * ## 线条颜色
+     */
     color: number;
+    /**
+     * ## 线条不透明度
+     */
     alpha: number;
+    /**
+     * ## 线条端点样式
+     */
     cap: LINE_CAP;
   } = {
     width: 1,
@@ -189,16 +245,41 @@ export default class canvas {
     alpha: 1,
     cap: LINE_CAP.ROUND,
   };
+  /**
+   * ## X坐标轴刻度值PIXI文字列表
+   * 用于显示X坐标轴上所有刻度值的PIXI文字（`PIXI.Text`）列表
+   */
   Xscale: Text[] = [];
+  /**
+   * ## Y坐标轴刻度值PIXI文字列表
+   * 用于显示Y坐标轴上所有刻度值的PIXI文字（`PIXI.Text`）列表
+   */
   Yscale: Text[] = [];
+  /**
+   * ## 坐标轴刻度值的PIXI文字样式
+   * 用于显示坐标轴上所有刻度值的PIXI文字的样式（`PIXI.TextStyle`）
+   */
   scaleFont: TextStyle = new TextStyle({
     fontFamily: "cambria",
     fontSize: 12,
   });
+  /**
+   * ## 坐标轴的PIXI图形对象
+   * 用于显示坐标轴的PIXI图形对象（`PIXI.Graphics`）
+   */
   axis: Graphics;
-
+  /**
+   * ## 当前绘图情况
+   *
+   * ---
+   * 标识该步应执行哪些函数、之后还会出现什么情况
+   */
   currentCase: drawCase;
 
+  /**
+   * @param  {IApplicationOptions} pixiAppSetting 创建PIXI应用（`PIXI.Application`）的参数
+   * @param  {Mode} Mode 初始画板模式
+   */
   constructor(pixiAppSetting: IApplicationOptions, Mode: Mode) {
     this.PIXIapp = new Application(pixiAppSetting);
     this.Mode = Mode;
@@ -239,7 +320,7 @@ export default class canvas {
         }
       }
       var crd = this.toCrd({ x: ev.offsetX, y: ev.offsetY });
-      var focus = this.chooseByGlobalPos({ x: ev.offsetX, y: ev.offsetY });
+      var focus = this.chooseByPos({ x: ev.offsetX, y: ev.offsetY });
       console.log("[mousedown] current focus:", focus);
       console.log("[mousedown] current drawing case:", this.currentCase);
       if (this.currentCase != undefined) {
@@ -292,8 +373,8 @@ export default class canvas {
           this.O[this.F].updDrag(crd);
           break;
         case 2:
-          this.tr[1] = ev.offsetX + this.dragOffset.x;
-          this.tr[2] = ev.offsetY + this.dragOffset.y;
+          this.trCoe[1] = ev.offsetX + this.dragOffset.x;
+          this.trCoe[2] = ev.offsetY + this.dragOffset.y;
           this.updAll();
           break;
         default:
@@ -305,7 +386,7 @@ export default class canvas {
       if (this.F != -1) {
         if (this.O[this.F].initializing) {
           this.O[this.F].initializing = false;
-          var focus = this.chooseByGlobalPos({ x: ev.offsetX, y: ev.offsetY });
+          var focus = this.chooseByPos({ x: ev.offsetX, y: ev.offsetY });
           if (!isBlank(focus)) {
             switch (focus.shapeName) {
               case "point":
@@ -325,30 +406,55 @@ export default class canvas {
     });
     this.PIXIapp.view.onwheel = (ev: WheelEvent): void => {
       if (ev.deltaY < 0) {
-        this.tr[0] *= 1.1;
-        this.tr[1] = ev.offsetX + (this.tr[1] - ev.offsetX) * 1.1;
-        this.tr[2] = ev.offsetY + (this.tr[2] - ev.offsetY) * 1.1;
+        this.trCoe[0] *= 1.1;
+        this.trCoe[1] = ev.offsetX + (this.trCoe[1] - ev.offsetX) * 1.1;
+        this.trCoe[2] = ev.offsetY + (this.trCoe[2] - ev.offsetY) * 1.1;
       } else {
-        this.tr[0] /= 1.1;
-        this.tr[1] = ev.offsetX + (this.tr[1] - ev.offsetX) / 1.1;
-        this.tr[2] = ev.offsetY + (this.tr[2] - ev.offsetY) / 1.1;
+        this.trCoe[0] /= 1.1;
+        this.trCoe[1] = ev.offsetX + (this.trCoe[1] - ev.offsetX) / 1.1;
+        this.trCoe[2] = ev.offsetY + (this.trCoe[2] - ev.offsetY) / 1.1;
       }
       this.updAll();
     };
   }
-
+  /**
+   * ## 转换至显示用坐标`pos`
+   *
+   * ---
+   * 将计算用坐标`crd`转换至显示用坐标`pos`
+   *
+   * ---
+   * @param  {crd} crd
+   * @returns pos
+   */
   toPos(crd: crd): pos {
     return {
-      x: crd.x * this.tr[0] + this.tr[1],
-      y: -crd.y * this.tr[0] + this.tr[2],
+      x: crd.x * this.trCoe[0] + this.trCoe[1],
+      y: -crd.y * this.trCoe[0] + this.trCoe[2],
     };
   }
+  /**
+   * ## 转换至计算用坐标`crd`
+   *
+   * ---
+   * 将显示用坐标`pos`转换至计算用坐标`crd`
+   *
+   * ---
+   * @param  {crd} crd
+   * @returns pos
+   */
   toCrd(pos: pos): crd {
     return {
-      x: (pos.x - this.tr[1]) / this.tr[0],
-      y: -(pos.y - this.tr[2]) / this.tr[0],
+      x: (pos.x - this.trCoe[1]) / this.trCoe[0],
+      y: -(pos.y - this.trCoe[2]) / this.trCoe[0],
     };
   }
+  /**
+   * ## 更新所有对象
+   *
+   * ---
+   * @returns void
+   */
   updAll(): void {
     this.updAxes();
     for (var i in this.rootObjs) {
@@ -357,7 +463,16 @@ export default class canvas {
       }
     }
   }
-  chooseByGlobalPos(pos: pos): -1 | shape {
+  /**
+   * ## 获取选中的图形对象
+   *
+   * ---
+   * 根据显示用坐标`pos`获取选中的图形对象
+   *
+   * @param  {pos} pos
+   * @returns -1 | shape
+   */
+  chooseByPos(pos: pos): -1 | shape {
     //ABSL
     if (this.drawingModeI != 0) {
       var predefineObjs: shape[] = this.IAseq[0].flat(2);
@@ -393,6 +508,15 @@ export default class canvas {
     }
     return -1;
   }
+  /**
+   * ## 清除选中对象列表
+   *
+   * ---
+   * 还原所有选中对象的样式
+   *
+   * ---
+   * @returns void
+   */
   clearChooseList(): void {
     for (var i in this.chooseObjs.all) {
       //重置所有选中元素的样式
@@ -403,15 +527,37 @@ export default class canvas {
     this.chooseObjs.line.length = 0;
     this.chooseObjs.circle.length = 0;
   }
+  /**
+   * ## 重置选择操作
+   *
+   * ---
+   * 还原所有选中对象的样式+重置绘图情况
+   *
+   * ---
+   * @returns void
+   */
   resetChoosing(): void {
     console.log(`=====reset choosing=====`);
     this.clearChooseList();
     this.currentCase = this.Mode.drawingModes[this.drawingModeI].rootCase;
   }
+  /**
+   * ## 更改绘图模式
+   *
+   * ---
+   * @param  {number} newDrawingModeI 新绘图模式的索引（编号）
+   * @returns void
+   */
   changeDrawingMode(newDrawingModeI: number): void {
     this.drawingModeI = newDrawingModeI;
     this.resetChoosing();
   }
+  /**
+   * ## 绘制/更新坐标轴
+   *
+   * ---
+   * @returns void
+   */
   updAxes(): void {
     this.axis.clear();
     var origin = this.toPos({ x: 0, y: 0 }),
@@ -424,7 +570,7 @@ export default class canvas {
     this.axis.lineStyle(this.axisStyle);
     var rsl = 1;
     var wtt = new Text("1", this.scaleFont); //widthTestText
-    while (this.tr[0] * rsl < 1.5 * (wtt.width + 10)) {
+    while (this.trCoe[0] * rsl < 1.5 * (wtt.width + 10)) {
       if ((rsl + "")[0] == "2") {
         rsl /= 2;
         rsl *= 5;
@@ -433,7 +579,7 @@ export default class canvas {
       }
       wtt.text = rsl + "";
     }
-    while (this.tr[0] * rsl > 5 * (wtt.width + 10)) {
+    while (this.trCoe[0] * rsl > 5 * (wtt.width + 10)) {
       if ((rsl + "")[(rsl + "").length - 1] == "5") {
         rsl *= 2;
         rsl /= 5;

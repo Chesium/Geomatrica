@@ -25,21 +25,21 @@ const toolbar = document.getElementById("toolbar");
 const adr = (str: string) => "../assets/" + str;
 
 var buttons = [
-  new modeSwitch(cv, "移动", adr("move.svg"), toolbar, dm.dm_move),
-  new modeSwitch(cv, "线段", adr("segment.svg"), toolbar, dm.dm_segment),
-  new modeSwitch(cv, "画点", adr("point.svg"), toolbar, dm.dm_drawPoint),
-  new modeSwitch(cv, "画圆", adr("circle.svg"), toolbar, dm.dm_CP_circle),
-  new modeSwitch(cv, "直线", adr("line.svg"), toolbar, dm.dm_straightLine),
-  new modeSwitch(cv, "射线", adr("halfline.svg"), toolbar, dm.dm_halfLine),
-  new modeSwitch(cv, "交点", adr("intersection.svg"), toolbar, dm.dm_intersection),
-  new modeSwitch(cv, "垂线", adr("perpendicular.svg"), toolbar),
-  new modeSwitch(cv, "平行线", adr("parallel.svg"), toolbar),
-  new modeSwitch(cv, "延长线", adr("extensionLine.svg"), toolbar, dm.dm_extensionLine),
-  new modeSwitch(cv, "角平分线", adr("angleBisector.svg"), toolbar),
-  new modeSwitch(cv, "切线", adr("tangent.svg"), toolbar),
-  new modeSwitch(cv, "中垂线", adr("perpendicularBisector.svg"), toolbar),
-  new modeSwitch(cv, "中点", adr("midPoint.svg"), toolbar),
-  new modeSwitch(cv, "外接圆", adr("circumcircle.svg"), toolbar),
+  new modeSwitch(cv, adr("move.svg"), toolbar, dm.dm_move),
+  new modeSwitch(cv, adr("segment.svg"), toolbar, dm.dm_segment),
+  new modeSwitch(cv, adr("point.svg"), toolbar, dm.dm_drawPoint),
+  new modeSwitch(cv, adr("circle.svg"), toolbar, dm.dm_CP_circle),
+  new modeSwitch(cv, adr("line.svg"), toolbar, dm.dm_straightLine),
+  new modeSwitch(cv, adr("halfline.svg"), toolbar, dm.dm_halfLine),
+  new modeSwitch(cv, adr("intersection.svg"), toolbar, dm.dm_intersection),
+  new modeSwitch(cv, adr("perpendicular.svg"), toolbar),
+  new modeSwitch(cv, adr("parallel.svg"), toolbar),
+  new modeSwitch(cv, adr("extensionLine.svg"), toolbar, dm.dm_extensionLine),
+  new modeSwitch(cv, adr("angleBisector.svg"), toolbar),
+  new modeSwitch(cv, adr("tangent.svg"), toolbar),
+  new modeSwitch(cv, adr("perpendicularBisector.svg"), toolbar),
+  new modeSwitch(cv, adr("midPoint.svg"), toolbar),
+  new modeSwitch(cv, adr("circumcircle.svg"), toolbar),
 ];
 
 for (let i in buttons) {

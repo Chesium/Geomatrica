@@ -24,8 +24,8 @@ dm_move.rootCase.blank = {
   processFn: (canvas: canvas, crd: crd) => {
     canvas.resetChoosing();
     var pos = canvas.toPos(crd);
-    canvas.dragOffset.x = canvas.tr[1] - pos.x;
-    canvas.dragOffset.y = canvas.tr[2] - pos.y;
+    canvas.dragOffset.x = canvas.trCoe[1] - pos.x;
+    canvas.dragOffset.y = canvas.trCoe[2] - pos.y;
     canvas.Status = 2;
   },
 };

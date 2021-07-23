@@ -25,7 +25,7 @@ export default abstract class circle extends shape {
     }
     for (var i in this.style.line) {
       this.body.lineStyle(this.style.line[i]);
-      this.body.drawCircle(...toPair(this.canvas.toPos(this)), this.r * this.canvas.tr[0]);
+      this.body.drawCircle(...toPair(this.canvas.toPos(this)), this.r * this.canvas.trCoe[0]);
     }
   }
 
@@ -39,7 +39,7 @@ export default abstract class circle extends shape {
       color: shape.IAA_color,
       alpha: shape.IAA_alpha,
     });
-    this.interactionArea.drawCircle(...toPair(this.canvas.toPos(this)), this.r * this.canvas.tr[0]);
+    this.interactionArea.drawCircle(...toPair(this.canvas.toPos(this)), this.r * this.canvas.trCoe[0]);
 
     this.needUpdBitmap = true;
     this.needUpdBoundRect = true;

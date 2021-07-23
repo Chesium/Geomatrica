@@ -1,6 +1,10 @@
 import Mode from "../Mode";
 import * as dm from "../drawingMode/dm";
 
+/**
+ * ## 欧几里得平面几何模式
+ * 默认(现今也是唯一)的画板模式
+ */
 var Euclidean2D = new Mode("Euclidean2D", "Euclidean2D");
 
 Euclidean2D.registerDrawingMode(dm.dm_move);

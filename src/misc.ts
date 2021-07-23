@@ -1,37 +1,85 @@
 import { ILineStyleOptions } from "pixi.js";
 
+/**
+ * ## 显示用坐标
+ */
 export interface pos {
   //二维坐标
   x: number;
   y: number;
 }
-
+/**
+ * ## 计算用坐标
+ */
 export type crd = pos;
-
-export type pair = [number, number]; //另一种二维坐标 可用于扩展运算符"..."
-export type range = pair; //范围
-
+/**
+ * ## 数对
+ * 
+ * ---
+ * 另一种平面坐标 可用于扩展运算符`...`
+ */
+export type pair = [number, number];
+/**
+ * ## 范围
+ * 
+ * ---
+ * 描述一个范围
+ */
+export type range = pair;
+/**
+ * ## 线的标准显示用数据
+ * 描述一个参数方程组:
+ * 1) x=at+b
+ * 2) y=ct+d  t∈r
+ */
 export interface line {
-  //线类标准显示用数据
-  //描述一个参数方程组:
-  //1) x=at+b
-  //2) y=ct+d  t∈r
   a: number;
   b: number;
   c: number;
   d: number;
   r: pair;
 }
-
-export type rect = [pair, pair]; //矩形格式 [左下点坐标,右上点坐标]
-
+/**
+ * ## 矩形
+ * 
+ * ---
+ * 描述一个矩形
+ * 格式 : `[左下点坐标,右上点坐标]`
+ */
+export type rect = [pair, pair];
+/**
+ * ## 图形对象的样式
+ */
 export class style {
-  //对象样式格式
+  /**
+   * ## 点的样式列表
+   *
+   * ---
+   * 位置相同，互相堆叠，靠前的先渲染
+   */
   point: {
+    /**
+     * ## 直径
+     */
     radius: number;
+    /**
+     * ## 颜色
+     */
     color: number;
+    /**
+     * ## 不透明度
+     */
     alpha: number;
+    /**
+     * ## 轮廓线格式
+     */
     outline: ILineStyleOptions;
   }[];
+  /**
+   * ## 线的样式列表
+   *
+   * ---
+   * 位置相同，互相堆叠，靠前的先渲染
+   */
   line: ILineStyleOptions[];
 }
