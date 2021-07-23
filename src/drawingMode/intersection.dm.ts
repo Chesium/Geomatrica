@@ -9,7 +9,8 @@ dm_intersection.name = "draw intersection";
 dm_intersection.title = "交点";
 dm_intersection.description = "选中两对象作其交点";
 dm_intersection.rootCase = {};
-dm_intersection.rootCase.line = dm_intersection.rootCase.circle = {};
+dm_intersection.rootCase.line = {};
+dm_intersection.rootCase.circle = {};
 dm_intersection.rootCase.line.line = {
   //线-线
   // nextType: "end",
