@@ -6,13 +6,23 @@ import { Graphics, LINE_CAP } from "pixi.js";
 import { chooseObjs, drawCase } from "./drawingMode";
 import shape from "./shape";
 import { rect, pos, crd } from "./misc";
-import { toPos, floatAdd, floatMul, toPair, getOffsetLeft, getOffsetTop, isBlank, isAvailable } from "./util";
+import {
+  toPos,
+  floatAdd,
+  floatMul,
+  toPair,
+  getOffsetLeft,
+  getOffsetTop,
+  isBlank,
+  isAvailable,
+  isHTMLElement,
+} from "./util";
 import Mode from "./Mode";
 import { defaultStyle, focusStyle } from "./style";
 
 /**
  * ## 画板
- * 
+ *
  * ---
  * 所有的绘图操作都在这里进行
  */
@@ -304,7 +314,13 @@ export default class canvas {
     this.updAxes();
 
     //设置鼠标事件
-    this.PIXIapp.view.addEventListener("mousedown", (ev: MouseEvent): void => {
+    this.PIXIapp.resizeTo.addEventListener("mousedown", (ev: MouseEvent): void => {
+      if (!isHTMLElement(this.PIXIapp.resizeTo)) {
+        return;
+      }
+      if (this.Status == 3) {
+        return;
+      }
       var IAAs = this.IAseq.flat(2);
       for (var i in IAAs) {
         if (IAAs[i].removed) {
@@ -319,8 +335,20 @@ export default class canvas {
           IAAs[i].needUpdBitmap = false;
         }
       }
-      var crd = this.toCrd({ x: ev.offsetX, y: ev.offsetY });
-      var focus = this.chooseByPos({ x: ev.offsetX, y: ev.offsetY });
+      var crd = this.toCrd({
+        x: ev.pageX - this.PIXIapp.resizeTo.offsetLeft,
+        y: ev.pageY - this.PIXIapp.resizeTo.offsetTop,
+      });
+      console.log(
+        "[mousedown] pos:",
+        ev.pageX - this.PIXIapp.resizeTo.offsetLeft,
+        " ",
+        ev.pageY - this.PIXIapp.resizeTo.offsetTop
+      );
+      var focus = this.chooseByPos({
+        x: ev.pageX - this.PIXIapp.resizeTo.offsetLeft,
+        y: ev.pageY - this.PIXIapp.resizeTo.offsetTop,
+      });
       console.log("[mousedown] current focus:", focus);
       console.log("[mousedown] current drawing case:", this.currentCase);
       if (this.currentCase != undefined) {
@@ -365,28 +393,50 @@ export default class canvas {
         }
       }
     });
-    this.PIXIapp.view.addEventListener("mousemove", (ev: MouseEvent): void => {
+    this.PIXIapp.resizeTo.addEventListener("mousemove", (ev: MouseEvent): void => {
+      if (!isHTMLElement(this.PIXIapp.resizeTo)) {
+        return;
+      }
+      if (this.Status == 3) {
+        return;
+      }
       // console.log("status",this.Status);
-      var crd = this.toCrd({ x: ev.offsetX, y: ev.offsetY });
+      var crd = this.toCrd({
+        x: ev.pageX - this.PIXIapp.resizeTo.offsetLeft,
+        y: ev.pageY - this.PIXIapp.resizeTo.offsetTop,
+      });
       switch (this.Status) {
         case 1:
           this.O[this.F].updDrag(crd);
           break;
         case 2:
-          this.trCoe[1] = ev.offsetX + this.dragOffset.x;
-          this.trCoe[2] = ev.offsetY + this.dragOffset.y;
+          this.trCoe[1] = ev.pageX - this.PIXIapp.resizeTo.offsetLeft + this.dragOffset.x;
+          this.trCoe[2] = ev.pageY - this.PIXIapp.resizeTo.offsetTop + this.dragOffset.y;
           this.updAll();
+          console.log("[update drag->canvas] trcoe:", this.trCoe);
           break;
         default:
           break;
       }
     });
-    this.PIXIapp.view.addEventListener("mouseup", (ev: MouseEvent): void => {
-      var crd = this.toCrd({ x: ev.offsetX, y: ev.offsetY });
+    this.PIXIapp.resizeTo.addEventListener("mouseup", (ev: MouseEvent): void => {
+      if (!isHTMLElement(this.PIXIapp.resizeTo)) {
+        return;
+      }
+      if (this.Status == 3) {
+        return;
+      }
+      var crd = this.toCrd({
+        x: ev.pageX - this.PIXIapp.resizeTo.offsetLeft,
+        y: ev.pageY - this.PIXIapp.resizeTo.offsetTop,
+      });
       if (this.F != -1) {
         if (this.O[this.F].initializing) {
           this.O[this.F].initializing = false;
-          var focus = this.chooseByPos({ x: ev.offsetX, y: ev.offsetY });
+          var focus = this.chooseByPos({
+            x: ev.pageX - this.PIXIapp.resizeTo.offsetLeft,
+            y: ev.pageY - this.PIXIapp.resizeTo.offsetTop,
+          });
           if (!isBlank(focus)) {
             switch (focus.shapeName) {
               case "point":
@@ -404,15 +454,30 @@ export default class canvas {
       this.F = -1;
       this.Status = 0;
     });
-    this.PIXIapp.view.onwheel = (ev: WheelEvent): void => {
+    this.PIXIapp.resizeTo.onwheel = (ev: WheelEvent): void => {
+      if (!isHTMLElement(this.PIXIapp.resizeTo)) {
+        return;
+      }
       if (ev.deltaY < 0) {
         this.trCoe[0] *= 1.1;
-        this.trCoe[1] = ev.offsetX + (this.trCoe[1] - ev.offsetX) * 1.1;
-        this.trCoe[2] = ev.offsetY + (this.trCoe[2] - ev.offsetY) * 1.1;
+        this.trCoe[1] =
+          ev.pageX -
+          this.PIXIapp.resizeTo.offsetLeft +
+          (this.trCoe[1] - ev.pageX + this.PIXIapp.resizeTo.offsetLeft) * 1.1;
+        this.trCoe[2] =
+          ev.pageY -
+          this.PIXIapp.resizeTo.offsetTop +
+          (this.trCoe[2] - ev.pageY + this.PIXIapp.resizeTo.offsetTop) * 1.1;
       } else {
         this.trCoe[0] /= 1.1;
-        this.trCoe[1] = ev.offsetX + (this.trCoe[1] - ev.offsetX) / 1.1;
-        this.trCoe[2] = ev.offsetY + (this.trCoe[2] - ev.offsetY) / 1.1;
+        this.trCoe[1] =
+          ev.pageX -
+          this.PIXIapp.resizeTo.offsetLeft +
+          (this.trCoe[1] - ev.pageX + this.PIXIapp.resizeTo.offsetLeft) / 1.1;
+        this.trCoe[2] =
+          ev.pageY -
+          this.PIXIapp.resizeTo.offsetTop +
+          (this.trCoe[2] - ev.pageY + this.PIXIapp.resizeTo.offsetTop) / 1.1;
       }
       this.updAll();
     };
@@ -559,6 +624,7 @@ export default class canvas {
    * @returns void
    */
   updAxes(): void {
+    console.log("[update AXES]");
     this.axis.clear();
     var origin = this.toPos({ x: 0, y: 0 }),
       dp_Xm = this.stageBound[0][0],

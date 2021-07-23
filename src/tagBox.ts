@@ -1,6 +1,7 @@
 import shape from "./shape";
 import { pos, crd } from "./misc";
 import { render } from "katex";
+import { isHTMLElement } from "./util";
 
 export default class tagBox {
   crd: crd; //标签参照坐标
@@ -29,6 +30,7 @@ export default class tagBox {
     this.element.children[0].classList.add("graphic-tag");
     this.element.children[0].addEventListener("mousedown", (ev: MouseEvent) => {
       //只有处于移动模式时采才可拖动标签
+      console.log("tagbox:click");
       if (this.obj.canvas.Mode.drawingModes[this.obj.canvas.drawingModeI].name == "move objects") {
         this.element.children[0].setAttribute("dragging", "");
         this.dragging = true;
@@ -48,6 +50,7 @@ export default class tagBox {
       }
     });
     this.obj.canvas.PIXIapp.resizeTo.addEventListener("mouseup", () => {
+      console.log("tagbox: mouseUP status:", this.obj.canvas.Status);
       //结束拖动
       if (this.obj.canvas.Status == 3 && this.dragging) {
         this.element.children[0].removeAttribute("dragging");
@@ -74,8 +77,4 @@ export default class tagBox {
   remove(): void {
     this.element.remove();
   }
-}
-
-function isHTMLElement(resizeTo: Window | HTMLElement): resizeTo is HTMLElement {
-  return (<HTMLElement>resizeTo).appendChild !== undefined;
 }

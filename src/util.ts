@@ -167,3 +167,7 @@ export function isAvailable(
     (<(canvas: canvas, crd?: pos) => void>Case).call === undefined
   );
 }
+
+export function isHTMLElement(resizeTo: Window | HTMLElement): resizeTo is HTMLElement {
+  return (<HTMLElement>resizeTo).appendChild !== undefined;
+}
