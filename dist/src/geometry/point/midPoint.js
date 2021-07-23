@@ -1,1 +1,0 @@
-//# sourceMappingURL=midPoint.js.map

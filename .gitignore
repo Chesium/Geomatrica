@@ -1,2 +1,3 @@
-node_modules/
+*.me
 *.i.md
+node_modules

@@ -1,6 +1,13 @@
 <img src="assets/GeomatricA.svg" width=200>
 =
 
+crd: coordinate的缩写，计算用坐标
+pos: position的缩写，显示用坐标
+“拖动”指用鼠标按住对象然后拖的操作，大部分时候等价于“移动”
+“移动”指对象改变位置时与其相关的对象也随其改变位置
+
+
+
 Geomatrica 是一个类似Geogebra，开发中的动态几何软件（Dynamic Geometry Software (DGS)），目前已实现和准备实现的功能：
 
 以模式分类：

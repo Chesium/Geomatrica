@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES2019" /* target用于指定编译之后的版本目标: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'. */,
-    "module": "commonjs" /* 用来指定要使用的模块标准: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */,
-    "allowJs": true /* allowJs设置的值为true或false，用来指定是否允许编译js文件，默认是false，即不编译js文件 */,
-    "checkJs": true /* checkJs的值为true或false，用来指定是否检查和报告js文件中的错误，默认是false */,
-    "sourceMap": true /* sourceMap的值为true或false，用来指定编译时是否生成.map文件 */,
-    "outDir": "./dist" /* outDir用来指定输出文件夹，值为一个文件夹路径字符串，输出的文件都将放置在这个文件夹 */,
-    "rootDir": "./" /* 用来指定编译文件的根目录，编译器会在根目录查找入口文件，如果编译器发现以rootDir的值作为根目录查找入口文件并不会把所有文件加载进去的话会报错，但是不会停止编译 */
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "es5",
+    "allowJs": true,
+    "lib": ["DOM","ES2019"],
+    // "baseUrl": "./",
+    // "paths": {
+    //   "@types/*":["node_modules/@types/*"]
+    // }
   },
-  "include": ["./src/**/*"],
-  "exclude": ["./lib/**/*", "**/*.u.js"]
+  "files": ["./src/index.ts"]
 }
