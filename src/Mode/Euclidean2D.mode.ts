@@ -15,6 +15,8 @@ Euclidean2D.registerDrawingMode(dm.dm_straightLine);
 Euclidean2D.registerDrawingMode(dm.dm_extensionLine);
 Euclidean2D.registerDrawingMode(dm.dm_CP_circle);
 Euclidean2D.registerDrawingMode(dm.dm_intersection);
+Euclidean2D.registerDrawingMode(dm.dm_perpendicular);
+Euclidean2D.registerDrawingMode(dm.dm_parallelLine);
 
 Euclidean2D.defaultDrawingModeI = 2;
 
