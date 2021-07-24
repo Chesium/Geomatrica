@@ -1,5 +1,6 @@
 import canvas from "../../canvas";
 import { pos } from "../../misc";
+import { calcIntersectionLL, calcLineEq, substituteIntoLineEq } from "../../util";
 import line from "../line";
 import point from "../point";
 
@@ -41,45 +42,31 @@ export default class angleBisector_3P extends line {
       y2 = this.Point2.y,
       x3 = this.Point3.x,
       y3 = this.Point3.y;
+    if ((x1 == x2 && y1 == y2) || (x3 == x2 && y3 == y2)) {
+      //1 2 重合 或 3 2 重合
+      this.exist = false;
+      return;
+    }
     var l12 = Math.hypot(x1 - x2, y1 - y2), //边 12 的长度
       l32 = Math.hypot(x3 - x2, y3 - y2); //边 32 的长度
     var k1o_o3 = l12 / l32; //边1o与边o3长度之比
     var ko3_13 = 1 / (k1o_o3 + 1); //边o2与边13长度之比
-    var o_x = x3 - (x3 - x1) * ko3_13,
-      o_y = y3 - (y3 - y1) * ko3_13; //o点坐标
+    var o = {
+      x: x3 - (x3 - x1) * ko3_13,
+      y: y3 - (y3 - y1) * ko3_13,
+    };
+
+    var l = calcLineEq(this.Point2, o);
     //角平分线即为直线2o
 
-    this.exist = true;
-    if (x2 == o_x) {
-      if (y2 == o_y) {
-        this.exist = false;
-      } else {
-        this.exist = true;
-        this.a = 0;
-        this.b = x2;
-        this.c = 1;
-        this.d = 0;
-        this.refP_t = [y2, o_y];
-        if (y2 < o_y) {
-          this.dr = 1;
-        } else {
-          this.dr = -1;
-        }
-      }
-    } else {
-      this.exist = true;
-      this.a = 1;
-      this.b = 0;
-      this.c = (y2 - o_y) / (x2 - o_x);
-      this.d = y2 - this.c * x2;
-      this.refP_t = [x2, o_x];
-      if (x2 < o_x) {
-        this.dr = 1;
-      } else {
-        this.dr = -1;
-      }
-    }
-    this.r = [-Infinity, Infinity];
+    this.exist = l.exist;
+    this.a = l.a;
+    this.b = l.b;
+    this.c = l.c;
+    this.d = l.d;
+    this.r = l.r;
+    this.dr = l.dr;
+    this.refP_t = l.refP_t;
   }
   getTagCrd(): pos {
     if (!this.exist) {
@@ -124,31 +111,26 @@ export class angleBisector_2L_1 extends line {
       b2 = this.Line2.b,
       c2 = this.Line2.c,
       d2 = this.Line2.d;
-    if (a1 * c2 == a2 * c1) {
-      //两线平行 角平分线不存在
+    this.r = [-Infinity, Infinity];
+    var itsc = calcIntersectionLL(this.Line1, this.Line2);
+    if (!itsc.exist) {
       this.exist = false;
       return;
     }
     this.exist = true;
-    this.r = [-Infinity, Infinity];
+    var p = substituteIntoLineEq(itsc.t1, this.Line1),
+      p1 = substituteIntoLineEq(itsc.t1 + 1, this.Line1),
+      p2 = substituteIntoLineEq(itsc.t2 + 1, this.Line2);
 
-    var t1 = (b2 * c2 - b1 * c2 + a2 * d1 - a2 * d2) / (a1 * c2 - a2 * c1),
-      t2 = (-b1 * c1 + b2 * c1 + a1 * d1 - a1 * d2) / (a1 * c2 - a2 * c1);
-    var m = a1 * t1 + b1,
-      n = c1 * t1 + d1,
-      dnmnt = (a2 * c1 - a1 * c2) * (a2 * c1 + a1 * c2), //角平分线斜率的分母 denominator简称
-      p1_x = a1 * (t1 + this.Line1.dr) + b1,
-      p1_y = c1 * (t1 + this.Line1.dr) + d1,
-      p2_x = a2 * (t2 + this.Line2.dr) + b2,
-      p2_y = c2 * (t2 + this.Line2.dr) + d2,
-      mn_t;
+    var dnmnt = (a2 * c1 - a1 * c2) * (a2 * c1 + a1 * c2); //角平分线斜率的分母 denominator简称
+    var mn_t;
     if (dnmnt == 0) {
       //分母为零 角平分线垂直于x轴
       this.a = 0;
-      this.b = m;
+      this.b = p.x;
       this.c = 1;
       this.d = 0;
-      mn_t = n;
+      mn_t = p.y;
     } else {
       this.a = 1;
       this.b = 0;
@@ -156,35 +138,24 @@ export class angleBisector_2L_1 extends line {
         ((a1 * c2 - a2 * c1) * (a1 * a2 - c1 * c2) -
           Math.hypot(a1, c1) * Math.hypot(a2, c2) * Math.abs(a1 * c2 - a2 * c1)) /
         dnmnt;
-      this.d = n - this.c * m;
-      mn_t = m;
+      this.d = p.y - this.c * p.x;
+      mn_t = p.x;
     }
-    var p_a, p_b, p_c, p_d;
-    if (p1_x == p2_x) {
-      p_a = 0;
-      p_b = p1_x;
-      p_c = 1;
-      p_d = 0;
-    } else {
-      p_a = 1;
-      p_b = 0;
-      p_c = (p1_y - p2_y) / (p1_x - p2_x);
-      p_d = p1_y - p_c * p1_x;
-    }
-    var p_t = (-this.b * p_c + p_b * p_c + p_a * this.d - p_a * p_d) / (this.a * p_c - p_a * this.c);
-    if (p_t > mn_t) {
+    var pl=calcLineEq(p1,p2);
+    var pItsc=calcIntersectionLL(this,pl);
+    if (pItsc.t1 > mn_t) {
       this.dr = 1;
       if (dnmnt == 0) {
-        this.refP_t = [n + 1, n - 1];
+        this.refP_t = [p.y + 1, p.y - 1];
       } else {
-        this.refP_t = [m + 1 / Math.sqrt(1 + this.c * this.c), m - 1 / Math.sqrt(1 + this.c * this.c)];
+        this.refP_t = [p.x + 1 / Math.sqrt(1 + this.c * this.c), p.x - 1 / Math.sqrt(1 + this.c * this.c)];
       }
     } else {
       this.dr = -1;
       if (dnmnt == 0) {
-        this.refP_t = [n - 1, n + 1];
+        this.refP_t = [p.y - 1, p.y + 1];
       } else {
-        this.refP_t = [m - 1 / Math.sqrt(1 + this.c * this.c), m + 1 / Math.sqrt(1 + this.c * this.c)];
+        this.refP_t = [p.x - 1 / Math.sqrt(1 + this.c * this.c), p.x + 1 / Math.sqrt(1 + this.c * this.c)];
       }
     }
   }
@@ -231,31 +202,26 @@ export class angleBisector_2L_2 extends line {
       b2 = this.Line2.b,
       c2 = this.Line2.c,
       d2 = this.Line2.d;
-    if (a1 * c2 == a2 * c1) {
-      //两线平行 角平分线不存在
+    this.r = [-Infinity, Infinity];
+    var itsc = calcIntersectionLL(this.Line1, this.Line2);
+    if (!itsc.exist) {
       this.exist = false;
       return;
     }
     this.exist = true;
-    this.r = [-Infinity, Infinity];
+    var p = substituteIntoLineEq(itsc.t1, this.Line1),
+      p1 = substituteIntoLineEq(itsc.t1 + 1, this.Line1),
+      p2 = substituteIntoLineEq(itsc.t2 + 1, this.Line2);
 
-    var t1 = (b2 * c2 - b1 * c2 + a2 * d1 - a2 * d2) / (a1 * c2 - a2 * c1),
-      t2 = (-b1 * c1 + b2 * c1 + a1 * d1 - a1 * d2) / (a1 * c2 - a2 * c1);
-    var m = a1 * t1 + b1,
-      n = c1 * t1 + d1,
-      dnmnt = (a2 * c1 - a1 * c2) * (a2 * c1 + a1 * c2), //角平分线斜率的分母 denominator简称
-      p1_x = a1 * (t1 + this.Line1.dr) + b1,
-      p1_y = c1 * (t1 + this.Line1.dr) + d1,
-      p2_x = a2 * (t2 + this.Line2.dr) + b2,
-      p2_y = c2 * (t2 + this.Line2.dr) + d2,
-      mn_t;
+    var dnmnt = (a2 * c1 - a1 * c2) * (a2 * c1 + a1 * c2); //角平分线斜率的分母 denominator简称
+    var mn_t;
     if (dnmnt == 0) {
       //分母为零 角平分线垂直于x轴
       this.a = 0;
-      this.b = m;
+      this.b = p.x;
       this.c = 1;
       this.d = 0;
-      mn_t = n;
+      mn_t = p.y;
     } else {
       this.a = 1;
       this.b = 0;
@@ -263,35 +229,24 @@ export class angleBisector_2L_2 extends line {
         ((a1 * c2 - a2 * c1) * (a1 * a2 - c1 * c2) +
           Math.hypot(a1, c1) * Math.hypot(a2, c2) * Math.abs(a1 * c2 - a2 * c1)) /
         dnmnt;
-      this.d = n - this.c * m;
-      mn_t = m;
+      this.d = p.y - this.c * p.x;
+      mn_t = p.x;
     }
-    var p_a, p_b, p_c, p_d;
-    if (p1_x == p2_x) {
-      p_a = 0;
-      p_b = p1_x;
-      p_c = 1;
-      p_d = 0;
-    } else {
-      p_a = 1;
-      p_b = 0;
-      p_c = (p1_y - p2_y) / (p1_x - p2_x);
-      p_d = p1_y - p_c * p1_x;
-    }
-    var p_t = (-this.b * p_c + p_b * p_c + p_a * this.d - p_a * p_d) / (this.a * p_c - p_a * this.c);
-    if (p_t < mn_t) {
+    var pl = calcLineEq(p1, p2);
+    var pItsc = calcIntersectionLL(this, pl);
+    if (pItsc.t1 > mn_t) {
       this.dr = 1;
       if (dnmnt == 0) {
-        this.refP_t = [n + 1, n - 1];
+        this.refP_t = [p.y + 1, p.y - 1];
       } else {
-        this.refP_t = [m + 1 / Math.sqrt(1 + this.c * this.c), m - 1 / Math.sqrt(1 + this.c * this.c)];
+        this.refP_t = [p.x + 1 / Math.sqrt(1 + this.c * this.c), p.x - 1 / Math.sqrt(1 + this.c * this.c)];
       }
     } else {
       this.dr = -1;
       if (dnmnt == 0) {
-        this.refP_t = [n - 1, n + 1];
+        this.refP_t = [p.y - 1, p.y + 1];
       } else {
-        this.refP_t = [m - 1 / Math.sqrt(1 + this.c * this.c), m + 1 / Math.sqrt(1 + this.c * this.c)];
+        this.refP_t = [p.x - 1 / Math.sqrt(1 + this.c * this.c), p.x + 1 / Math.sqrt(1 + this.c * this.c)];
       }
     }
   }

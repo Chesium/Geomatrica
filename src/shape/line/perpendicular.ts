@@ -53,13 +53,11 @@ export default class perpendicular extends line {
 
       //clockwise 90°
       this.dr = this.Line.dr == 1 ? -1 : 1;
-
       if (this.dr == 1) {
         this.refP_t = [x + 10 / Math.sqrt(1 + k * k), x - 10 / Math.sqrt(1 + k * k)];
       } else {
         this.refP_t = [x - 10 / Math.sqrt(1 + k * k), x + 10 / Math.sqrt(1 + k * k)];
       }
-      //todo 这里有问题
     } else {
       //[/][|]->[\][-]
       var k = -a / c;

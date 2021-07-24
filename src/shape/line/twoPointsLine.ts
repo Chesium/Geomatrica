@@ -1,6 +1,7 @@
 import line from "../line";
 import point from "../point";
 import { pos } from "../../misc";
+import { calcLineEq } from "../../util";
 
 export default abstract class twoPointsLine extends line {
   Point1: point;
@@ -24,57 +25,47 @@ export default abstract class twoPointsLine extends line {
       y1 = this.Point1.y,
       x2 = this.Point2.x,
       y2 = this.Point2.y;
-    if (x1 == x2) {
-      if (y1 == y2) {
-        this.exist = false;
+    var l = calcLineEq(this.Point1, this.Point2);
+    this.exist = l.exist;
+    this.a = l.a;
+    this.b = l.b;
+    this.c = l.c;
+    this.d = l.d;
+    this.dr = l.dr;
+    this.refP_t = [...l.refP_t];
+    if (l.a == 0) {
+      if (y1 < y2) {
+        switch (type) {
+          case "x-x":
+            this.r = [y1, y2];
+            break;
+          case "x--":
+            this.r = [y1, Infinity];
+            break;
+          case "---":
+            this.r = [-Infinity, Infinity];
+            break;
+          case "xx-":
+            this.r = [y2, Infinity];
+            break;
+        }
       } else {
-        this.exist = true;
-        this.a = 0;
-        this.b = x1;
-        this.c = 1;
-        this.d = 0;
-        this.refP_t = [y1, y2];
-        if (y1 < y2) {
-          switch (type) {
-            case "x-x":
-              this.r = [y1, y2];
-              break;
-            case "x--":
-              this.r = [y1, Infinity];
-              break;
-            case "---":
-              this.r = [-Infinity, Infinity];
-              break;
-            case "xx-":
-              this.r = [y2, Infinity];
-              break;
-          }
-          this.dr = 1;
-        } else {
-          switch (type) {
-            case "x-x":
-              this.r = [y1, y2];
-              break;
-            case "x--":
-              this.r = [-Infinity, y1];
-              break;
-            case "---":
-              this.r = [-Infinity, Infinity];
-              break;
-            case "xx-":
-              this.r = [-Infinity, y2];
-              break;
-          }
-          this.dr = -1;
+        switch (type) {
+          case "x-x":
+            this.r = [y1, y2];
+            break;
+          case "x--":
+            this.r = [-Infinity, y1];
+            break;
+          case "---":
+            this.r = [-Infinity, Infinity];
+            break;
+          case "xx-":
+            this.r = [-Infinity, y2];
+            break;
         }
       }
     } else {
-      this.exist = true;
-      this.a = 1;
-      this.b = 0;
-      this.c = (y1 - y2) / (x1 - x2);
-      this.d = y1 - this.c * x1;
-      this.refP_t = [x1, x2];
       if (x1 < x2) {
         switch (type) {
           case "x-x":
@@ -90,7 +81,6 @@ export default abstract class twoPointsLine extends line {
             this.r = [x2, Infinity];
             break;
         }
-        this.dr = 1;
       } else {
         switch (type) {
           case "x-x":
@@ -106,7 +96,6 @@ export default abstract class twoPointsLine extends line {
             this.r = [-Infinity, x2];
             break;
         }
-        this.dr = -1;
       }
     }
   }

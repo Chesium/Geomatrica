@@ -1,6 +1,7 @@
 import intersection from "../intersection";
 import line from "../../line";
 import canvas from "../../../canvas";
+import { calcIntersectionLL, substituteIntoLineEq } from "../../../util";
 
 export default class intersection_LL extends intersection {
   Line1: line; //点在这条线上
@@ -26,35 +27,26 @@ export default class intersection_LL extends intersection {
     if (this.checkNonExistParents()) {
       return;
     }
-    var a1 = this.Line1.a,
-      b1 = this.Line1.b,
-      c1 = this.Line1.c,
-      d1 = this.Line1.d,
-      r1 = this.Line1.r,
-      a2 = this.Line2.a,
-      b2 = this.Line2.b,
-      c2 = this.Line2.c,
-      d2 = this.Line2.d,
+    var r1 = this.Line1.r,
       r2 = this.Line2.r;
-    if (a1 * c2 == a2 * c1) {
-      //两线平行无交点
+    var itsc = calcIntersectionLL(this.Line1, this.Line2);
+    if (!itsc.exist) {
       this.exist = false;
       return;
     }
-    var t1 = (b2 * c2 - b1 * c2 + a2 * d1 - a2 * d2) / (a1 * c2 - a2 * c1),
-      t2 = (b2 * c1 - b1 * c1 + a1 * d1 - a1 * d2) / (a1 * c2 - a2 * c1);
     if (
-      t1 < Math.min(r1[0], r1[1]) ||
-      t1 > Math.max(r1[0], r1[1]) ||
-      t2 < Math.min(r2[0], r2[1]) ||
-      t2 > Math.max(r2[0], r2[1])
+      itsc.t1 < Math.min(r1[0], r1[1]) ||
+      itsc.t1 > Math.max(r1[0], r1[1]) ||
+      itsc.t2 < Math.min(r2[0], r2[1]) ||
+      itsc.t2 > Math.max(r2[0], r2[1])
     ) {
       this.exist = false;
       return;
     }
     this.exist = true;
-    this.x = a1 * t1 + b1;
-    this.y = c1 * t1 + d1;
+    var crd = substituteIntoLineEq(itsc.t1, this.Line1);
+    this.x = crd.x;
+    this.y = crd.y;
   }
   // beginDraw见shape
   // beginDrag见shape

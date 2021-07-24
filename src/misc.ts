@@ -30,12 +30,15 @@ export type range = pair;
  * 1) x=at+b
  * 2) y=ct+d  t∈r
  */
-export interface line {
+export interface stdLine {
+  exist: boolean;
   a: number;
   b: number;
   c: number;
   d: number;
   r: pair;
+  dr?: -1 | 1;
+  refP_t?: pair;
 }
 /**
  * ## 矩形

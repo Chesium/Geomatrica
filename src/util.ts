@@ -1,4 +1,4 @@
-import { rect, line, pos, pair, crd } from "./misc";
+import { rect, stdLine, pos, pair, crd, range } from "./misc";
 import shape from "./shape";
 import { drawCase } from "./drawingMode";
 import canvas from "./canvas";
@@ -13,7 +13,7 @@ export function pairForm(pos: pos): pair {
   return [pos.x, pos.y];
 }
 
-export function L_DpData_To_epCrd(l: line, VF: rect): [boolean, crd, crd] {
+export function L_DpData_To_epCrd(l: stdLine, VF: rect): [boolean, crd, crd] {
   /*
    *      y
    *      ^
@@ -36,11 +36,11 @@ export function L_DpData_To_epCrd(l: line, VF: rect): [boolean, crd, crd] {
   if (l.a == 0) {
     if (l.c == 0) {
       console.log("ERROR in L_DpData_To_epCrd: the line doesn't exist.");
-      return [false, { x: 0, y: 0 }, { x: 0, y: 0 }];
+      return [false, { x: NaN, y: NaN }, { x: NaN, y: NaN }];
     }
     //[|]
     if (l.b < Xm || l.b > Xn) {
-      return [false, { x: 0, y: 0 }, { x: 0, y: 0 }];
+      return [false, { x: NaN, y: NaN }, { x: NaN, y: NaN }];
     }
     var tM: number = (Ym - l.d) / l.c,
       tN: number = (Yn - l.d) / l.c;
@@ -50,7 +50,7 @@ export function L_DpData_To_epCrd(l: line, VF: rect): [boolean, crd, crd] {
     //[-]
     // console.log("c==0", l.d, Ym, Yn);
     if (l.d < Ym || l.d > Yn) {
-      return [false, { x: 0, y: 0 }, { x: 0, y: 0 }];
+      return [false, { x: NaN, y: NaN }, { x: NaN, y: NaN }];
     }
     // console.log("access");
     var tM: number = (Xm - l.b) / l.a,
@@ -169,4 +169,61 @@ export function isAvailable(
 
 export function isHTMLElement(resizeTo: Window | HTMLElement): resizeTo is HTMLElement {
   return (<HTMLElement>resizeTo).appendChild !== undefined;
+}
+
+export function calcIntersectionLL(l1: stdLine, l2: stdLine): { exist: boolean; t1: number; t2: number } {
+  var dnmnt = l1.a * l2.c - l2.a * l1.c;
+  if (dnmnt == 0) {
+    return { exist: false, t1: NaN, t2: NaN };
+  }
+  return {
+    exist: true,
+    t1: (l2.b * l2.c - l1.b * l2.c + l2.a * l1.d - l2.a * l2.d) / dnmnt,
+    t2: (l2.b * l1.c - l1.b * l1.c + l1.a * l1.d - l1.a * l2.d) / dnmnt,
+  };
+}
+
+export function substituteIntoLineEq(t: number, l: stdLine): crd {
+  return { x: l.a * t + l.b, y: l.c * t + l.d };
+}
+
+export const allReal: range = [-Infinity, Infinity];
+
+export function calcLineEq(p1: crd, p2: crd): stdLine {
+  if (p1.x == p2.x) {
+    if (p1.y == p2.y) {
+      return {
+        exist: false,
+        a: NaN,
+        b: NaN,
+        c: NaN,
+        d: NaN,
+        r: allReal,
+        dr: 1,
+        refP_t: [NaN, NaN],
+      };
+    }
+    return {
+      exist: true,
+      a: 0,
+      b: p1.x,
+      c: 1,
+      d: 0,
+      r: allReal,
+      dr: p1.y < p2.y ? 1 : -1,
+      refP_t: [p1.y, p2.y],
+    };
+  } else {
+    var k = (p1.y - p2.y) / (p1.x - p2.x);
+    return {
+      exist: true,
+      a: 1,
+      b: 0,
+      c: k,
+      d: p1.y - k * p1.x,
+      r: allReal,
+      dr: p1.x < p2.x ? 1 : -1,
+      refP_t: [p1.x, p2.x],
+    };
+  }
 }

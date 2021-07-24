@@ -1,10 +1,11 @@
 import { Graphics, LINE_CAP } from "pixi.js";
-import { style, rect, pos, crd } from "./misc";
+import { rect, pos, crd } from "./misc";
 import { generateName } from "./util";
 import canvas from "./canvas";
 import tagBox from "./tagBox";
 import { defaultStyle } from "./style";
 import point from "./shape/point";
+import { style } from "./style";
 
 //图形对象类
 export default abstract class shape {
@@ -100,7 +101,7 @@ export default abstract class shape {
   abstract generatePointOnIt(crd: crd): point;
 
   update(): void {
-    if(this.removed){
+    if (this.removed) {
       return;
     }
     //根据对象形状层显示数据更新显示层图形、交互层图形、对象标签和子对象
@@ -260,7 +261,7 @@ export default abstract class shape {
     // this.initializing = false;
   }
   changeStyle(newStyle: style): void {
-    if(this.removed){
+    if (this.removed) {
       return;
     }
     this.style = newStyle;
