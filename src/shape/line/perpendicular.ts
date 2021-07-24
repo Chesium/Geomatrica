@@ -59,6 +59,7 @@ export default class perpendicular extends line {
       } else {
         this.refP_t = [x - 10 / Math.sqrt(1 + k * k), x + 10 / Math.sqrt(1 + k * k)];
       }
+      //todo 这里有问题
     } else {
       //[/][|]->[\][-]
       var k = -a / c;
@@ -94,7 +95,7 @@ export default class perpendicular extends line {
     }
     this.r = [-Infinity, Infinity];
   }
-  getTagCrd():pos{
+  getTagCrd(): pos {
     if (!this.exist) {
       return { x: undefined, y: undefined };
     }
