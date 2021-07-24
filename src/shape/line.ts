@@ -1,6 +1,6 @@
 import shape from "../shape";
 import { crd, range } from "../misc";
-import { L_DpData_To_epCrd, toPos, toPair } from "../util";
+import { L_DpData_To_epCrd, posForm, pairForm } from "../util";
 import point from "./point";
 import pointOnLine from "./point/pointOnShape/pointOnLine";
 
@@ -29,16 +29,16 @@ export default abstract class line extends shape {
       return;
     }
     var endPoints = L_DpData_To_epCrd(this, [
-      toPair(this.canvas.toCrd(toPos(this.canvas.stageBound[0]))),
-      toPair(this.canvas.toCrd(toPos(this.canvas.stageBound[1]))),
+      pairForm(this.canvas.toCrd(posForm(this.canvas.stageBound[0]))),
+      pairForm(this.canvas.toCrd(posForm(this.canvas.stageBound[1]))),
     ]);
     if (!endPoints[0]) {
       return;
     }
     for (var i in this.style.line) {
       this.body.lineStyle(this.style.line[i]);
-      this.body.moveTo(...toPair(this.canvas.toPos(toPos(endPoints[1]))));
-      this.body.lineTo(...toPair(this.canvas.toPos(toPos(endPoints[2]))));
+      this.body.moveTo(...pairForm(this.canvas.toPos(endPoints[1])));
+      this.body.lineTo(...pairForm(this.canvas.toPos(endPoints[2])));
     }
   }
 
@@ -48,8 +48,8 @@ export default abstract class line extends shape {
       return;
     }
     var endPoints = L_DpData_To_epCrd(this, [
-      toPair(this.canvas.toCrd(toPos(this.canvas.stageBound[0]))),
-      toPair(this.canvas.toCrd(toPos(this.canvas.stageBound[1]))),
+      pairForm(this.canvas.toCrd(posForm(this.canvas.stageBound[0]))),
+      pairForm(this.canvas.toCrd(posForm(this.canvas.stageBound[1]))),
     ]);
     if (!endPoints[0]) {
       return;
@@ -59,8 +59,8 @@ export default abstract class line extends shape {
       color: shape.IAA_color,
       alpha: shape.IAA_alpha,
     });
-    this.interactionArea.moveTo(...toPair(this.canvas.toPos(toPos(endPoints[1]))));
-    this.interactionArea.lineTo(...toPair(this.canvas.toPos(toPos(endPoints[2]))));
+    this.interactionArea.moveTo(...pairForm(this.canvas.toPos(endPoints[1])));
+    this.interactionArea.lineTo(...pairForm(this.canvas.toPos(endPoints[2])));
 
     this.needUpdBitmap = true;
     this.needUpdBoundRect = true;

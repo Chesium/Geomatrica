@@ -1,5 +1,5 @@
 import shape from "../shape";
-import { toPair } from "../util";
+import { pairForm } from "../util";
 import { crd, pos } from "../misc";
 import pointOnCircle from "./point/pointOnShape/pointOnCircle";
 import point from "./point";
@@ -25,7 +25,7 @@ export default abstract class circle extends shape {
     }
     for (var i in this.style.line) {
       this.body.lineStyle(this.style.line[i]);
-      this.body.drawCircle(...toPair(this.canvas.toPos(this)), this.r * this.canvas.trCoe[0]);
+      this.body.drawCircle(...pairForm(this.canvas.toPos(this)), this.r * this.canvas.trCoe[0]);
     }
   }
 
@@ -39,7 +39,7 @@ export default abstract class circle extends shape {
       color: shape.IAA_color,
       alpha: shape.IAA_alpha,
     });
-    this.interactionArea.drawCircle(...toPair(this.canvas.toPos(this)), this.r * this.canvas.trCoe[0]);
+    this.interactionArea.drawCircle(...pairForm(this.canvas.toPos(this)), this.r * this.canvas.trCoe[0]);
 
     this.needUpdBitmap = true;
     this.needUpdBoundRect = true;

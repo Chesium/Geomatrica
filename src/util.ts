@@ -1,28 +1,30 @@
-//     y
-//     ^
-// +-------N
-// |*******|
-// |*******|  > x
-// M-------+
-
-//  00  01   10   11
-//[[Xm, Ym],[Xn, Yn]]
-import { rect, line, pos, pair } from "./misc";
+import { rect, line, pos, pair, crd } from "./misc";
 import shape from "./shape";
 import { drawCase } from "./drawingMode";
 import canvas from "./canvas";
 
-export function toPos(pair: pair): pos {
+export function posForm(pair: pair): pos {
   //将pos对象转为pair二元组
   return { x: pair[0], y: pair[1] };
 }
 
-export function toPair(pos: pos): pair {
+export function pairForm(pos: pos): pair {
   //将pair二元组转为pos对象
   return [pos.x, pos.y];
 }
 
-export function L_DpData_To_epCrd(l: line, VF: rect): [boolean, pair, pair] {
+export function L_DpData_To_epCrd(l: line, VF: rect): [boolean, crd, crd] {
+  /*
+   *      y
+   *      ^
+   *  +-------N
+   *  |*******|
+   *  |*******|  > x
+   *  M-------+
+   *
+   *   00  01   10   11
+   * [[Xm, Ym],[Xn, Yn]]
+   */
   //根据线类的显示数据和显示区域矩形 计算 该线在该区域中的两端点位置(crd,非pos)
   //若画面中该线不可见 则返回的元组中第一个布尔值为false
   // console.log(l,VF);
@@ -34,11 +36,11 @@ export function L_DpData_To_epCrd(l: line, VF: rect): [boolean, pair, pair] {
   if (l.a == 0) {
     if (l.c == 0) {
       console.log("ERROR in L_DpData_To_epCrd: the line doesn't exist.");
-      return;
+      return [false, { x: 0, y: 0 }, { x: 0, y: 0 }];
     }
     //[|]
     if (l.b < Xm || l.b > Xn) {
-      return [false, [0, 0], [0, 0]];
+      return [false, { x: 0, y: 0 }, { x: 0, y: 0 }];
     }
     var tM: number = (Ym - l.d) / l.c,
       tN: number = (Yn - l.d) / l.c;
@@ -48,7 +50,7 @@ export function L_DpData_To_epCrd(l: line, VF: rect): [boolean, pair, pair] {
     //[-]
     // console.log("c==0", l.d, Ym, Yn);
     if (l.d < Ym || l.d > Yn) {
-      return [false, [0, 0], [0, 0]];
+      return [false, { x: 0, y: 0 }, { x: 0, y: 0 }];
     }
     // console.log("access");
     var tM: number = (Xm - l.b) / l.a,
@@ -69,14 +71,14 @@ export function L_DpData_To_epCrd(l: line, VF: rect): [boolean, pair, pair] {
       Ymn_minX_t: number = Ym_t_X < Yn_t_X ? Ym_t : Yn_t,
       Ymn_maxX_t: number = Ym_t_X > Yn_t_X ? Ym_t : Yn_t;
     if ((Ymn_minX < Xm && Ymn_maxX < Xm) || (Ymn_minX > Xn && Ymn_maxX > Xn)) {
-      return [false, [0, 0], [0, 0]];
+      return [false, { x: 0, y: 0 }, { x: 0, y: 0 }];
     }
     var tA: number = Ymn_minX > Xm ? Ymn_minX_t : Xm_t,
       tB: number = Ymn_maxX < Xn ? Ymn_maxX_t : Xn_t;
     var t1: number = Math.max(Math.min(l.r[0], l.r[1]), Math.min(tA, tB)),
       t2: number = Math.min(Math.max(l.r[0], l.r[1]), Math.max(tA, tB));
   }
-  return [true, [l.a * t1 + l.b, l.c * t1 + l.d], [l.a * t2 + l.b, l.c * t2 + l.d]];
+  return [true, { x: l.a * t1 + l.b, y: l.c * t1 + l.d }, { x: l.a * t2 + l.b, y: l.c * t2 + l.d }];
 }
 
 export function generateName(shapeName: string, index: number): string {
@@ -88,19 +90,16 @@ export function generateName(shapeName: string, index: number): string {
       var name: string = upper[index % 26];
       var subscript: number = Math.floor(index / 26);
       return subscript > 0 ? name + "_{" + subscript + "}" : name;
-
     case "line": //line
       return "l" + "_{" + (index + 1) + "}";
-
     case "circle": //circle
       return "c" + "_{" + (index + 1) + "}";
-
     default:
       break;
   }
 }
 
-export function getOffsetLeft(obj:any) {
+export function getOffsetLeft(obj: any) {
   //获取一个HTMLElement的Left位置
   var tmp: number = obj.offsetLeft;
   var node = obj.offsetParent;
@@ -111,7 +110,7 @@ export function getOffsetLeft(obj:any) {
   return tmp;
 }
 
-export function getOffsetTop(obj:any) {
+export function getOffsetTop(obj: any) {
   //获取一个HTMLElement的Top位置
   var tmp: number = obj.offsetTop;
   var node = obj.offsetParent;
@@ -159,7 +158,7 @@ export function isBlank(focus: -1 | shape): focus is -1 {
 export function isAvailable(
   Case: drawCase | ((canvas: canvas, crd?: pos) => void) | undefined
 ): Case is drawCase {
-  if(Case==undefined){
+  if (Case == undefined) {
     return false;
   }
   return (

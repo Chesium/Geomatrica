@@ -1,6 +1,42 @@
 import { LINE_CAP } from "pixi.js";
+import { ILineStyleOptions } from "pixi.js";
 
-import { style } from "./misc";
+/**
+ * ## 图形对象的样式
+ */
+export class style {
+  /**
+   * ## 点的样式列表
+   *
+   * ---
+   * 位置相同，互相堆叠，靠前的先渲染
+   */
+  point: {
+    /**
+     * ## 直径
+     */
+    radius: number;
+    /**
+     * ## 颜色
+     */
+    color: number;
+    /**
+     * ## 不透明度
+     */
+    alpha: number;
+    /**
+     * ## 轮廓线格式
+     */
+    outline: ILineStyleOptions;
+  }[];
+  /**
+   * ## 线的样式列表
+   *
+   * ---
+   * 位置相同，互相堆叠，靠前的先渲染
+   */
+  line: ILineStyleOptions[];
+}
 
 var defaultStyle: style = {
   point: [

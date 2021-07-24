@@ -7,10 +7,10 @@ import { chooseObjs, drawCase } from "./drawingMode";
 import shape from "./shape";
 import { rect, pos, crd } from "./misc";
 import {
-  toPos,
+  posForm,
   floatAdd,
   floatMul,
-  toPair,
+  pairForm,
   getOffsetLeft,
   getOffsetTop,
   isBlank,
@@ -631,8 +631,8 @@ export default class canvas {
       dp_Ym = this.stageBound[0][1],
       dp_Xn = this.stageBound[1][0],
       dp_Yn = this.stageBound[1][1],
-      minCrd = this.toCrd(toPos(this.stageBound[0])),
-      maxCrd = this.toCrd(toPos(this.stageBound[1]));
+      minCrd = this.toCrd(posForm(this.stageBound[0])),
+      maxCrd = this.toCrd(posForm(this.stageBound[1]));
     this.axis.lineStyle(this.axisStyle);
     var rsl = 1;
     var wtt = new Text("1", this.scaleFont); //widthTestText
@@ -677,7 +677,7 @@ export default class canvas {
               continue;
             }
             var DPcrd_t = this.toPos({ x: I, y: 0 });
-            this.axis.moveTo(...toPair(DPcrd_t));
+            this.axis.moveTo(...pairForm(DPcrd_t));
             this.axis.lineTo(DPcrd_t.x, origin.y + 3);
           }
         }
@@ -746,7 +746,7 @@ export default class canvas {
               continue;
             }
             var DPcrd_t = this.toPos({ x: 0, y: I });
-            this.axis.moveTo(...toPair(DPcrd_t));
+            this.axis.moveTo(...pairForm(DPcrd_t));
             this.axis.lineTo(origin.x - 3, DPcrd_t.y);
           }
         }

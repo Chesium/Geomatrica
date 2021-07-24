@@ -1,6 +1,6 @@
 import shape from "../shape";
 import { crd, pos } from "../misc";
-import { toPair } from "../util";
+import { pairForm } from "../util";
 
 export default abstract class point extends shape {
   static readonly IAA_radius = 15;
@@ -24,7 +24,7 @@ export default abstract class point extends shape {
     for (var i in this.style.point) {
       this.body.beginFill(this.style.point[i].color, this.style.point[i].alpha);
       this.body.lineStyle(this.style.point[i].outline);
-      this.body.drawCircle(...toPair(this.canvas.toPos(this)), this.style.point[i].radius);
+      this.body.drawCircle(...pairForm(this.canvas.toPos(this)), this.style.point[i].radius);
     }
   }
 
@@ -34,7 +34,7 @@ export default abstract class point extends shape {
       return;
     }
     this.interactionArea.beginFill(shape.IAA_color, shape.IAA_alpha);
-    this.interactionArea.drawCircle(...toPair(this.canvas.toPos(this)), point.IAA_radius);
+    this.interactionArea.drawCircle(...pairForm(this.canvas.toPos(this)), point.IAA_radius);
 
     this.needUpdBitmap = true;
     this.needUpdBoundRect = true;
