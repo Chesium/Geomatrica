@@ -6,6 +6,14 @@ pos: position的缩写，显示用坐标
 “拖动”指用鼠标按住对象然后拖的操作，大部分时候等价于“移动”
 “移动”指对象改变位置时与其相关的对象也随其改变位置
 
+添加功能的步骤:
+
+1. 写shape
+2. 写drawingMode
+3. 将drawingMode添至dm.ts
+4. 在Mode里注册drawingMode
+5. 在index.ts中添加按钮
+
 
 
 Geomatrica 是一个类似Geogebra，开发中的动态几何软件（Dynamic Geometry Software (DGS)），目前已实现和准备实现的功能：
@@ -13,6 +21,7 @@ Geomatrica 是一个类似Geogebra，开发中的动态几何软件（Dynamic Ge
 以模式分类：
 
 ## mode 0 - 拖动
+
 - [x] 可任意拖动自由点，其所有子对象随着改变位置
 - [x] 拖动在线、圆上的半自由点时让其沿轨迹运动，做出动点的效果（不断计算离光标最近的位置）
 - [x] 可拖动线和圆，这等价于递归拖动其所有父对象，其所有子对象也随着改变位置

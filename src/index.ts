@@ -38,7 +38,7 @@ var buttons = [
   new modeSwitch(cv, adr("angleBisector.svg"), toolbar),
   new modeSwitch(cv, adr("tangent.svg"), toolbar),
   new modeSwitch(cv, adr("perpendicularBisector.svg"), toolbar),
-  new modeSwitch(cv, adr("midPoint.svg"), toolbar),
+  new modeSwitch(cv, adr("midPoint.svg"), toolbar, dm.dm_midPoint),
   new modeSwitch(cv, adr("circumcircle.svg"), toolbar),
 ];
 
