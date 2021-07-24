@@ -59,12 +59,6 @@ export default abstract class circle extends shape {
     //暂时不实现
   }
 
-  backL1() {
-    delete this.x;
-    delete this.y;
-    delete this.r;
-  }
-
   generatePointOnIt(crd: crd): point {
     return new pointOnCircle(this.canvas, this, crd.x, crd.y);
   }

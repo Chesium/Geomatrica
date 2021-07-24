@@ -46,11 +46,6 @@ export default abstract class point extends shape {
     return { x: this.x, y: this.y };
   }
 
-  backL1() {
-    delete this.x;
-    delete this.y;
-  }
-
   generatePointOnIt(crd: crd): point {
     return this;
   }

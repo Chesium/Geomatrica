@@ -54,10 +54,6 @@ export default abstract class shape {
   static indexes: { [index: string]: number } = {};
 
   //================//
-  // protected static redefine(obj: shape) {}
-  // public abstract redefineTo(Shape: typeof shape): void;
-  // abstract backL2(): void;
-  abstract backL1(): void;
 
   calc(): void {} //根据定义计算形状层显示数据(定义层) 默认为空
   beginDraw(crd: crd): void {

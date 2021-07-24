@@ -70,15 +70,6 @@ export default abstract class line extends shape {
     //暂时不实现
   }
 
-  backL1() {
-    delete this.a;
-    delete this.b;
-    delete this.c;
-    delete this.d;
-    delete this.r;
-    delete this.dr;
-  }
-
   generatePointOnIt(crd: crd): point {
     return new pointOnLine(this.canvas, this, crd.x, crd.y);
   }
