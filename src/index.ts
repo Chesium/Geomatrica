@@ -35,7 +35,7 @@ var buttons = [
   new modeSwitch(cv, adr("perpendicular.svg"), toolbar, dm.dm_perpendicular),
   new modeSwitch(cv, adr("parallel.svg"), toolbar, dm.dm_parallelLine),
   new modeSwitch(cv, adr("extensionLine.svg"), toolbar, dm.dm_extensionLine),
-  new modeSwitch(cv, adr("angleBisector.svg"), toolbar),
+  new modeSwitch(cv, adr("angleBisector.svg"), toolbar,dm.dm_angleBisector),
   new modeSwitch(cv, adr("tangent.svg"), toolbar),
   new modeSwitch(cv, adr("perpendicularBisector.svg"), toolbar),
   new modeSwitch(cv, adr("midPoint.svg"), toolbar, dm.dm_midPoint),
