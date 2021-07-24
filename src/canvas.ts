@@ -136,7 +136,7 @@ export default class canvas {
    *
    * 边界盒在每次鼠标按下时更新，所以会出现不准的情况
    */
-  showBoundBox: boolean = true;
+  showBoundBox: boolean = false;
   /**
    * ## 画板区域
    * 当前画板的范围
