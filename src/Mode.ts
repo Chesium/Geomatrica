@@ -1,4 +1,5 @@
 import drawingMode from "./drawingMode";
+import obj from "./object";
 
 /**
  * ## 画板模式
@@ -29,6 +30,10 @@ export default class Mode {
    */
   drawingModes: drawingMode[] = [];
   /**
+   * ## 模式里的形状列表
+   */
+  shapes: typeof obj[] = [];
+  /**
    * ## 模式默认绘图模式(工具)索引(编号)
    * 默认绘图模式在`this.drawingModes`中的索引
    */
@@ -55,5 +60,12 @@ export default class Mode {
     }
     newDrawingMode.indexes[this.name] = this.drawingModes.length;
     this.drawingModes.push(newDrawingMode);
+  }
+  registerShape(newShape: typeof obj): void {
+    if (newShape.indexes[this.name] != undefined) {
+      return;
+    }
+    newShape.indexes[this.name] = this.shapes.length;
+    this.shapes.push(newShape);
   }
 }
