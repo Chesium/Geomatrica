@@ -5,7 +5,7 @@ import MousePoint from "../shape/point/MousePoint";
 import { crd } from "../misc";
 import twoPointsLine from "../shape/line/twoPointsLine";
 import twoPointsCircle from "../shape/circle/twoPointsCircle";
-import shape from "../shape";
+import obj from "../object";
 
 /**
  * 所有用两点构造的对象
@@ -57,7 +57,7 @@ export default class twoPointsObj_dm extends drawingMode {
         var endListener = (ev: MouseEvent) => {
           var focus = canvas.chooseByPos({ x: ev.offsetX, y: ev.offsetY });
           console.log("[drawing 2P obj][mouseup] current focus:", focus);
-          if (focus instanceof shape) {
+          if (focus instanceof obj) {
             if (focus.index == canvas.chooseObjs.point[0].index) {
               console.log("[drawing 2P obj][mouseup] the mouse still in first point -> still drawing");
               return;

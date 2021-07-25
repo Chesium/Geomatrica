@@ -1,4 +1,4 @@
-import shape from "./shape";
+import obj from "./object";
 import { pos, crd } from "./misc";
 import { render } from "katex";
 
@@ -6,12 +6,12 @@ export default class tagBox {
   crd: crd; //标签参照坐标
   offset: pos = { x: 5, y: -25 }; //将crd转为pos再加上此偏移向量即为标签坐标
   content: string; //内容 用于Katex渲染
-  obj: shape; //该标签属于的对象
+  obj: obj; //该标签属于的对象
   element: HTMLElement; //该标签对应的HTML元素
   dragging: boolean = false;
   dragPos: pos; //拖动开始时的鼠标位置
   dragBeginOffset: pos; //拖动开始时的offset
-  constructor(tagCrd: crd, content: string, obj: shape) {
+  constructor(tagCrd: crd, content: string, obj: obj) {
     //初始化
     this.crd = tagCrd;
     this.obj = obj;

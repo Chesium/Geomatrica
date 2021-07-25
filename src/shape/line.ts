@@ -1,10 +1,10 @@
-import shape from "../shape";
+import obj from "../object";
 import { crd, range } from "../misc";
 import { L_DpData_To_epCrd, posForm, pairForm } from "../util";
 import point from "./point";
 import pointOnLine from "./point/pointOnShape/pointOnLine";
 
-export default abstract class line extends shape {
+export default abstract class line extends obj {
   static readonly IAA_width = 15;
 
   a: number;
@@ -56,8 +56,8 @@ export default abstract class line extends shape {
     }
     this.interactionArea.lineStyle({
       width: line.IAA_width,
-      color: shape.IAA_color,
-      alpha: shape.IAA_alpha,
+      color: obj.IAA_color,
+      alpha: obj.IAA_alpha,
     });
     this.interactionArea.moveTo(...pairForm(this.canvas.toPos(endPoints[1])));
     this.interactionArea.lineTo(...pairForm(this.canvas.toPos(endPoints[2])));

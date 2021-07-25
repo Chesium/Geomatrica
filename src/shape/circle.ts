@@ -1,10 +1,10 @@
-import shape from "../shape";
+import obj from "../object";
 import { pairForm } from "../util";
 import { crd, pos } from "../misc";
 import pointOnCircle from "./point/pointOnShape/pointOnCircle";
 import point from "./point";
 
-export default abstract class circle extends shape {
+export default abstract class circle extends obj {
   static readonly IAA_width = 15;
 
   x: number;
@@ -36,8 +36,8 @@ export default abstract class circle extends shape {
     }
     this.interactionArea.lineStyle({
       width: circle.IAA_width,
-      color: shape.IAA_color,
-      alpha: shape.IAA_alpha,
+      color: obj.IAA_color,
+      alpha: obj.IAA_alpha,
     });
     this.interactionArea.drawCircle(...pairForm(this.canvas.toPos(this)), this.r * this.canvas.trCoe[0]);
 

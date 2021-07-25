@@ -4,7 +4,7 @@ import { Text, TextStyle } from "pixi.js";
 import { Graphics, LINE_CAP } from "pixi.js";
 
 import { chooseObjs, drawCase } from "./drawingMode";
-import shape from "./shape";
+import obj from "./object";
 import { rect, pos, crd } from "./misc";
 import {
   posForm,
@@ -48,7 +48,7 @@ export default class canvas {
    * ---
    * "objects"的缩写
    */
-  O: shape[] = [];
+  O: obj[] = [];
   /**
    * ## 预定义图形对象列表
    * 画板中所有预定义(predefined)图形对象被存储在这里
@@ -56,7 +56,7 @@ export default class canvas {
    * ---
    * "predefined objects"的缩写
    */
-  pO: shape[] = [];
+  pO: obj[] = [];
   /**
    * ## 交互区域响应序列
    * 画板中各可点击图形对象交互区域的响应序列
@@ -72,7 +72,7 @@ export default class canvas {
    *
    * "interaction sequence"的简称
    */
-  IAseq: [[shape[], shape[]], [shape[], shape[]]] = [
+  IAseq: [[obj[], obj[]], [obj[], obj[]]] = [
     [[], []],
     [[], []],
   ];
@@ -168,7 +168,7 @@ export default class canvas {
    *
    * 今后的 固定坐标点（定值点）、自定义函数的图像也都是根对象
    */
-  rootObjs: shape[] = [];
+  rootObjs: obj[] = [];
   /**
    * ## 画板拖动偏移
    * 存储画板原点位置与拖动起始位置的偏移量
@@ -369,7 +369,7 @@ export default class canvas {
       console.log("[mousedown] current focus:", focus);
       console.log("[mousedown] current drawing case:", this.currentCase);
       if (this.currentCase != undefined) {
-        if (focus instanceof shape) {
+        if (focus instanceof obj) {
           //点击了一个对象
           //处理泛形状情况
           var AnyCase = this.currentCase.any;
@@ -555,10 +555,10 @@ export default class canvas {
    * @param  {pos} pos
    * @returns -1 | shape
    */
-  chooseByPos(pos: pos): -1 | shape {
+  chooseByPos(pos: pos): -1 | obj {
     //ABSL
     if (this.drawingModeI != 0) {
-      var predefineObjs: shape[] = this.IAseq[0].flat(2);
+      var predefineObjs: obj[] = this.IAseq[0].flat(2);
       for (var i in predefineObjs) {
         if (!predefineObjs[i].removed) {
           if (

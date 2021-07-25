@@ -1,8 +1,8 @@
-import shape from "../shape";
+import obj from "../object";
 import { crd, pos } from "../misc";
 import { pairForm } from "../util";
 
-export default abstract class point extends shape {
+export default abstract class point extends obj {
   static readonly IAA_radius = 15;
 
   x: number;
@@ -33,7 +33,7 @@ export default abstract class point extends shape {
     if (this.removed || !this.exist || !this.interactive) {
       return;
     }
-    this.interactionArea.beginFill(shape.IAA_color, shape.IAA_alpha);
+    this.interactionArea.beginFill(obj.IAA_color, obj.IAA_alpha);
     this.interactionArea.drawCircle(...pairForm(this.canvas.toPos(this)), point.IAA_radius);
 
     this.needUpdBitmap = true;

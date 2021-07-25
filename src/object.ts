@@ -8,7 +8,7 @@ import point from "./shape/point";
 import { style } from "./style";
 
 //图形对象类
-export default abstract class shape {
+export default abstract class obj {
   static readonly IAA_color = 0xffffff;
   static readonly IAA_alpha = 2e-3;
 
@@ -29,10 +29,10 @@ export default abstract class shape {
   public index: number; //对象在画板中的索引 唯一
   public removed: boolean = false; //是否被移除(删除)
   public exist: boolean = false; //对象在当前定义下是否存在
-  public parents: shape[] = []; //父对象列表
-  public children: shape[] = []; //子对象列表
-  public preDefinedChildren: shape[] = []; //预定义子对象列表
-  public drawableObj: undefined | shape = undefined;
+  public parents: obj[] = []; //父对象列表
+  public children: obj[] = []; //子对象列表
+  public preDefinedChildren: obj[] = []; //预定义子对象列表
+  public drawableObj: undefined | obj = undefined;
   public interactive: boolean = true; //是否允许交互(点中)
   protected interactionArea: Graphics; //交互层PIXI图形
   public boundRect: rect = [
@@ -268,7 +268,7 @@ export default abstract class shape {
       this.bitmap[Math.floor(pos.y) - this.boundRect[0][1]][Math.floor(pos.x) - this.boundRect[0][0]] != 0
     );
   }
-  toObj<I extends shape>(this: I): I {
+  toObj<I extends obj>(this: I): I {
     if (this.preDefined) {
       this.preDefined = false;
 

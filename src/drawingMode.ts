@@ -1,4 +1,4 @@
-import shape from "./shape";
+import obj from "./object";
 import canvas from "./canvas";
 import point from "./shape/point";
 import line from "./shape/line";
@@ -13,7 +13,7 @@ export interface chooseObjs {
   /**
    * ## 所有种类的图形对象
    */
-  all: shape[];
+  all: obj[];
   /**
    * ## 形状为点的图形对象
    */
@@ -26,7 +26,7 @@ export interface chooseObjs {
    * ## 形状为圆的图形对象
    */
   circle: circle[];
-  [index: string]: shape[];
+  [index: string]: obj[];
 }
 
 /**

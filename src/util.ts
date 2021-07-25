@@ -1,5 +1,5 @@
 import { rect, stdLine, pos, pair, crd, range } from "./misc";
-import shape from "./shape";
+import obj from "./object";
 import { drawCase } from "./drawingMode";
 import canvas from "./canvas";
 
