@@ -167,10 +167,6 @@ export function isAvailable(
   );
 }
 
-export function isHTMLElement(resizeTo: Window | HTMLElement): resizeTo is HTMLElement {
-  return (<HTMLElement>resizeTo).appendChild !== undefined;
-}
-
 export function calcIntersectionLL(l1: stdLine, l2: stdLine): { exist: boolean; t1: number; t2: number } {
   var dnmnt = l1.a * l2.c - l2.a * l1.c;
   if (dnmnt == 0) {

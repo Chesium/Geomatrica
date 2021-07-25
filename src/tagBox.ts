@@ -1,7 +1,6 @@
 import shape from "./shape";
 import { pos, crd } from "./misc";
 import { render } from "katex";
-import { isHTMLElement } from "./util";
 
 export default class tagBox {
   crd: crd; //标签参照坐标
@@ -20,8 +19,7 @@ export default class tagBox {
     this.element = document.createElement("div");
     this.element.style.position = "absolute";
     this.element.classList.add("graphic-tagbox");
-    if (isHTMLElement(obj.canvas.PIXIapp.resizeTo)) {
-      //不加这个类型判断会报错
+    if (obj.canvas.PIXIapp.resizeTo instanceof HTMLElement) {
       obj.canvas.PIXIapp.resizeTo.appendChild(this.element);
     }
     //初始更新

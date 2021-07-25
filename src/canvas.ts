@@ -15,7 +15,6 @@ import {
   getOffsetTop,
   isBlank,
   isAvailable,
-  isHTMLElement,
 } from "./util";
 import Mode from "./Mode";
 import { defaultStyle, focusStyle } from "./style";
@@ -334,7 +333,7 @@ export default class canvas {
         this.justEndDrawing = false;
         return;
       }
-      if (!isHTMLElement(this.PIXIapp.resizeTo)) {
+      if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
         return;
       }
       if (this.Status == 3) {
@@ -416,7 +415,7 @@ export default class canvas {
       }
     });
     this.PIXIapp.resizeTo.addEventListener("mousemove", (ev: MouseEvent): void => {
-      if (!isHTMLElement(this.PIXIapp.resizeTo)) {
+      if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
         return;
       }
       if (this.Status == 3) {
@@ -442,7 +441,7 @@ export default class canvas {
       }
     });
     this.PIXIapp.resizeTo.addEventListener("mouseup", (ev: MouseEvent): void => {
-      if (!isHTMLElement(this.PIXIapp.resizeTo)) {
+      if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
         return;
       }
       if (this.Status == 3) {
@@ -477,7 +476,7 @@ export default class canvas {
       this.Status = 0;
     });
     this.PIXIapp.resizeTo.addEventListener("wheel", (ev: WheelEvent): void => {
-      if (!isHTMLElement(this.PIXIapp.resizeTo)) {
+      if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
         return;
       }
       if (ev.deltaY < 0) {
