@@ -11,11 +11,11 @@ import { style } from "./style";
 export default abstract class obj {
   static readonly IAA_color = 0xffffff;
   static readonly IAA_alpha = 2e-3;
-  static shapeName:string;
+  static shapeName: string;
 
   //形状层静态信息
   protected interactPriority: number; //交互优先级 越小越先
-  shape:typeof obj;
+  shape: typeof obj;
   // public shapeName: string; //形状参考名
   // public shapeI: number;
   public shapeDescription: string; //形状参考描述
@@ -91,7 +91,7 @@ export default abstract class obj {
   }
   //================//
 
-  abstract preDefine(): void; //进行预定义操作(形状层) 暂时不实现
+  abstract preDefine(): void; //进行预定义操作(形状层)
   abstract getTagCrd(): pos; //获取用于确认对象标签的坐标(形状层或定义层)
   abstract updBody(): void; //更新显示层图形 (形状层) 已完成
   abstract updInteractionArea(): void; //更新交互层图形 (形状层) 已完成
@@ -239,6 +239,7 @@ export default abstract class obj {
   }
   init_end(): void {
     //初始化(下段)
+    this.preDefine();
     this.updInteractionArea();
     if (this.preDefined) {
       this.canvas.IAseq[0][this.interactPriority].push(this);

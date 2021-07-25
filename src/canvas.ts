@@ -6,15 +6,7 @@ import { Graphics, LINE_CAP } from "pixi.js";
 import { chooseObjs, drawCase } from "./drawingMode";
 import obj from "./object";
 import { rect, pos, crd } from "./misc";
-import {
-  posForm,
-  floatAdd,
-  floatMul,
-  pairForm,
-  getOffsetLeft,
-  getOffsetTop,
-  isAvailable,
-} from "./util";
+import { posForm, floatAdd, floatMul, pairForm, getOffsetLeft, getOffsetTop, isAvailable } from "./util";
 import Mode from "./Mode";
 import { defaultStyle, focusStyle } from "./style";
 import dm_move from "./drawingMode/move.dm";

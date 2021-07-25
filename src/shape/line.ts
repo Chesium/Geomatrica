@@ -3,6 +3,20 @@ import { crd, range } from "../misc";
 import { L_DpData_To_epCrd, posForm, pairForm } from "../util";
 import point from "./point";
 import pointOnLine from "./point/pointOnShape/pointOnLine";
+import intersection_LL from "./point/intersection/intersection_LL";
+import circle from "./circle";
+import { intersection_LC_1, intersection_LC_2 } from "./point/intersection/intersection_LC";
+
+function haveEqualIndex(arr1: obj[], arr2: obj[]) {
+  for (var i = 0; i < arr2.length; i++) {
+    for (var j = 0; j < arr1.length; j++) {
+      if (arr1[j].index == arr2[i].index) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
 
 export default abstract class line extends obj {
   static readonly IAA_width = 15;
@@ -68,7 +82,22 @@ export default abstract class line extends obj {
   }
 
   preDefine(): void {
-    //暂时不实现
+    for (var i in this.canvas.O) {
+      var t: obj = this.canvas.O[i];
+      if (!t.shown || t.removed || t.index == this.index) {
+        continue;
+      }
+      if (t instanceof line) {
+        if (haveEqualIndex(this.parents, t.parents)) {
+          continue;
+        }
+        new intersection_LL(this.canvas, this, t, true);
+      }
+      if (t instanceof circle) {
+        new intersection_LC_1(this.canvas, this, t, true);
+        new intersection_LC_2(this.canvas, this, t, true);
+      }
+    }
   }
 
   generatePointOnIt(crd: crd): point {
