@@ -19,6 +19,7 @@ import {
 } from "./util";
 import Mode from "./Mode";
 import { defaultStyle, focusStyle } from "./style";
+import dm_move from "./drawingMode/move.dm";
 
 /**
  * ## 画板
@@ -285,6 +286,13 @@ export default class canvas {
    * 标识该步应执行哪些函数、之后还会出现什么情况
    */
   currentCase: drawCase;
+  /**
+   * ## 是否处于根情况
+   *
+   * ---
+   * 是否处在当前绘图模式的根情况中
+   */
+  inRootCase: boolean = true;
 
   /**
    * @param  {IApplicationOptions} pixiAppSetting 创建PIXI应用（`PIXI.Application`）的参数
@@ -360,6 +368,7 @@ export default class canvas {
           var blankCase = this.currentCase.blank;
           if (isAvailable(blankCase)) {
             this.currentCase = blankCase;
+            this.inRootCase = false;
             if (blankCase.processFn !== undefined) {
               blankCase.processFn(this, crd);
             }
@@ -371,6 +380,7 @@ export default class canvas {
           if (isAvailable(AnyCase)) {
             //匹配 进入该情况 添加该对象至选中对象列表 执行处理函数
             this.currentCase = AnyCase;
+            this.inRootCase = false;
             this.chooseObjs.all.push(focus);
             this.chooseObjs[focus.shapeName].push(focus);
             focus.changeStyle(focusStyle);
@@ -383,6 +393,7 @@ export default class canvas {
           if (isAvailable(Tcase)) {
             //匹配 进入该情况 添加该对象至选中对象列表 执行处理函数
             this.currentCase = Tcase;
+            this.inRootCase = false;
             this.chooseObjs.all.push(focus);
             this.chooseObjs[focus.shapeName].push(focus);
             focus.changeStyle(focusStyle);
@@ -454,7 +465,7 @@ export default class canvas {
       this.F = -1;
       this.Status = 0;
     });
-    this.PIXIapp.resizeTo.onwheel = (ev: WheelEvent): void => {
+    this.PIXIapp.resizeTo.addEventListener("wheel", (ev: WheelEvent): void => {
       if (!isHTMLElement(this.PIXIapp.resizeTo)) {
         return;
       }
@@ -480,7 +491,17 @@ export default class canvas {
           (this.trCoe[2] - ev.pageY + this.PIXIapp.resizeTo.offsetTop) / 1.1;
       }
       this.updAll();
-    };
+    });
+    document.addEventListener("keydown", (ev: KeyboardEvent): void => {
+      console.log("[keydown] code: ", ev.code);
+      if (ev.code == "Escape") {
+        if (this.inRootCase) {
+          this.changeDrawingMode(dm_move.indexes[this.Mode.name]);
+        } else {
+          this.resetChoosing();
+        }
+      }
+    });
   }
   /**
    * ## 转换至显示用坐标`pos`
@@ -605,6 +626,7 @@ export default class canvas {
     console.log(`=====reset choosing=====`);
     this.clearChooseList();
     this.currentCase = this.Mode.drawingModes[this.drawingModeI].rootCase;
+    this.inRootCase = true;
   }
   /**
    * ## 更改绘图模式
@@ -614,7 +636,15 @@ export default class canvas {
    * @returns void
    */
   changeDrawingMode(newDrawingModeI: number): void {
+    if (this.drawingModeI != undefined) {
+      if (this.Mode.drawingModes[this.drawingModeI].switch != undefined) {
+        this.Mode.drawingModes[this.drawingModeI].switch.element.removeAttribute("checked");
+      }
+    }
     this.drawingModeI = newDrawingModeI;
+    if (this.Mode.drawingModes[newDrawingModeI].switch != undefined) {
+      this.Mode.drawingModes[newDrawingModeI].switch.element.setAttribute("checked", "");
+    }
     this.resetChoosing();
   }
   /**

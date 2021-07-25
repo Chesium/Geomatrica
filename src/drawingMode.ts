@@ -4,6 +4,7 @@ import point from "./shape/point";
 import line from "./shape/line";
 import circle from "./shape/circle";
 import { crd } from "./misc";
+import modeSwitch from "./modeSwitch";
 
 /**
  * ## 选中对象列表格式
@@ -30,7 +31,7 @@ export interface chooseObjs {
 
 /**
  * ## 绘图情况
- * 
+ *
  * ---
  * 描述一种绘图时的情况和接下来可能进入的情况
  */
@@ -88,7 +89,7 @@ export interface drawCase {
 
 /**
  * ## 绘图模式
- * 
+ *
  * ---
  * 和按钮绑定，
  * 存储切换为此种模式后如何处理用户在画板上的各种操作，
@@ -123,11 +124,16 @@ export default class drawingMode {
    * 从其延申出其他子情况
    */
   rootCase: drawCase;
+
   /**
    * ## 绘图模式的索引/编号（们）
    * 该绘图模式在不同名称画板模式的`drawingModes`列表中的索引
    */
   indexes: { [index: string]: number } = {};
+  /**
+   * ## 切换至此模式的按钮
+   */
+  switch: modeSwitch;
   /**
    */
   constructor() {}

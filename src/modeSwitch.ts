@@ -45,8 +45,10 @@ export default class modeSwitch {
       this.title = "";
     } else {
       this.title = drawingMode.title;
+      drawingMode.switch = this;
     }
 
+    // console.log("create modeSwitch title:",this.title);
     this.element = document.createElement("input");
     this.element.setAttribute("type", "radio");
     this.element.setAttribute("name", "tool");
@@ -66,6 +68,7 @@ export default class modeSwitch {
    * 将按钮添加至HTML中
    */
   activate() {
+    // console.log("activate modeSwitch title:", this.title);
     this.parentDiv.appendChild(this.element);
   }
 }
