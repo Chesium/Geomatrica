@@ -9,7 +9,7 @@ import twoPointsCircle from "../shape/circle/twoPointsCircle";
 
 /**
  * 所有用两点构造的对象
- * 
+ *
  * 如: 线段、射线、圆(圆心和其上一点)、圆(直径两端点)
  */
 export default class twoPointsObj_dm extends drawingMode {
@@ -74,6 +74,7 @@ export default class twoPointsObj_dm extends drawingMode {
           canvas.PIXIapp.view.removeEventListener("mouseup", endListener);
           canvas.PIXIapp.view.removeEventListener("mousedown", endListener);
           canvas.resetChoosing();
+          canvas.justEndDrawing = true;
         };
         canvas.PIXIapp.view.addEventListener("mouseup", endListener);
         canvas.PIXIapp.view.addEventListener("mousedown", endListener);

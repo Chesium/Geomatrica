@@ -293,6 +293,13 @@ export default class canvas {
    * 是否处在当前绘图模式的根情况中
    */
   inRootCase: boolean = true;
+  /**
+   * ## 刚刚结束绘图
+   *
+   * ---
+   * 此时取消一次画板的点击判断
+   */
+  justEndDrawing: boolean = false;
 
   /**
    * @param  {IApplicationOptions} pixiAppSetting 创建PIXI应用（`PIXI.Application`）的参数
@@ -323,6 +330,10 @@ export default class canvas {
 
     //设置鼠标事件
     this.PIXIapp.resizeTo.addEventListener("mousedown", (ev: MouseEvent): void => {
+      if (this.justEndDrawing) {
+        this.justEndDrawing = false;
+        return;
+      }
       if (!isHTMLElement(this.PIXIapp.resizeTo)) {
         return;
       }
