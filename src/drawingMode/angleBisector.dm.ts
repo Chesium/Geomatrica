@@ -1,32 +1,34 @@
-import drawingMode from "../drawingMode";
+import drawingMode, { drawCase } from "../drawingMode";
 import canvas from "../canvas";
 import angleBisector_3P, { angleBisector_2L_1, angleBisector_2L_2 } from "../shape/line/angleBisector";
+import point from "../shape/point";
+import line from "../shape/line";
 
-var dm_angleBisector = new drawingMode();
-dm_angleBisector.name = "draw angleBisector";
-dm_angleBisector.title = "角平分线";
-dm_angleBisector.description = "选中三点作其构成角的平分线";
-dm_angleBisector.rootCase = {};
-dm_angleBisector.rootCase.point = {};
-dm_angleBisector.rootCase.point.point = {};
-dm_angleBisector.rootCase.point.point.point = {
-  processFn(canvas: canvas) {
-    new angleBisector_3P(
-      canvas,
-      canvas.chooseObjs.point[0],
-      canvas.chooseObjs.point[1],
-      canvas.chooseObjs.point[2]
-    );
-    canvas.resetChoosing();
-  },
-};
-dm_angleBisector.rootCase.line = {};
-dm_angleBisector.rootCase.line.line = {
-  processFn(canvas: canvas) {
-    new angleBisector_2L_1(canvas, canvas.chooseObjs.line[0], canvas.chooseObjs.line[1]);
-    new angleBisector_2L_2(canvas, canvas.chooseObjs.line[0], canvas.chooseObjs.line[1]);
-    canvas.resetChoosing();
-  },
-};
+var dm_angleBisector = new drawingMode({
+  name: "draw angleBisector",
+  title: "角平分线",
+  description: "选中三点作其构成角的平分线",
+});
+dm_angleBisector.rootCase = new drawCase((root: drawCase) => {
+  root.into[point.shapeName] = new drawCase((intoPoint1: drawCase) => {
+    intoPoint1.into[point.shapeName] = new drawCase((intoPoint2: drawCase) => {
+      intoPoint2.into[point.shapeName] = new drawCase((intoPoint3: drawCase) => {
+        intoPoint3.processFn = (cv: canvas) => {
+          new angleBisector_3P(cv, cv.chooseObjs.point[0], cv.chooseObjs.point[1], cv.chooseObjs.point[2]);
+          cv.resetChoosing();
+        };
+      });
+    });
+  });
+  root.into[line.shapeName] = new drawCase((intoLine1: drawCase) => {
+    intoLine1.into[line.shapeName] = new drawCase((intoLine2: drawCase) => {
+      intoLine2.processFn = (cv: canvas) => {
+        new angleBisector_2L_1(cv, cv.chooseObjs.line[0], cv.chooseObjs.line[1]);
+        new angleBisector_2L_2(cv, cv.chooseObjs.line[0], cv.chooseObjs.line[1]);
+        cv.resetChoosing();
+      };
+    });
+  });
+});
 
 export default dm_angleBisector;

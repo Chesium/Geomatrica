@@ -11,10 +11,12 @@ import { style } from "./style";
 export default abstract class obj {
   static readonly IAA_color = 0xffffff;
   static readonly IAA_alpha = 2e-3;
+  static shapeName:string;
 
   //形状层静态信息
   protected interactPriority: number; //交互优先级 越小越先
-  public shapeName: string; //形状参考名
+  shape:typeof obj;
+  // public shapeName: string; //形状参考名
   // public shapeI: number;
   public shapeDescription: string; //形状参考描述
   protected bodyZIndex: number; //显示堆叠顺序 越大越前
@@ -246,12 +248,12 @@ export default abstract class obj {
       this.preDefine();
       this.body.zIndex = this.bodyZIndex;
       if (this.name == undefined) {
-        this.name = generateName(this.shapeName, this.canvas.nextNameI[this.shapeName]);
-        this.canvas.nextNameI[this.shapeName]++;
+        this.name = generateName(this.shape.shapeName, this.canvas.nextNameI[this.shape.shapeName]);
+        this.canvas.nextNameI[this.shape.shapeName]++;
       }
       this.canvas.names.push(this.name);
       this.tagCrd = this.getTagCrd();
-      console.log(`[NEW OBJ]: <${this.shapeName}> <${this.defineTypeName}> "${this.name}"`);
+      console.log(`[NEW OBJ]: <${this.shape.shapeName}> <${this.defineTypeName}> "${this.name}"`);
       this.tag = new tagBox(this.tagCrd, this.name, this);
     }
     // this.initializing = false;
@@ -278,8 +280,8 @@ export default abstract class obj {
       this.body.zIndex = this.bodyZIndex;
       this.canvas.stage.addChild(this.body);
       if (this.name == undefined) {
-        this.name = generateName(this.shapeName, this.canvas.nextNameI[this.shapeName]);
-        this.canvas.nextNameI[this.shapeName]++;
+        this.name = generateName(this.shape.shapeName, this.canvas.nextNameI[this.shape.shapeName]);
+        this.canvas.nextNameI[this.shape.shapeName]++;
       }
       this.canvas.names.push(this.name);
       this.tagCrd = this.getTagCrd();

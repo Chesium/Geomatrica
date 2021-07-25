@@ -35,7 +35,7 @@ export interface chooseObjs {
  * ---
  * 描述一种绘图时的情况和接下来可能进入的情况
  */
-export interface drawCase {
+export class drawCase {
   /**
    * ## 处理函数
    *
@@ -48,43 +48,15 @@ export interface drawCase {
    *
    * @returns void
    */
-  processFn?: (canvas: canvas, crd?: crd) => void;
-  /**
-   * ## 任意对象
-   *
-   * ---
-   * 点击任意正式对象后进入此情况
-   */
-  any?: drawCase;
-  /**
-   * ## 空白区域
-   *
-   * ---
-   * 点击空白处后进入此情况
-   */
-  blank?: drawCase;
-  /**
-   * ## 点击点
-   *
-   * ---
-   * 点击一个形状为点的正式对象后进入此情况
-   */
-  point?: drawCase;
-  /**
-   * ## 点击线
-   *
-   * ---
-   * 点击一个形状为线的正式对象后进入此情况
-   */
-  line?: drawCase;
-  /**
-   * ## 点击圆
-   *
-   * ---
-   * 点击一个形状为圆的正式对象后进入此情况
-   */
-  circle?: drawCase;
-  [index: string]: drawCase | ((canvas: canvas, crd?: crd) => void) | undefined;
+  processFn: (canvas: canvas, crd?: crd) => void | undefined = undefined;
+
+  intoAny: drawCase | undefined = undefined;
+  intoBlank: drawCase | undefined = undefined;
+  into: { [index: string]: drawCase } = {};
+
+  constructor(initFn: (Case: drawCase) => void = () => {}) {
+    initFn(this);
+  }
 }
 
 /**
@@ -136,5 +108,9 @@ export default class drawingMode {
   switch: modeSwitch;
   /**
    */
-  constructor() {}
+  constructor(info: { name: string; title: string; description: string }) {
+    this.name = info.name;
+    this.title = info.title;
+    this.description = info.description;
+  }
 }

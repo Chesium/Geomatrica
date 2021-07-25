@@ -6,6 +6,7 @@ import pointOnLine from "./point/pointOnShape/pointOnLine";
 
 export default abstract class line extends obj {
   static readonly IAA_width = 15;
+  static shapeName = "line";
 
   a: number;
   b: number;
@@ -18,7 +19,7 @@ export default abstract class line extends obj {
 
   init_L2(): void {
     this.interactPriority = 1;
-    this.shapeName = "line";
+    this.shape = line;
     this.shapeDescription = "all lines";
     this.bodyZIndex = 5;
   }

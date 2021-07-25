@@ -372,26 +372,26 @@ export default class canvas {
         if (focus instanceof obj) {
           //点击了一个对象
           //处理泛形状情况
-          var AnyCase = this.currentCase.any;
+          var AnyCase = this.currentCase.intoAny;
           if (isAvailable(AnyCase)) {
             //匹配 进入该情况 添加该对象至选中对象列表 执行处理函数
             this.currentCase = AnyCase;
             this.inRootCase = false;
             this.chooseObjs.all.push(focus);
-            this.chooseObjs[focus.shapeName].push(focus);
+            this.chooseObjs[focus.shape.shapeName].push(focus);
             focus.changeStyle(focusStyle);
             if (AnyCase.processFn !== undefined) {
               AnyCase.processFn(this, crd);
             }
           }
           //查找该对象类型是否符和 当前绘图情况的 某一种[子情况]
-          var Tcase = this.currentCase[focus.shapeName];
+          var Tcase = this.currentCase.into[focus.shape.shapeName];
           if (isAvailable(Tcase)) {
             //匹配 进入该情况 添加该对象至选中对象列表 执行处理函数
             this.currentCase = Tcase;
             this.inRootCase = false;
             this.chooseObjs.all.push(focus);
-            this.chooseObjs[focus.shapeName].push(focus);
+            this.chooseObjs[focus.shape.shapeName].push(focus);
             focus.changeStyle(focusStyle);
             if (Tcase.processFn !== undefined) {
               Tcase.processFn(this, crd);
@@ -402,7 +402,7 @@ export default class canvas {
           //重置选择操作
           this.resetChoosing();
           //处理点击空白情况
-          var blankCase = this.currentCase.blank;
+          var blankCase = this.currentCase.intoBlank;
           if (isAvailable(blankCase)) {
             this.currentCase = blankCase;
             this.inRootCase = false;

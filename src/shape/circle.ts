@@ -6,13 +6,14 @@ import point from "./point";
 
 export default abstract class circle extends obj {
   static readonly IAA_width = 15;
+  static shapeName = "circle";
 
   x: number;
   y: number;
   r: number;
 
   init_L2() {
-    this.shapeName = "circle";
+    this.shape = circle;
     this.shapeDescription = "all circles";
     this.interactPriority = 1;
     this.bodyZIndex = 5;

@@ -1,33 +1,33 @@
-import drawingMode from "../drawingMode";
+import drawingMode, { drawCase } from "../drawingMode";
 import canvas from "../canvas";
 import { crd } from "../misc";
 
-var dm_move = new drawingMode();
-dm_move.name = "move objects";
-dm_move.title = "移动";
-dm_move.description = "移动";
-dm_move.rootCase = {};
-dm_move.rootCase.any = {
-  // nextType: "end",
-  processFn: (canvas: canvas, crd: crd) => {
-    var endListener = () => {
-      canvas.resetChoosing();
-      canvas.PIXIapp.view.removeEventListener("mouseup", endListener);
+var dm_move = new drawingMode({
+  name: "move objects",
+  title: "移动",
+  description: "移动对象或画板",
+});
+
+dm_move.rootCase = new drawCase((root: drawCase) => {
+  root.intoAny = new drawCase((intoAny: drawCase) => {
+    intoAny.processFn = (cv: canvas, crd: crd) => {
+      var endListener = () => {
+        cv.resetChoosing();
+        cv.PIXIapp.view.removeEventListener("mouseup", endListener);
+      };
+      cv.PIXIapp.view.addEventListener("mouseup", endListener);
+      cv.chooseObjs.all[0].beginDrag(crd);
     };
-    canvas.PIXIapp.view.addEventListener("mouseup", endListener);
-    canvas.chooseObjs.all[0].beginDrag(crd);
-    // canvas.resetChoosing();
-  },
-};
-dm_move.rootCase.blank = {
-  // nextType: "end",
-  processFn: (canvas: canvas, crd: crd) => {
-    canvas.resetChoosing();
-    var pos = canvas.toPos(crd);
-    canvas.dragOffset.x = canvas.trCoe[1] - pos.x;
-    canvas.dragOffset.y = canvas.trCoe[2] - pos.y;
-    canvas.Status = 2;
-  },
-};
+  });
+  root.intoBlank = new drawCase((intoBlank: drawCase) => {
+    intoBlank.processFn = (cv: canvas, crd: crd) => {
+      cv.resetChoosing();
+      var pos = cv.toPos(crd);
+      cv.dragOffset.x = cv.trCoe[1] - pos.x;
+      cv.dragOffset.y = cv.trCoe[2] - pos.y;
+      cv.Status = 2;
+    };
+  });
+});
 
 export default dm_move;

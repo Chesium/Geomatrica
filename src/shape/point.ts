@@ -4,13 +4,14 @@ import { pairForm } from "../util";
 
 export default abstract class point extends obj {
   static readonly IAA_radius = 15;
+  static shapeName = "point";
 
   x: number;
   y: number;
 
   init_L2() {
     this.interactPriority = 0;
-    this.shapeName = "point";
+    this.shape = point;
     this.shapeDescription = "all points";
     this.bodyZIndex = 10;
     this.drawableObj = this;
