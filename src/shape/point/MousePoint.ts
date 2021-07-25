@@ -1,8 +1,8 @@
 import point from "../point";
 import { crd } from "../../misc";
 import canvas from "../../canvas";
-import { isBlank } from "../../util";
 import freepoint from "./freepoint";
+import shape from "../../shape";
 
 interface moveEventListener extends EventListenerObject {
   self: MousePoint;
@@ -70,10 +70,10 @@ export default class MousePoint extends point {
 
   toPoint(): point {
     var focus = this.canvas.chooseByPos(this.canvas.toPos(this));
-    if (isBlank(focus)) {
-      return new freepoint(this.canvas, this.x, this.y);
-    } else {
+    if (focus instanceof shape) {
       return focus.generatePointOnIt(this);
+    } else {
+      return new freepoint(this.canvas, this.x, this.y);
     }
   }
 }

@@ -13,7 +13,6 @@ import {
   pairForm,
   getOffsetLeft,
   getOffsetTop,
-  isBlank,
   isAvailable,
 } from "./util";
 import Mode from "./Mode";
@@ -370,20 +369,7 @@ export default class canvas {
       console.log("[mousedown] current focus:", focus);
       console.log("[mousedown] current drawing case:", this.currentCase);
       if (this.currentCase != undefined) {
-        if (isBlank(focus)) {
-          //点击空白处
-          //重置选择操作
-          this.resetChoosing();
-          //处理点击空白情况
-          var blankCase = this.currentCase.blank;
-          if (isAvailable(blankCase)) {
-            this.currentCase = blankCase;
-            this.inRootCase = false;
-            if (blankCase.processFn !== undefined) {
-              blankCase.processFn(this, crd);
-            }
-          }
-        } else {
+        if (focus instanceof shape) {
           //点击了一个对象
           //处理泛形状情况
           var AnyCase = this.currentCase.any;
@@ -409,6 +395,19 @@ export default class canvas {
             focus.changeStyle(focusStyle);
             if (Tcase.processFn !== undefined) {
               Tcase.processFn(this, crd);
+            }
+          }
+        } else {
+          //点击空白处
+          //重置选择操作
+          this.resetChoosing();
+          //处理点击空白情况
+          var blankCase = this.currentCase.blank;
+          if (isAvailable(blankCase)) {
+            this.currentCase = blankCase;
+            this.inRootCase = false;
+            if (blankCase.processFn !== undefined) {
+              blankCase.processFn(this, crd);
             }
           }
         }
@@ -458,18 +457,6 @@ export default class canvas {
             x: ev.pageX - this.PIXIapp.resizeTo.offsetLeft,
             y: ev.pageY - this.PIXIapp.resizeTo.offsetTop,
           });
-          if (!isBlank(focus)) {
-            switch (focus.shapeName) {
-              case "point":
-                break;
-              case "line":
-                break;
-              case "circle":
-                break;
-              default:
-                break;
-            }
-          }
         }
       }
       this.F = -1;

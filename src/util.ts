@@ -151,10 +151,6 @@ export function floatMul(a: number, b: number) {
   return (Number(d.replace(".", "")) * Number(e.replace(".", ""))) / Math.pow(10, c);
 }
 
-export function isBlank(focus: -1 | shape): focus is -1 {
-  return focus === -1;
-}
-
 export function isAvailable(
   Case: drawCase | ((canvas: canvas, crd?: pos) => void) | undefined
 ): Case is drawCase {
