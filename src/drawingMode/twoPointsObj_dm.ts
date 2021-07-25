@@ -60,6 +60,7 @@ export default class twoPointsObj_dm extends drawingMode {
           if (focus instanceof obj) {
             if (focus.index == canvas.chooseObjs.point[0].index) {
               console.log("[drawing 2P obj][mouseup] the mouse still in first point -> still drawing");
+              canvas.justEndDrawing = true;
               return;
             }
           }
@@ -74,7 +75,6 @@ export default class twoPointsObj_dm extends drawingMode {
           canvas.PIXIapp.view.removeEventListener("mouseup", endListener);
           canvas.PIXIapp.view.removeEventListener("mousedown", endListener);
           canvas.resetChoosing();
-          canvas.justEndDrawing = true;
         };
         canvas.PIXIapp.view.addEventListener("mouseup", endListener);
         canvas.PIXIapp.view.addEventListener("mousedown", endListener);
