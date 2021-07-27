@@ -1,4 +1,5 @@
-@headerHeight: 60px;
+
+@headerHeight: 36px;
 @toolbarWidth: 70px;
 
 #workarea,
@@ -32,14 +33,15 @@
   width: 100%;
   height: @headerHeight;
   overflow: hidden;
-  box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.4);
+  // box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.4);
   background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
 }
 
 #headerID {
   top: 0px;
   left: 0px;
-  width: 420px;
   height: 100%;
   overflow: hidden;
   background-color: rgb(255, 255, 255);
@@ -47,11 +49,10 @@
   align-items: center;
 }
 
-#headerID img {
+#gm-logo {
   position: relative;
-  left: 10px;
-  width: 180px;
-  height: 70%;
+  left: 6px;
+  height: 30px;
 }
 
 #headerID p {

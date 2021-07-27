@@ -5,7 +5,7 @@
 }
 #toolbar {
   position: absolute;
-  top: 60px;
+  top: 36px;
   left: 0px;
   width: 70px;
   height: 100%;
@@ -24,26 +24,25 @@
   top: 0px;
   left: 0px;
   width: 100%;
-  height: 60px;
+  height: 36px;
   overflow: hidden;
-  box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.4);
   background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
 }
 #headerID {
   top: 0px;
   left: 0px;
-  width: 420px;
   height: 100%;
   overflow: hidden;
   background-color: #ffffff;
   display: flex;
   align-items: center;
 }
-#headerID img {
+#gm-logo {
   position: relative;
-  left: 10px;
-  width: 180px;
-  height: 70%;
+  left: 6px;
+  height: 30px;
 }
 #headerID p {
   position: relative;
@@ -62,7 +61,7 @@ body {
 }
 #workarea-container {
   position: absolute;
-  top: 60px;
+  top: 36px;
   left: 70px;
   overflow: hidden;
   height: 100%;
