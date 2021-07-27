@@ -4,7 +4,7 @@ import point from "./shape/point";
 import line from "./shape/line";
 import circle from "./shape/circle";
 import { crd } from "./misc";
-import modeSwitch from "./modeSwitch";
+import ModeSwitch from "./modeSwitch";
 
 /**
  * ## 选中对象列表格式
@@ -105,7 +105,7 @@ export default class drawingMode {
   /**
    * ## 切换至此模式的按钮
    */
-  switch: modeSwitch;
+  switch: ModeSwitch;
   /**
    */
   constructor(info: { name: string; title: string; description: string }) {

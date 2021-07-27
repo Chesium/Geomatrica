@@ -625,15 +625,15 @@ export default class canvas {
    * @returns void
    */
   changeDrawingMode(newDrawingModeI: number): void {
-    if (this.drawingModeI != undefined) {
-      if (this.Mode.drawingModes[this.drawingModeI].switch != undefined) {
-        this.Mode.drawingModes[this.drawingModeI].switch.element.removeAttribute("checked");
-      }
-    }
+    // if (this.drawingModeI != undefined) {
+    //   if (this.Mode.drawingModes[this.drawingModeI].switch != undefined) {
+    //     this.Mode.drawingModes[this.drawingModeI].switch.element.removeAttribute("checked");
+    //   }
+    // }
     this.drawingModeI = newDrawingModeI;
-    if (this.Mode.drawingModes[newDrawingModeI].switch != undefined) {
-      this.Mode.drawingModes[newDrawingModeI].switch.element.setAttribute("checked", "");
-    }
+    // if (this.Mode.drawingModes[newDrawingModeI].switch != undefined) {
+    //   this.Mode.drawingModes[newDrawingModeI].switch.element.setAttribute("checked", "");
+    // }
     this.resetChoosing();
   }
   /**

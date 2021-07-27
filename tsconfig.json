@@ -6,7 +6,8 @@
     "module": "es6",
     "lib": ["DOM", "ES2019.Array"],
     "target": "es5",
-    "allowJs": true
+    "allowJs": true,
+    "jsx": "react"
   },
-  "files": ["src/index.ts"]
+  "files": ["src/index.tsx"]
 }

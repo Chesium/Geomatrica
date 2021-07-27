@@ -9,7 +9,7 @@ const isProduction = process.env.NODE_ENV == "production";
 const stylesHandler = MiniCssExtractPlugin.loader;
 
 const config = {
-  entry: "./src/index.ts",
+  entry: "./src/index.tsx",
   output: {
     path: path.resolve(__dirname, "dist"),
   },
@@ -18,10 +18,7 @@ const config = {
     host: "localhost",
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: "index.html",
-    }),
-
+    new HtmlWebpackPlugin(),
     new MiniCssExtractPlugin(),
 
     // Add your plugins here
@@ -45,6 +42,11 @@ const config = {
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
+      },
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        loader: "source-map-loader",
       },
 
       // Add your rules for custom modules here
