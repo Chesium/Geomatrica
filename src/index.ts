@@ -51,21 +51,21 @@ for (let i in buttons) {
 
 buttons[1].element.setAttribute("checked", "");
 
-var mainMenu = new menu(cv, document.getElementById("header"));
+// var mainMenu = new menu(cv, document.getElementById("header"));
 
-var t1 = document.createElement("div");
-t1.innerHTML = "<p>文件(F)</p>";
-var n1 = new navL1(mainMenu, { name: "file", context: t1 });
-/****/
-var t11 = document.createElement("div");
-t11.innerHTML = '<p class="p-left">新建画板</p>';
-var n11 = new navL2(n1, { name: "new", context: t11 }, true);
-var t12 = document.createElement("div");
-t12.innerHTML = '<p class="p-left">导入画板...</p>';
-var n12 = new navL2(n1, { name: "import", context: t12 }, false);
-var t13 = document.createElement("div");
-t13.innerHTML = '<p class="p-left">导出画板</p><p class="p-right">Ctrl+S</p>';
-var n13 = new navL2(n1, { name: "export", context: t13 }, false);
+// var t1 = document.createElement("div");
+// t1.innerHTML = "<p>文件(F)</p>";
+// var n1 = new navL1(mainMenu, { name: "file", context: t1 });
+// /****/
+// var t11 = document.createElement("div");
+// t11.innerHTML = '<p class="p-left">新建画板</p>';
+// var n11 = new navL2(n1, { name: "new", context: t11 }, true);
+// var t12 = document.createElement("div");
+// t12.innerHTML = '<p class="p-left">导入画板...</p>';
+// var n12 = new navL2(n1, { name: "import", context: t12 }, false);
+// var t13 = document.createElement("div");
+// t13.innerHTML = '<p class="p-left">导出画板</p><p class="p-right">Ctrl+S</p>';
+// var n13 = new navL2(n1, { name: "export", context: t13 }, false);
 
 // var t2 = document.createElement("div");
 // t2.innerHTML = "<p>编辑(E)</p>";

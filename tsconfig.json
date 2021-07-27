@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "module": "es6",
+    "lib": ["DOM", "ES2019.Array"],
+    "target": "es5",
+    "allowJs": true
+  },
+  "files": ["src/index.ts"]
+}
