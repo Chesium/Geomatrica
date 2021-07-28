@@ -425,7 +425,7 @@ export default class canvas {
           this.trCoe[1] = ev.pageX - this.PIXIapp.resizeTo.offsetLeft + this.dragOffset.x;
           this.trCoe[2] = ev.pageY - this.PIXIapp.resizeTo.offsetTop + this.dragOffset.y;
           this.updAll();
-          console.log("[update drag->canvas] trcoe:", this.trCoe);
+          // console.log("[update drag->canvas] trcoe:", this.trCoe);
           break;
         default:
           break;
@@ -625,15 +625,15 @@ export default class canvas {
    * @returns void
    */
   changeDrawingMode(newDrawingModeI: number): void {
-    // if (this.drawingModeI != undefined) {
-    //   if (this.Mode.drawingModes[this.drawingModeI].switch != undefined) {
-    //     this.Mode.drawingModes[this.drawingModeI].switch.element.removeAttribute("checked");
-    //   }
-    // }
+    if (this.drawingModeI != undefined) {
+      if (this.Mode.drawingModes[this.drawingModeI].switch != undefined) {
+        this.Mode.drawingModes[this.drawingModeI].switch.setState(() => ({ checked: false }));
+      }
+    }
     this.drawingModeI = newDrawingModeI;
-    // if (this.Mode.drawingModes[newDrawingModeI].switch != undefined) {
-    //   this.Mode.drawingModes[newDrawingModeI].switch.element.setAttribute("checked", "");
-    // }
+    if (this.Mode.drawingModes[newDrawingModeI].switch != undefined) {
+      this.Mode.drawingModes[newDrawingModeI].switch.setState(() => ({ checked: true }));
+    }
     this.resetChoosing();
   }
   /**
@@ -643,7 +643,7 @@ export default class canvas {
    * @returns void
    */
   updAxes(): void {
-    console.log("[update AXES]");
+    // console.log("[update AXES]");
     this.axis.clear();
     var origin = this.toPos({ x: 0, y: 0 }),
       dp_Xm = this.stageBound[0][0],

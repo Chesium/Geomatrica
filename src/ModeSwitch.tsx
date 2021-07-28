@@ -55,7 +55,8 @@ export default class ModeSwitch extends React.Component<
         title={this.title}
         style={this.iconStyle}
         onClick={() => this.activate()}
-        defaultChecked={this.state.checked}
+        onChange={() => {}}
+        checked={this.state.checked}
       />
     );
   }
