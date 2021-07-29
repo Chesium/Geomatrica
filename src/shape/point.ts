@@ -9,6 +9,8 @@ export default abstract class point extends obj {
   x: number;
   y: number;
 
+  onObjs: obj[] = [];
+
   init_L2() {
     this.interactPriority = 0;
     this.shape = point;

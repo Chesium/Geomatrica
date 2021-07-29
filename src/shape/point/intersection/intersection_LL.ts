@@ -15,6 +15,7 @@ export default class intersection_LL extends intersection {
     //================//
     this.Line1 = l1;
     this.Line2 = l2;
+    this.onObjs.push(l1, l2);
     //对象间父子关系处理
     l1.children.push(this);
     l2.children.push(this);

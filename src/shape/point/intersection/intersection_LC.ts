@@ -15,6 +15,7 @@ export class intersection_LC_1 extends intersection {
     //================//
     this.Line = l;
     this.Circle = c;
+    this.onObjs.push(l, c);
     //对象间父子关系处理
     l.children.push(this);
     c.children.push(this);

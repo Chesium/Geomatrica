@@ -13,7 +13,7 @@ export default class MousePoint extends point {
   constructor(canvas: canvas) {
     super(); //无用
     this.name = "MOUSE";
-    this.defineTypeName="MousePoint";
+    this.defineTypeName = "MousePoint";
     this.init_L1(canvas, false);
     this.init_L2();
     //================//
@@ -70,10 +70,13 @@ export default class MousePoint extends point {
 
   toPoint(): point {
     var focus = this.canvas.chooseByPos(this.canvas.toPos(this));
+    var newP: point;
     if (focus instanceof obj) {
-      return focus.generatePointOnIt(this);
+      newP = focus.generatePointOnIt(this);
     } else {
-      return new freepoint(this.canvas, this.x, this.y);
+      newP = new freepoint(this.canvas, this.x, this.y);
     }
+    newP.onObjs = newP.onObjs.concat(this.onObjs);
+    return newP;
   }
 }

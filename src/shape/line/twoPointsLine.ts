@@ -10,7 +10,9 @@ export default abstract class twoPointsLine extends line {
     this.Point1 = p1;
     this.Point2 = p2;
     p1.children.push(this);
+    p1.onObjs.push(this);
     p2.children.push(this);
+    p2.onObjs.push(this);
     this.parents = [this.Point1, this.Point2];
     this.drawableObj = this.Point2;
   }

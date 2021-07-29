@@ -6,17 +6,18 @@ export class intersection_CC_1 extends intersection {
   Circle1: circle; //点在这条线上
   Circle2: circle; //点也在这条线上
 
-  constructor(canvas: canvas, l1: circle, l2: circle, predefined: boolean = false) {
+  constructor(canvas: canvas, c1: circle, c2: circle, predefined: boolean = false) {
     super(); //无用
     this.defineTypeName = "intersection_CC_1";
     this.init_L1(canvas, predefined);
     this.init_L2();
     //================//
-    this.Circle1 = l1;
-    this.Circle2 = l2;
+    this.Circle1 = c1;
+    this.Circle2 = c2;
+    this.onObjs.push(c1, c2);
     //对象间父子关系处理
-    l1.children.push(this);
-    l2.children.push(this);
+    c1.children.push(this);
+    c2.children.push(this);
     this.parents = [this.Circle1, this.Circle2];
     //================//
     this.calc();

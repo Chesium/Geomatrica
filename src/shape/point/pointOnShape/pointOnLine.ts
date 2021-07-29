@@ -5,7 +5,7 @@ import canvas from "../../../canvas";
 export default class pointOnLine extends pointOnShape {
   proportion: number = 0.5; //比例默认值
   Line: line; //点在这条线上
-  
+
   constructor(canvas: canvas, l: line, init_x: number, init_y: number) {
     super(); //无用
     this.defineTypeName = "pointOnLine";
@@ -13,6 +13,7 @@ export default class pointOnLine extends pointOnShape {
     this.init_L2();
     //================//
     this.Line = l;
+    this.onObjs.push(l);
     //对象间父子关系处理
     l.children.push(this);
     this.parents = [this.Line];

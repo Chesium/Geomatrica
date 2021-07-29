@@ -14,6 +14,7 @@ export default class pointOnCircle extends pointOnShape {
     this.init_L2();
     //================//
     this.Circle = c;
+    this.onObjs.push(c);
     //对象间父子关系处理
     c.children.push(this);
     this.parents = [this.Circle];

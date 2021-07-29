@@ -20,6 +20,7 @@ export class tangent_1 extends line {
     //对象间父子关系处理
     c.children.push(this);
     p.children.push(this);
+    p.onObjs.push(this);
     this.parents = [this.Circle, this.Point];
     //================//
     this.calc();
@@ -29,22 +30,20 @@ export class tangent_1 extends line {
     if (this.checkNonExistParents()) {
       return;
     }
-    if (this.Point instanceof pointOnCircle) {
-      if (this.Point.Circle.index == this.Circle.index) {
-        //点就在该圆上
-        //* 相当于过该点作此圆过此点的半径的垂线
-        //此时只有一条切线，tangent_2对象不存在
-        var perp = calcPerpendicular(this.Point, calcLineEq(this.Circle, this.Point));
-        this.a = perp.a;
-        this.b = perp.b;
-        this.c = perp.c;
-        this.d = perp.d;
-        this.r = perp.r;
-        this.dr = perp.dr;
-        this.exist = perp.exist;
-        this.refP_t = perp.refP_t;
-        return;
-      }
+    if (this.isPointOnCircle()) {
+      //点就在该圆上
+      //* 相当于过该点作此圆过此点的半径的垂线
+      //此时只有一条切线，tangent_2对象不存在
+      var perp = calcPerpendicular(this.Point, calcLineEq(this.Circle, this.Point));
+      this.a = perp.a;
+      this.b = perp.b;
+      this.c = perp.c;
+      this.d = perp.d;
+      this.r = perp.r;
+      this.dr = perp.dr;
+      this.exist = perp.exist;
+      this.refP_t = perp.refP_t;
+      return;
     }
     //* 相当于求以该圆与该点为圆心，该点到切点的距离为半径的圆之第一交点
     var x1 = this.Point.x,
@@ -103,6 +102,14 @@ export class tangent_1 extends line {
       y: this.c * t + this.d,
     };
   }
+  isPointOnCircle(): boolean {
+    for (var v of this.Point.onObjs) {
+      if (v.index == this.Circle.index) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 export class tangent_2 extends line {
@@ -128,13 +135,11 @@ export class tangent_2 extends line {
     if (this.checkNonExistParents()) {
       return;
     }
-    if (this.Point instanceof pointOnCircle) {
-      if (this.Point.Circle.index == this.Circle.index) {
-        //点就在该圆上
-        //!此时只有一条切线，采用tangent_1对象，不使用tangent_2对象
-        this.exist = false;
-        return;
-      }
+    if (this.isPointOnCircle()) {
+      //点就在该圆上
+      //!此时只有一条切线，采用tangent_1对象，不使用tangent_2对象
+      this.exist = false;
+      return;
     }
     //* 相当于求以该圆与该点为圆心，该点到切点的距离为半径的圆之第二交点
     var x1 = this.Point.x,
@@ -192,5 +197,13 @@ export class tangent_2 extends line {
       x: this.a * t + this.b,
       y: this.c * t + this.d,
     };
+  }
+  isPointOnCircle(): boolean {
+    for (var v of this.Point.onObjs) {
+      if (v.index == this.Circle.index) {
+        return true;
+      }
+    }
+    return false;
   }
 }

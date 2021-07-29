@@ -18,6 +18,7 @@ export default class perpendicular extends line {
     //对象间父子关系处理
     l.children.push(this);
     p.children.push(this);
+    p.onObjs.push(this);
     this.parents = [this.Line, this.Point];
     //================//
     this.calc();

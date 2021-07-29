@@ -19,8 +19,11 @@ export default class angleBisector_3P extends line {
     this.Point3 = p3;
     //对象间父子关系处理
     p1.children.push(this);
+    p1.onObjs.push(this);
     p2.children.push(this);
+    p2.onObjs.push(this);
     p3.children.push(this);
+    p3.onObjs.push(this);
     this.parents = [p1, p2, p3];
     //================//
     this.calc();
