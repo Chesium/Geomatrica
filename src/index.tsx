@@ -21,7 +21,6 @@ var root = document.createElement("div");
 root.id = "root";
 document.getElementsByTagName("body")[0].appendChild(root);
 
-
 var buttons: [string, drawingMode | undefined][] = [
   ["move", dm.dm_move],
   ["segment", dm.dm_segment],
@@ -37,7 +36,7 @@ var buttons: [string, drawingMode | undefined][] = [
   ["tangent", dm.dm_tangent],
   ["perpendicularBisector", dm.dm_perpendicularBisector],
   ["midPoint", dm.dm_midPoint],
-  ["circumcircle", undefined],
+  ["circumcircle", dm.dm_circumcircle],
 ];
 
 ReactDOM.render(<App buttons={buttons} />, document.getElementById("root"));

@@ -1,21 +1,21 @@
 /**
  * ## 显示用坐标
  */
-export interface pos {
+export class pos {
   //二维坐标
-  x: number;
-  y: number;
+  x: number = NaN;
+  y: number = NaN;
 }
 /**
  * ## 计算用坐标
  */
-export interface crd {
+export class crd {
   //二维坐标
-  x: number;
-  y: number;
+  x: number = NaN;
+  y: number = NaN;
 }
 
-export const EMPTY_P = { x: NaN, y: NaN };
+// export const EMPTY_P = { x: NaN, y: NaN };
 /**
  * ## 数对
  *
@@ -37,39 +37,39 @@ export const REAL_NUMBER: range = [-Infinity, Infinity];
  * 1) x=at+b
  * 2) y=ct+d  t∈r
  */
-export interface stdLine {
-  exist: boolean;
-  a: number;
-  b: number;
-  c: number;
-  d: number;
-  r: pair;
-  dr?: -1 | 1;
-  refP_t?: pair;
+export class stdLine {
+  exist: boolean = false;
+  a: number = NaN;
+  b: number = NaN;
+  c: number = NaN;
+  d: number = NaN;
+  r: pair = REAL_NUMBER;
+  dr?: -1 | 1 = 1;
+  refP_t?: pair = [NaN, NaN];
 }
 
-export const EMPTY_LINE: stdLine = {
-  exist: false,
-  a: NaN,
-  b: NaN,
-  c: NaN,
-  d: NaN,
-  r: REAL_NUMBER,
-  dr: 1,
-  refP_t: [NaN, NaN],
-};
+// export const EMPTY_LINE: stdLine = {
+//   exist: false,
+//   a: NaN,
+//   b: NaN,
+//   c: NaN,
+//   d: NaN,
+//   r: REAL_NUMBER,
+//   dr: 1,
+//   refP_t: [NaN, NaN],
+// };
 
-export interface stdCircle extends crd {
-  exist: boolean;
-  r: number;
+export class stdCircle extends crd {
+  exist: boolean=false;
+  r: number=NaN;
 }
 
-export const EMPTY_CIRCLE: stdCircle = {
-  exist: false,
-  x: NaN,
-  y: NaN,
-  r: NaN,
-};
+// export const EMPTY_CIRCLE: stdCircle = {
+//   exist: false,
+//   x: NaN,
+//   y: NaN,
+//   r: NaN,
+// };
 
 /**
  * ## 矩形

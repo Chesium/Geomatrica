@@ -1,4 +1,4 @@
-import { rect, stdLine, pos, pair, crd, REAL_NUMBER, EMPTY_LINE, EMPTY_P } from "./misc";
+import { rect, stdLine, pos, pair, crd, REAL_NUMBER } from "./misc";
 
 export function posForm(pair: pair): pos {
   //将pos对象转为pair二元组
@@ -33,11 +33,11 @@ export function L_DpData_To_epCrd(l: stdLine, VF: rect): [boolean, crd, crd] {
   if (l.a == 0) {
     if (l.c == 0) {
       console.log("ERROR in L_DpData_To_epCrd: the line doesn't exist.");
-      return [false, EMPTY_P, EMPTY_P];
+      return [false, new crd(), new crd()];
     }
     //[|]
     if (l.b < Xm || l.b > Xn) {
-      return [false, EMPTY_P, EMPTY_P];
+      return [false, new crd(), new crd()];
     }
     var tM: number = (Ym - l.d) / l.c,
       tN: number = (Yn - l.d) / l.c;
@@ -47,7 +47,7 @@ export function L_DpData_To_epCrd(l: stdLine, VF: rect): [boolean, crd, crd] {
     //[-]
     // console.log("c==0", l.d, Ym, Yn);
     if (l.d < Ym || l.d > Yn) {
-      return [false, EMPTY_P, EMPTY_P];
+      return [false, new crd(), new crd()];
     }
     // console.log("access");
     var tM: number = (Xm - l.b) / l.a,
@@ -167,7 +167,7 @@ export function substituteIntoLineEq(t: number, l: stdLine): crd {
 export function calcLineEq(p1: crd, p2: crd): stdLine {
   if (p1.x == p2.x) {
     if (p1.y == p2.y) {
-      return EMPTY_LINE;
+      return new stdLine();
     }
     return {
       exist: true,
@@ -195,7 +195,7 @@ export function calcLineEq(p1: crd, p2: crd): stdLine {
 }
 
 export function calcPerpendicular(p: crd, l: stdLine): stdLine {
-  var perp = EMPTY_LINE;
+  var perp = new stdLine();
   perp.exist = true;
   if (l.c == 0) {
     //[-]->[|]
@@ -258,7 +258,7 @@ export function calcPerpendicular(p: crd, l: stdLine): stdLine {
 }
 
 export default function calcParallelLine(p: crd, l: stdLine): stdLine {
-  var para = EMPTY_LINE;
+  var para = new stdLine();
   if (l.a == 0) {
     //[|]->[|]
     para.exist = true;
