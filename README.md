@@ -8,7 +8,7 @@ pos: position的缩写，显示用坐标
 
 添加功能的步骤:
 
-1. 写shape
+1. 在shape文件夹里写新功能类
 2. 写drawingMode
 3. 将drawingMode添至dm.ts
 4. 在Mode里注册drawingMode
@@ -54,6 +54,8 @@ Geomatrica 是一个类似Geogebra，开发中的动态几何软件（Dynamic Ge
 ## mode 12 - 中垂线
 ## mode 13 - 中点
 ## mode 14 - 外接圆
+
+
 - [x] 绘线、圆时松开鼠标后若光标在点上则自动吸附至该点
 - [x] 绘线、圆模式中点击线或圆时若光标在点上则以其为初始点来绘图
 - [x] 绘线、圆模式中点击线或圆时若光标在线或圆上则先创造在其上的一动点并以其为初始点来绘图

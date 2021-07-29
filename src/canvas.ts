@@ -6,7 +6,7 @@ import { Graphics, LINE_CAP } from "pixi.js";
 import { chooseObjs, drawCase } from "./drawingMode";
 import obj from "./object";
 import { rect, pos, crd } from "./misc";
-import { posForm, floatAdd, floatMul, pairForm, getOffsetLeft, getOffsetTop, isAvailable } from "./util";
+import { posForm, floatAdd, floatMul, pairForm, getOffsetLeft, getOffsetTop } from "./util";
 import Mode from "./Mode";
 import { defaultStyle, focusStyle } from "./style";
 import dm_move from "./drawingMode/move.dm";
@@ -365,7 +365,7 @@ export default class canvas {
           //点击了一个对象
           //处理泛形状情况
           var AnyCase = this.currentCase.intoAny;
-          if (isAvailable(AnyCase)) {
+          if (AnyCase != undefined) {
             //匹配 进入该情况 添加该对象至选中对象列表 执行处理函数
             this.currentCase = AnyCase;
             this.inRootCase = false;
@@ -378,7 +378,7 @@ export default class canvas {
           }
           //查找该对象类型是否符和 当前绘图情况的 某一种[子情况]
           var Tcase = this.currentCase.into[focus.shape.shapeName];
-          if (isAvailable(Tcase)) {
+          if (Tcase != undefined) {
             //匹配 进入该情况 添加该对象至选中对象列表 执行处理函数
             this.currentCase = Tcase;
             this.inRootCase = false;
@@ -395,7 +395,7 @@ export default class canvas {
           this.resetChoosing();
           //处理点击空白情况
           var blankCase = this.currentCase.intoBlank;
-          if (isAvailable(blankCase)) {
+          if (blankCase != undefined) {
             this.currentCase = blankCase;
             this.inRootCase = false;
             if (blankCase.processFn !== undefined) {
