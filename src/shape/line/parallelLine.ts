@@ -1,5 +1,6 @@
 import canvas from "../../canvas";
 import { pos } from "../../misc";
+import calcParallelLine from "../../util";
 import line from "../line";
 import point from "../point";
 
@@ -27,35 +28,7 @@ export default class parallelLine extends line {
     if (this.checkNonExistParents()) {
       return;
     }
-    var x = this.Point.x,
-      y = this.Point.y,
-      a = this.Line.a,
-      c = this.Line.c;
-
-    if (a == 0) {
-      //[|]->[|]
-      this.exist = true;
-      this.a = 0;
-      this.b = x;
-      this.c = 1;
-      this.d = 0;
-    } else {
-      //[/][-]->[/][-]
-      var k = c / a;
-      this.exist = true;
-      this.a = 1;
-      this.b = 0;
-      this.c = k;
-      this.d = y - k * x;
-    }
-
-    this.dr = this.Line.dr;
-    if (this.dr == 1) {
-      this.refP_t = [x + 1 / Math.sqrt(1 + k * k), x - 1 / Math.sqrt(1 + k * k)];
-    } else {
-      this.refP_t = [x - 1 / Math.sqrt(1 + k * k), x + 1 / Math.sqrt(1 + k * k)];
-    }
-    this.r = [-Infinity, Infinity];
+    this.setData(calcParallelLine(this.Point, this.Line));
   }
   getTagCrd(): pos {
     if (!this.exist) {

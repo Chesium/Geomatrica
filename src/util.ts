@@ -195,7 +195,7 @@ export function calcLineEq(p1: crd, p2: crd): stdLine {
 }
 
 export function calcPerpendicular(p: crd, l: stdLine): stdLine {
-  var perp: stdLine = EMPTY_LINE;
+  var perp = EMPTY_LINE;
   perp.exist = true;
   if (l.c == 0) {
     //[-]->[|]
@@ -255,6 +255,35 @@ export function calcPerpendicular(p: crd, l: stdLine): stdLine {
   }
   perp.r = [-Infinity, Infinity];
   return perp;
+}
+
+export default function calcParallelLine(p: crd, l: stdLine): stdLine {
+  var para = EMPTY_LINE;
+  if (l.a == 0) {
+    //[|]->[|]
+    para.exist = true;
+    para.a = 0;
+    para.b = p.x;
+    para.c = 1;
+    para.d = 0;
+  } else {
+    //[/][-]->[/][-]
+    var k = l.c / l.a;
+    para.exist = true;
+    para.a = 1;
+    para.b = 0;
+    para.c = k;
+    para.d = p.y - k * p.x;
+  }
+
+  para.dr = l.dr;
+  if (para.dr == 1) {
+    para.refP_t = [p.x + 1 / Math.sqrt(1 + k * k), p.x - 1 / Math.sqrt(1 + k * k)];
+  } else {
+    para.refP_t = [p.x - 1 / Math.sqrt(1 + k * k), p.x + 1 / Math.sqrt(1 + k * k)];
+  }
+  para.r = [-Infinity, Infinity];
+  return para;
 }
 
 export function centerOfGravity(...p: crd[]) {
