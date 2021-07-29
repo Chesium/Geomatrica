@@ -1,4 +1,4 @@
-import { rect, stdLine, pos, pair, crd, REAL_NUMBER, EMPTY_LINE } from "./misc";
+import { rect, stdLine, pos, pair, crd, REAL_NUMBER, EMPTY_LINE, EMPTY_P } from "./misc";
 
 export function posForm(pair: pair): pos {
   //将pos对象转为pair二元组
@@ -33,11 +33,11 @@ export function L_DpData_To_epCrd(l: stdLine, VF: rect): [boolean, crd, crd] {
   if (l.a == 0) {
     if (l.c == 0) {
       console.log("ERROR in L_DpData_To_epCrd: the line doesn't exist.");
-      return [false, { x: NaN, y: NaN }, { x: NaN, y: NaN }];
+      return [false, EMPTY_P, EMPTY_P];
     }
     //[|]
     if (l.b < Xm || l.b > Xn) {
-      return [false, { x: NaN, y: NaN }, { x: NaN, y: NaN }];
+      return [false, EMPTY_P, EMPTY_P];
     }
     var tM: number = (Ym - l.d) / l.c,
       tN: number = (Yn - l.d) / l.c;
@@ -47,7 +47,7 @@ export function L_DpData_To_epCrd(l: stdLine, VF: rect): [boolean, crd, crd] {
     //[-]
     // console.log("c==0", l.d, Ym, Yn);
     if (l.d < Ym || l.d > Yn) {
-      return [false, { x: NaN, y: NaN }, { x: NaN, y: NaN }];
+      return [false, EMPTY_P, EMPTY_P];
     }
     // console.log("access");
     var tM: number = (Xm - l.b) / l.a,

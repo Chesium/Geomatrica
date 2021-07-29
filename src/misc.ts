@@ -14,6 +14,8 @@ export interface crd {
   x: number;
   y: number;
 }
+
+export const EMPTY_P = { x: NaN, y: NaN };
 /**
  * ## 数对
  *

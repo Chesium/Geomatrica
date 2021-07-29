@@ -1,5 +1,5 @@
 import obj from "../object";
-import { crd, pos } from "../misc";
+import { crd, EMPTY_P, pos } from "../misc";
 import { pairForm } from "../util";
 
 export default abstract class point extends obj {
@@ -53,7 +53,7 @@ export default abstract class point extends obj {
     return this;
   }
 
-  setData(p: crd = { x: NaN, y: NaN }): void {
+  setData(p: crd = EMPTY_P): void {
     this.x = p.x;
     this.y = p.y;
   }
