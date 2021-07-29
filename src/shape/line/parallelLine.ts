@@ -8,7 +8,7 @@ export default class parallelLine extends line {
   Line: line;
   constructor(canvas: canvas, p: point, l: line) {
     super();
-    this.defineTypeName = "perpendicular";
+    this.defineTypeName = "parallelLine";
     this.init_L1(canvas, false);
     this.init_L2();
     //================//
