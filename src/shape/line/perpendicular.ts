@@ -1,5 +1,6 @@
 import canvas from "../../canvas";
 import { pos } from "../../misc";
+import { calcPerpendicular } from "../../util";
 import line from "../line";
 import point from "../point";
 
@@ -26,72 +27,15 @@ export default class perpendicular extends line {
     if (this.checkNonExistParents()) {
       return;
     }
-    var x = this.Point.x,
-      y = this.Point.y,
-      a = this.Line.a,
-      c = this.Line.c;
-    if (c == 0) {
-      //[-]->[|]
-      this.exist = true;
-      this.a = 0;
-      this.b = x;
-      this.c = 1;
-      this.d = 0;
-      // this.refP_t = [y, y + 1]; //(x,y)->t1 (x,y+1)->t2
-
-      /**
-       *
-       *   +-------------+ ↻ +-------------+
-       *   |             | ↻ |             |
-       *   |             | ↻ |      |      |
-       *   |   ------>   | ↻ |      |      |
-       *   |             | ↻ |      ↓      |
-       *   |             | ↻ |             |
-       *   +-------------+ ↻ +-------------+
-       *
-       */
-
-      //clockwise 90°
-      this.dr = this.Line.dr == 1 ? -1 : 1;
-      if (this.dr == 1) {
-        this.refP_t = [x + 10 / Math.sqrt(1 + k * k), x - 10 / Math.sqrt(1 + k * k)];
-      } else {
-        this.refP_t = [x - 10 / Math.sqrt(1 + k * k), x + 10 / Math.sqrt(1 + k * k)];
-      }
-    } else {
-      //[/][|]->[\][-]
-      var k = -a / c;
-      this.exist = true;
-      this.a = 1;
-      this.b = 0;
-      this.c = k;
-      this.d = y - k * x;
-
-      /**
-       *
-       *   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ↻ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-       *   █     *       █ ↻ █             █
-       *   █    /        █ ↻ █  ██\        █
-       *   █   /         █ ↻ █     ██\     █
-       *   █  /          █ ↻ █        █*   █
-       *   █             █ ↻ █             █
-       *   ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ↻ ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-       *
-       */
-
-      //clockwise 90°
-      if (k > 0) {
-        this.dr = this.Line.dr == 1 ? -1 : 1;
-      } else {
-        this.dr = this.Line.dr;
-      }
-      if (this.dr == 1) {
-        this.refP_t = [x + 1 / Math.sqrt(1 + k * k), x - 1 / Math.sqrt(1 + k * k)];
-      } else {
-        this.refP_t = [x - 1 / Math.sqrt(1 + k * k), x + 1 / Math.sqrt(1 + k * k)];
-      }
-    }
-    this.r = [-Infinity, Infinity];
+    var perp = calcPerpendicular(this.Point, this.Line);
+    this.a = perp.a;
+    this.b = perp.b;
+    this.c = perp.c;
+    this.d = perp.d;
+    this.r = perp.r;
+    this.dr = perp.dr;
+    this.exist = perp.exist;
+    this.refP_t = perp.refP_t;
   }
   getTagCrd(): pos {
     if (!this.exist) {

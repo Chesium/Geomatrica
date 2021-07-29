@@ -2,7 +2,7 @@ import canvas from "../../canvas";
 import point from "../point";
 import line from "../line";
 import { crd, pos } from "../../misc";
-import { calcLineEq } from "../../util";
+import { calcLineEq, calcPerpendicular } from "../../util";
 
 export default class perpendicularBisector extends line {
   Point1: point; //点在这条线上
@@ -28,39 +28,18 @@ export default class perpendicularBisector extends line {
     if (this.checkNonExistParents()) {
       return;
     }
-    var midP: crd = { x: (this.Point1.x + this.Point2.x) / 2, y: (this.Point1.y + this.Point2.y) / 2 };
-    var l = calcLineEq(this.Point1, this.Point2);
-    if (l.c == 0) {
-      this.exist = true;
-      this.a = 0;
-      this.b = midP.x;
-      this.c = 1;
-      this.d = 0;
-      this.dr = l.dr == 1 ? -1 : 1;
-      if (this.dr == 1) {
-        this.refP_t = [midP.x + 10 / Math.sqrt(1 + k * k), midP.x - 10 / Math.sqrt(1 + k * k)];
-      } else {
-        this.refP_t = [midP.x - 10 / Math.sqrt(1 + k * k), midP.x + 10 / Math.sqrt(1 + k * k)];
-      }
-    } else {
-      var k = -l.a / l.c;
-      this.exist = true;
-      this.a = 1;
-      this.b = 0;
-      this.c = k;
-      this.d = midP.y - k * midP.x;
-      if (k > 0) {
-        this.dr = l.dr == 1 ? -1 : 1;
-      } else {
-        this.dr = l.dr;
-      }
-      if (this.dr == 1) {
-        this.refP_t = [midP.x + 1 / Math.sqrt(1 + k * k), midP.x - 1 / Math.sqrt(1 + k * k)];
-      } else {
-        this.refP_t = [midP.x - 1 / Math.sqrt(1 + k * k), midP.x + 1 / Math.sqrt(1 + k * k)];
-      }
-    }
-    this.r = [-Infinity, Infinity];
+    var perp = calcPerpendicular(
+      { x: (this.Point1.x + this.Point2.x) / 2, y: (this.Point1.y + this.Point2.y) / 2 },
+      calcLineEq(this.Point1, this.Point2)
+    );
+    this.a = perp.a;
+    this.b = perp.b;
+    this.c = perp.c;
+    this.d = perp.d;
+    this.r = perp.r;
+    this.dr = perp.dr;
+    this.exist = perp.exist;
+    this.refP_t = perp.refP_t;
   }
   getTagCrd(): pos {
     if (!this.exist) {

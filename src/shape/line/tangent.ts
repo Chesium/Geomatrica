@@ -1,6 +1,6 @@
 import canvas from "../../canvas";
 import { crd, pos } from "../../misc";
-import { calcLineEq } from "../../util";
+import { calcLineEq, calcPerpendicular } from "../../util";
 import circle from "../circle";
 import line from "../line";
 import point from "../point";
@@ -34,42 +34,15 @@ export class tangent_1 extends line {
         //点就在该圆上
         //* 相当于过该点作此圆过此点的半径的垂线
         //此时只有一条切线，tangent_2对象不存在
-        var radius = calcLineEq(this.Circle, this.Point); //半径这条线
-        var x = this.Point.x,
-          y = this.Point.y,
-          a = radius.a,
-          c = radius.c;
-        if (c == 0) {
-          this.exist = true;
-          this.a = 0;
-          this.b = x;
-          this.c = 1;
-          this.d = 0;
-          this.dr = radius.dr == 1 ? -1 : 1;
-          if (this.dr == 1) {
-            this.refP_t = [x + 10 / Math.sqrt(1 + k * k), x - 10 / Math.sqrt(1 + k * k)];
-          } else {
-            this.refP_t = [x - 10 / Math.sqrt(1 + k * k), x + 10 / Math.sqrt(1 + k * k)];
-          }
-        } else {
-          var k = -a / c;
-          this.exist = true;
-          this.a = 1;
-          this.b = 0;
-          this.c = k;
-          this.d = y - k * x;
-          if (k > 0) {
-            this.dr = radius.dr == 1 ? -1 : 1;
-          } else {
-            this.dr = radius.dr;
-          }
-          if (this.dr == 1) {
-            this.refP_t = [x + 1 / Math.sqrt(1 + k * k), x - 1 / Math.sqrt(1 + k * k)];
-          } else {
-            this.refP_t = [x - 1 / Math.sqrt(1 + k * k), x + 1 / Math.sqrt(1 + k * k)];
-          }
-        }
-        this.r = [-Infinity, Infinity];
+        var perp = calcPerpendicular(this.Point, calcLineEq(this.Circle, this.Point));
+        this.a = perp.a;
+        this.b = perp.b;
+        this.c = perp.c;
+        this.d = perp.d;
+        this.r = perp.r;
+        this.dr = perp.dr;
+        this.exist = perp.exist;
+        this.refP_t = perp.refP_t;
         return;
       }
     }

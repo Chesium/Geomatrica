@@ -1,7 +1,4 @@
-import { rect, stdLine, pos, pair, crd, range } from "./misc";
-import obj from "./object";
-import { drawCase } from "./drawingMode";
-import canvas from "./canvas";
+import { rect, stdLine, pos, pair, crd, REAL_NUMBER, EMPTY_LINE } from "./misc";
 
 export function posForm(pair: pair): pos {
   //将pos对象转为pair二元组
@@ -167,21 +164,10 @@ export function substituteIntoLineEq(t: number, l: stdLine): crd {
   return { x: l.a * t + l.b, y: l.c * t + l.d };
 }
 
-export const allReal: range = [-Infinity, Infinity];
-
 export function calcLineEq(p1: crd, p2: crd): stdLine {
   if (p1.x == p2.x) {
     if (p1.y == p2.y) {
-      return {
-        exist: false,
-        a: NaN,
-        b: NaN,
-        c: NaN,
-        d: NaN,
-        r: allReal,
-        dr: 1,
-        refP_t: [NaN, NaN],
-      };
+      return EMPTY_LINE;
     }
     return {
       exist: true,
@@ -189,7 +175,7 @@ export function calcLineEq(p1: crd, p2: crd): stdLine {
       b: p1.x,
       c: 1,
       d: 0,
-      r: allReal,
+      r: REAL_NUMBER,
       dr: p1.y < p2.y ? 1 : -1,
       refP_t: [p1.y, p2.y],
     };
@@ -201,9 +187,72 @@ export function calcLineEq(p1: crd, p2: crd): stdLine {
       b: 0,
       c: k,
       d: p1.y - k * p1.x,
-      r: allReal,
+      r: REAL_NUMBER,
       dr: p1.x < p2.x ? 1 : -1,
       refP_t: [p1.x, p2.x],
     };
   }
+}
+
+export function calcPerpendicular(p: crd, l: stdLine): stdLine {
+  var perp: stdLine = EMPTY_LINE;
+  perp.exist = true;
+  if (l.c == 0) {
+    //[-]->[|]
+    perp.a = 0;
+    perp.b = p.x;
+    perp.c = 1;
+    perp.d = 0;
+    /**
+     *
+     *   +-------------+ ↻ +-------------+
+     *   |             | ↻ |             |
+     *   |             | ↻ |      |      |
+     *   |   ------>   | ↻ |      |      |
+     *   |             | ↻ |      ↓      |
+     *   |             | ↻ |             |
+     *   +-------------+ ↻ +-------------+
+     *
+     */
+
+    //clockwise 90°
+    perp.dr = l.dr == 1 ? -1 : 1;
+    if (perp.dr == 1) {
+      perp.refP_t = [p.x + 10 / Math.sqrt(1 + k * k), p.x - 10 / Math.sqrt(1 + k * k)];
+    } else {
+      perp.refP_t = [p.x - 10 / Math.sqrt(1 + k * k), p.x + 10 / Math.sqrt(1 + k * k)];
+    }
+  } else {
+    //[/][|]->[\][-]
+    var k = -l.a / l.c;
+    perp.a = 1;
+    perp.b = 0;
+    perp.c = k;
+    perp.d = p.y - k * p.x;
+    /**
+     *
+     *   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄ ↻ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+     *   █     *       █ ↻ █             █
+     *   █    /        █ ↻ █  ██\        █
+     *   █   /         █ ↻ █     ██\     █
+     *   █  /          █ ↻ █        █*   █
+     *   █             █ ↻ █             █
+     *   ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀ ↻ ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+     *
+     */
+
+    //clockwise 90°
+    if (k > 0) {
+      perp.dr = l.dr == 1 ? -1 : 1;
+    } else {
+      perp.dr = l.dr;
+    }
+    if (perp.dr == 1) {
+      perp.refP_t = [p.x + 1 / Math.sqrt(1 + k * k), p.x - 1 / Math.sqrt(1 + k * k)];
+    } else {
+      perp.refP_t = [p.x - 1 / Math.sqrt(1 + k * k), p.x + 1 / Math.sqrt(1 + k * k)];
+    }
+  }
+  perp.r = [-Infinity, Infinity];
+  return perp;
 }

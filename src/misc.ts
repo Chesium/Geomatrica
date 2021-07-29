@@ -24,6 +24,7 @@ export type pair = [number, number];
  * 描述一个范围
  */
 export type range = pair;
+export const REAL_NUMBER: range = [-Infinity, Infinity];
 /**
  * ## 线的标准显示用数据
  * 描述一个参数方程组:
@@ -40,6 +41,17 @@ export interface stdLine {
   dr?: -1 | 1;
   refP_t?: pair;
 }
+
+export const EMPTY_LINE: stdLine = {
+  exist: false,
+  a: NaN,
+  b: NaN,
+  c: NaN,
+  d: NaN,
+  r: REAL_NUMBER,
+  dr: 1,
+  refP_t: [NaN, NaN],
+};
 /**
  * ## 矩形
  *
