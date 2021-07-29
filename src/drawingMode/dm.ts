@@ -11,6 +11,7 @@ import dm_parallelLine from "./parallelLine.dm";
 import dm_midPoint from "./midPoint.dm";
 import dm_angleBisector from "./angleBisector.dm";
 import dm_tangent from "./tangent.dm"
+import dm_perpendicularBisector from "./perpendicularBisector.dm";
 
 export {
   dm_drawPoint,
@@ -26,4 +27,5 @@ export {
   dm_midPoint,
   dm_angleBisector,
   dm_tangent,
+  dm_perpendicularBisector,
 };

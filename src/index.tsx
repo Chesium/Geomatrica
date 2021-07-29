@@ -35,7 +35,7 @@ var buttons: [string, drawingMode | undefined][] = [
   ["extensionLine", dm.dm_extensionLine],
   ["angleBisector", dm.dm_angleBisector],
   ["tangent", dm.dm_tangent],
-  ["perpendicularBisector", undefined],
+  ["perpendicularBisector", dm.dm_perpendicularBisector],
   ["midPoint", dm.dm_midPoint],
   ["circumcircle", undefined],
 ];

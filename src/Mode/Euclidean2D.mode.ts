@@ -23,6 +23,7 @@ Euclidean2D.registerDrawingMode(dm.dm_parallelLine);
 Euclidean2D.registerDrawingMode(dm.dm_midPoint);
 Euclidean2D.registerDrawingMode(dm.dm_angleBisector);
 Euclidean2D.registerDrawingMode(dm.dm_tangent);
+Euclidean2D.registerDrawingMode(dm.dm_perpendicularBisector);
 
 Euclidean2D.registerShape(point);
 Euclidean2D.registerShape(line);
