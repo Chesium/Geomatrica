@@ -1,4 +1,5 @@
 import canvas from "../../canvas";
+import { centerOfGravity } from "../../util";
 import point from "../point";
 
 export default class midPoint extends point {
@@ -25,8 +26,9 @@ export default class midPoint extends point {
     if (this.checkNonExistParents()) {
       return;
     }
-    this.x = (this.Point1.x + this.Point2.x) / 2;
-    this.y = (this.Point1.y + this.Point2.y) / 2;
+    var midP=centerOfGravity(this.Point1,this.Point2);
+    this.x=midP.x;
+    this.y=midP.y;
     this.exist = true;
   }
   // beginDraw见shape

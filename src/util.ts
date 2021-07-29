@@ -256,3 +256,13 @@ export function calcPerpendicular(p: crd, l: stdLine): stdLine {
   perp.r = [-Infinity, Infinity];
   return perp;
 }
+
+export function centerOfGravity(...p: crd[]) {
+  var nx = 0,
+    ny = 0;
+  p.forEach((v) => {
+    nx += v.x;
+    ny += v.y;
+  });
+  return { x: nx / p.length, y: ny / p.length };
+}

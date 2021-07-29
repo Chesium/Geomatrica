@@ -2,7 +2,7 @@ import canvas from "../../canvas";
 import point from "../point";
 import line from "../line";
 import { crd, pos } from "../../misc";
-import { calcLineEq, calcPerpendicular } from "../../util";
+import { calcLineEq, calcPerpendicular, centerOfGravity } from "../../util";
 
 export default class perpendicularBisector extends line {
   Point1: point; //点在这条线上
@@ -29,7 +29,7 @@ export default class perpendicularBisector extends line {
       return;
     }
     var perp = calcPerpendicular(
-      { x: (this.Point1.x + this.Point2.x) / 2, y: (this.Point1.y + this.Point2.y) / 2 },
+      centerOfGravity(this.Point1, this.Point2),
       calcLineEq(this.Point1, this.Point2)
     );
     this.a = perp.a;
