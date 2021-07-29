@@ -1,10 +1,9 @@
 import React from "react";
-
+import { ReactSVG } from "react-svg";
 export class N3 extends React.Component<{
   name: string;
   lCtx: string;
   rCtx?: string;
-  addhr?: boolean;
 }> {
   render(): React.ReactNode {
     return (
@@ -12,7 +11,7 @@ export class N3 extends React.Component<{
         <div>
           <p className="p-left">{this.props.lCtx}</p>
           {this.props.rCtx != undefined && <p className="p-right">{this.props.rCtx}</p>}
-          {this.props.addhr && <hr />}
+          <ReactSVG className="expand-icon" src="../assets/blank.svg" />
         </div>
       </li>
     );
@@ -23,7 +22,6 @@ export class N2 extends React.Component<{
   name: string;
   lCtx: string;
   rCtx?: string;
-  addhr?: boolean;
   haveN3: boolean;
 }> {
   render(): React.ReactNode {
@@ -32,7 +30,11 @@ export class N2 extends React.Component<{
         <div>
           <p className="p-left">{this.props.lCtx}</p>
           {this.props.rCtx != undefined && <p className="p-right">{this.props.rCtx}</p>}
-          {this.props.addhr && <hr />}
+          {this.props.haveN3 ? (
+            <ReactSVG className="expand-icon" src="../assets/expand.svg" />
+          ) : (
+            <ReactSVG className="expand-icon" src="../assets/blank.svg" />
+          )}
         </div>
         {this.props.haveN3 && <ul className="navls-L2">{this.props.children}</ul>}
       </li>

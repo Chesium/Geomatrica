@@ -1,6 +1,6 @@
 import React from "react";
 import drawingMode from "./drawingMode";
-import { Menu, N1, N2 } from "./menu";
+import { Menu, N1, N2, N3 } from "./menu";
 import ModeSwitch from "./modeSwitch";
 import canvas from "./canvas";
 import Euclidean2D from "./Mode/Euclidean2D.mode";
@@ -33,9 +33,14 @@ export default class App extends React.Component<{ buttons: [string, drawingMode
           <img id="gm-logo" src="../assets/Geomatrica-icon.svg" />
           <Menu>
             <N1 name="file" ctx="文件">
-              <N2 name="new" lCtx="新建画板" haveN3={false} />
-              <N2 name="import" lCtx="导入画板" haveN3={false} />
-              <N2 name="export" lCtx="导出画板" haveN3={false} />
+              <N2 name="new" lCtx="新建画板" rCtx="Alt+O" haveN3={true}>
+                <N3 name="new1" lCtx="NEW 1" />
+                <N3 name="new2" lCtx="NEW 2" />
+                <N3 name="new3" lCtx="NEW 3" />
+              </N2>
+              <hr />
+              <N2 name="import" lCtx="导入画板" rCtx="Alt+O" haveN3={false} />
+              <N2 name="export" lCtx="导出画板" rCtx="Alt+S" haveN3={false} />
             </N1>
             <N1 name="edit" ctx="编辑">
               <N2 name="undo" lCtx="撤销" haveN3={false} />
