@@ -297,6 +297,7 @@ export default class canvas {
    */
   constructor(pixiAppSetting: IApplicationOptions, Mode: Mode) {
     this.PIXIapp = new Application(pixiAppSetting);
+    this.PIXIapp.view.removeAttribute("style");
     this.Mode = Mode;
     this.nextNameI = {
       point: 0,
