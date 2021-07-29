@@ -1,6 +1,6 @@
 import obj from "../object";
 import { pairForm } from "../util";
-import { crd, pos } from "../misc";
+import { crd, EMPTY_CIRCLE, pos, stdCircle } from "../misc";
 import pointOnCircle from "./point/pointOnShape/pointOnCircle";
 import point from "./point";
 import { intersection_LC_1, intersection_LC_2 } from "./point/intersection/intersection_LC";
@@ -78,5 +78,12 @@ export default abstract class circle extends obj {
 
   generatePointOnIt(crd: crd): point {
     return new pointOnCircle(this.canvas, this, crd.x, crd.y);
+  }
+
+  setData(c: stdCircle = EMPTY_CIRCLE): void {
+    this.x = c.x;
+    this.y = c.y;
+    this.r = c.r;
+    this.exist = c.exist;
   }
 }

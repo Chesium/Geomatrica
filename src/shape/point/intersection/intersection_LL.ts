@@ -45,9 +45,7 @@ export default class intersection_LL extends intersection {
       return;
     }
     this.exist = true;
-    var crd = substituteIntoLineEq(itsc.t1, this.Line1);
-    this.x = crd.x;
-    this.y = crd.y;
+    this.setData(substituteIntoLineEq(itsc.t1, this.Line1));
   }
   // beginDraw见shape
   // beginDrag见shape

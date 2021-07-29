@@ -2,6 +2,7 @@ import intersection from "../intersection";
 import line from "../../line";
 import circle from "../../circle";
 import canvas from "../../../canvas";
+import { substituteIntoLineEq } from "../../../util";
 
 export class intersection_LC_1 extends intersection {
   Line: line; //点在这条线上
@@ -65,8 +66,7 @@ export class intersection_LC_1 extends intersection {
       t = Math.min(...ts);
     }
     this.exist = true;
-    this.x = a * t + b;
-    this.y = c * t + d;
+    this.setData(substituteIntoLineEq(t, this.Line));
   }
   // beginDraw见shape
   // beginDrag见shape
@@ -137,8 +137,7 @@ export class intersection_LC_2 extends intersection {
       t = Math.min(...ts);
     }
     this.exist = true;
-    this.x = a * t + b;
-    this.y = c * t + d;
+    this.setData(substituteIntoLineEq(t, this.Line));
   }
   // beginDraw见shape
   // beginDrag见shape

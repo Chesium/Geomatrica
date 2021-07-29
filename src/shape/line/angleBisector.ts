@@ -59,17 +59,7 @@ export default class angleBisector_3P extends line {
       y: y3 - (y3 - y1) * ko3_13,
     };
 
-    var l = calcLineEq(this.Point2, o);
-    //角平分线即为直线2o
-
-    this.exist = l.exist;
-    this.a = l.a;
-    this.b = l.b;
-    this.c = l.c;
-    this.d = l.d;
-    this.r = l.r;
-    this.dr = l.dr;
-    this.refP_t = l.refP_t;
+    this.setData(calcLineEq(this.Point2, o));
   }
   getTagCrd(): pos {
     if (!this.exist) {
@@ -107,13 +97,9 @@ export class angleBisector_2L_1 extends line {
       return;
     }
     var a1 = this.Line1.a,
-      b1 = this.Line1.b,
       c1 = this.Line1.c,
-      d1 = this.Line1.d,
       a2 = this.Line2.a,
-      b2 = this.Line2.b,
-      c2 = this.Line2.c,
-      d2 = this.Line2.d;
+      c2 = this.Line2.c;
     this.r = [-Infinity, Infinity];
     var itsc = calcIntersectionLL(this.Line1, this.Line2);
     if (!itsc.exist) {
@@ -198,13 +184,9 @@ export class angleBisector_2L_2 extends line {
       return;
     }
     var a1 = this.Line1.a,
-      b1 = this.Line1.b,
       c1 = this.Line1.c,
-      d1 = this.Line1.d,
       a2 = this.Line2.a,
-      b2 = this.Line2.b,
-      c2 = this.Line2.c,
-      d2 = this.Line2.d;
+      c2 = this.Line2.c;
     this.r = [-Infinity, Infinity];
     var itsc = calcIntersectionLL(this.Line1, this.Line2);
     if (!itsc.exist) {

@@ -28,15 +28,7 @@ export default class perpendicular extends line {
     if (this.checkNonExistParents()) {
       return;
     }
-    var perp = calcPerpendicular(this.Point, this.Line);
-    this.a = perp.a;
-    this.b = perp.b;
-    this.c = perp.c;
-    this.d = perp.d;
-    this.r = perp.r;
-    this.dr = perp.dr;
-    this.exist = perp.exist;
-    this.refP_t = perp.refP_t;
+    this.setData(calcPerpendicular(this.Point, this.Line));
   }
   getTagCrd(): pos {
     if (!this.exist) {

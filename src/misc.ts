@@ -9,7 +9,11 @@ export interface pos {
 /**
  * ## 计算用坐标
  */
-export type crd = pos;
+export interface crd {
+  //二维坐标
+  x: number;
+  y: number;
+}
 /**
  * ## 数对
  *
@@ -52,6 +56,19 @@ export const EMPTY_LINE: stdLine = {
   dr: 1,
   refP_t: [NaN, NaN],
 };
+
+export interface stdCircle extends crd {
+  exist: boolean;
+  r: number;
+}
+
+export const EMPTY_CIRCLE: stdCircle = {
+  exist: false,
+  x: NaN,
+  y: NaN,
+  r: NaN,
+};
+
 /**
  * ## 矩形
  *

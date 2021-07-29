@@ -52,4 +52,9 @@ export default abstract class point extends obj {
   generatePointOnIt(crd: crd): point {
     return this;
   }
+
+  setData(p: crd = { x: NaN, y: NaN }): void {
+    this.x = p.x;
+    this.y = p.y;
+  }
 }

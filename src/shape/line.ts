@@ -1,5 +1,5 @@
 import obj from "../object";
-import { crd, range } from "../misc";
+import { crd, EMPTY_LINE, range, stdLine } from "../misc";
 import { L_DpData_To_epCrd, posForm, pairForm } from "../util";
 import point from "./point";
 import pointOnLine from "./point/pointOnShape/pointOnLine";
@@ -102,5 +102,16 @@ export default abstract class line extends obj {
 
   generatePointOnIt(crd: crd): point {
     return new pointOnLine(this.canvas, this, crd.x, crd.y);
+  }
+
+  setData(l: stdLine = EMPTY_LINE): void {
+    this.a = l.a;
+    this.b = l.b;
+    this.c = l.c;
+    this.d = l.d;
+    this.r = l.r;
+    this.dr = l.dr;
+    this.exist = l.exist;
+    this.refP_t = l.refP_t;
   }
 }

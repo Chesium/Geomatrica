@@ -28,18 +28,9 @@ export default class perpendicularBisector extends line {
     if (this.checkNonExistParents()) {
       return;
     }
-    var perp = calcPerpendicular(
-      centerOfGravity(this.Point1, this.Point2),
-      calcLineEq(this.Point1, this.Point2)
+    this.setData(
+      calcPerpendicular(centerOfGravity(this.Point1, this.Point2), calcLineEq(this.Point1, this.Point2))
     );
-    this.a = perp.a;
-    this.b = perp.b;
-    this.c = perp.c;
-    this.d = perp.d;
-    this.r = perp.r;
-    this.dr = perp.dr;
-    this.exist = perp.exist;
-    this.refP_t = perp.refP_t;
   }
   getTagCrd(): pos {
     if (!this.exist) {

@@ -26,9 +26,7 @@ export default class midPoint extends point {
     if (this.checkNonExistParents()) {
       return;
     }
-    var midP=centerOfGravity(this.Point1,this.Point2);
-    this.x=midP.x;
-    this.y=midP.y;
+    this.setData(centerOfGravity(this.Point1, this.Point2));
     this.exist = true;
   }
   // beginDraw见shape

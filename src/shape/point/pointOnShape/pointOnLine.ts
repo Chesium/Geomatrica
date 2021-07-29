@@ -1,6 +1,7 @@
 import pointOnShape from "../pointOnShape";
 import line from "../../line";
 import canvas from "../../../canvas";
+import { substituteIntoLineEq } from "../../../util";
 
 export default class pointOnLine extends pointOnShape {
   proportion: number = 0.5; //比例默认值
@@ -40,8 +41,7 @@ export default class pointOnLine extends pointOnShape {
     if (!this.following) {
       var t = (t2 - t1) * this.proportion + t1;
       this.exist = true;
-      this.x = a * t + b;
-      this.y = c * t + d;
+      this.setData(substituteIntoLineEq(t, this.Line));
       return;
     }
     if (c == 0 && a == 0) {
@@ -51,18 +51,15 @@ export default class pointOnLine extends pointOnShape {
     var t = (a * (this.x - b) + c * (this.y - d)) / (a * a + c * c);
     if (t < Math.min(r[0], r[1])) {
       this.exist = true;
-      this.x = a * t1 + b;
-      this.y = c * t1 + d;
+      this.setData(substituteIntoLineEq(t1, this.Line));
       this.proportion = 0;
     } else if (t > Math.max(r[0], r[1])) {
       this.exist = true;
-      this.x = a * t2 + b;
-      this.y = c * t2 + d;
+      this.setData(substituteIntoLineEq(t2, this.Line));
       this.proportion = 1;
     } else {
       this.exist = true;
-      this.x = a * t + b;
-      this.y = c * t + d;
+      this.setData(substituteIntoLineEq(t, this.Line));
       this.proportion = (t - t1) / (t2 - t1);
     }
   }

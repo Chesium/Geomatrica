@@ -72,15 +72,7 @@ export class tangent_1 extends line {
     var POT: crd = { x: xM + q * (y1 - yM), y: yM - q * (x1 - xM) };
     //!                    ↑---------swap---------↑
 
-    var l = calcLineEq(this.Point, POT);
-    this.exist = l.exist;
-    this.a = l.a;
-    this.b = l.b;
-    this.c = l.c;
-    this.d = l.d;
-    this.dr = l.dr;
-    this.r = [-Infinity, Infinity];
-    this.refP_t = l.refP_t;
+    this.setData(calcLineEq(this.Point, POT));
   }
   getTagCrd(): pos {
     if (!this.exist) {
@@ -168,15 +160,7 @@ export class tangent_2 extends line {
     var POT: crd = { x: xM - q * (y1 - yM), y: yM + q * (x1 - xM) };
     //!                    ↑---------swap---------↑
 
-    var l = calcLineEq(this.Point, POT);
-    this.exist = l.exist;
-    this.a = l.a;
-    this.b = l.b;
-    this.c = l.c;
-    this.d = l.d;
-    this.dr = l.dr;
-    this.r = [-Infinity, Infinity];
-    this.refP_t = l.refP_t;
+    this.setData(calcLineEq(this.Point, POT));
   }
   getTagCrd(): pos {
     if (!this.exist) {
