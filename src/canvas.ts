@@ -297,7 +297,6 @@ export default class canvas {
    */
   constructor(pixiAppSetting: IApplicationOptions, Mode: Mode) {
     this.PIXIapp = new Application(pixiAppSetting);
-    this.PIXIapp.view.removeAttribute("style");
     this.Mode = Mode;
     this.nextNameI = {
       point: 0,
@@ -492,6 +491,7 @@ export default class canvas {
         }
       }
     });
+    this.PIXIapp.view.removeAttribute("style");
   }
   /**
    * ## 转换至显示用坐标`pos`
