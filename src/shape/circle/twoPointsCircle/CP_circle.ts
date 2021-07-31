@@ -3,9 +3,10 @@ import canvas from "../../../canvas";
 import twoPointsCircle from "../twoPointsCircle";
 
 export default class CP_circle extends twoPointsCircle {
+  static defineTypeName = "CP_circle";
   constructor(canvas: canvas, center: point, point: point) {
     super(); //无用
-    this.defineTypeName = "CP_circle";
+    this.defineTypeName = CP_circle.defineTypeName;
     this.init_L1(canvas, false);
     this.init_L2();
     this.init_L3(center, point);

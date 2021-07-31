@@ -8,9 +8,10 @@ export default class perpendicularBisector extends line {
   Point1: point; //点在这条线上
   Point2: point; //点也在这条线上
 
+  static defineTypeName = "perpendicularBisector";
   constructor(canvas: canvas, p1: point, p2: point) {
     super(); //无用
-    this.defineTypeName = "perpendicularBisector";
+    this.defineTypeName = perpendicularBisector.defineTypeName;
     this.init_L1(canvas, false);
     this.init_L2();
     //================//

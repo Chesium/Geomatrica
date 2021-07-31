@@ -31,3 +31,21 @@ export {
   dm_perpendicularBisector,
   dm_circumcircle,
 };
+
+export const dms = [
+  dm_drawPoint,
+  dm_intersection,
+  dm_move,
+  dm_segment,
+  dm_halfLine,
+  dm_straightLine,
+  dm_extensionLine,
+  dm_CP_circle,
+  dm_perpendicular,
+  dm_parallelLine,
+  dm_midPoint,
+  dm_angleBisector,
+  dm_tangent,
+  dm_perpendicularBisector,
+  dm_circumcircle,
+];

@@ -21,8 +21,9 @@ export default abstract class obj {
   public shapeDescription: string; //形状参考描述
   protected bodyZIndex: number; //显示堆叠顺序 越大越前
   //定义层静态信息
+  static defineTypeName: string; //定义参考名
   public defineTypeName: string; //定义参考名
-  public defineI: number;
+  // public defineI: number;
   public defineTypeDescription: string; //定义参考描述
 
   public initializing: boolean; //是否在初始化
@@ -53,7 +54,8 @@ export default abstract class obj {
   public tag: tagBox; //对象标签
   public name: string; //对象名称
 
-  static indexes: { [index: string]: number } = {};
+  static shapeIndexes: { [index: string]: number } = {};
+  static defIndexes: { [index: string]: number } = {};
 
   //================//
 

@@ -42,14 +42,6 @@ export default class canvas {
    */
   O: obj[] = [];
   /**
-   * ## 预定义图形对象列表
-   * 画板中所有预定义(predefined)图形对象被存储在这里
-   *
-   * ---
-   * "predefined objects"的缩写
-   */
-  pO: obj[] = [];
-  /**
    * ## 交互区域响应序列
    * 画板中各可点击图形对象交互区域的响应序列
    *
@@ -75,11 +67,11 @@ export default class canvas {
    * ---
    * 目前有3种可能的值:
    *
-   * `1` : 空闲
+   * `0` : 空闲
    *
-   * `2` : 正在拖动图形对象
+   * `1` : 正在拖动图形对象
    *
-   * `3` : 正在拖动图形标签
+   * `2` : 正在拖动图形标签
    */
   Status: number = 0;
   /**
@@ -836,4 +828,12 @@ export default class canvas {
       }
     }
   }
+
+  
+
+  // save():string{
+  //   for(var obj of this.O){
+
+  //   }
+  // }
 }

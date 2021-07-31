@@ -8,9 +8,11 @@ export default class angleBisector_3P extends line {
   Point1: point;
   Point2: point;
   Point3: point;
+
+  static defineTypeName = "angleBisector_3P";
   constructor(canvas: canvas, p1: point, p2: point, p3: point) {
     super();
-    this.defineTypeName = "angleBisector_3P";
+    this.defineTypeName = angleBisector_3P.defineTypeName;
     this.init_L1(canvas, false);
     this.init_L2();
     //================//
@@ -76,9 +78,11 @@ export default class angleBisector_3P extends line {
 export class angleBisector_2L_1 extends line {
   Line1: line;
   Line2: line;
+
+  static defineTypeName = "angleBisector_2L_1";
   constructor(canvas: canvas, l1: line, l2: line) {
     super();
-    this.defineTypeName = "angleBisector_2L_1";
+    this.defineTypeName = angleBisector_2L_1.defineTypeName;
     this.init_L1(canvas, false);
     this.init_L2();
     //================//
@@ -130,8 +134,8 @@ export class angleBisector_2L_1 extends line {
       this.d = p.y - this.c * p.x;
       mn_t = p.x;
     }
-    var pl=calcLineEq(p1,p2);
-    var pItsc=calcIntersectionLL(this,pl);
+    var pl = calcLineEq(p1, p2);
+    var pItsc = calcIntersectionLL(this, pl);
     if (pItsc.t1 > mn_t) {
       this.dr = 1;
       if (dnmnt == 0) {
@@ -163,9 +167,11 @@ export class angleBisector_2L_1 extends line {
 export class angleBisector_2L_2 extends line {
   Line1: line;
   Line2: line;
+
+  static defineTypeName = "angleBisector_2L_2";
   constructor(canvas: canvas, l1: line, l2: line) {
     super();
-    this.defineTypeName = "angleBisector_2L_2";
+    this.defineTypeName = angleBisector_2L_2.defineTypeName;
     this.init_L1(canvas, false);
     this.init_L2();
     //================//

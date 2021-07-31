@@ -3,9 +3,10 @@ import point from "../../point";
 import canvas from "../../../canvas";
 
 export default class halfLine extends twoPointsLine {
+  static defineTypeName = "halfLine";
   constructor(canvas: canvas, p1: point, p2: point) {
     super(); //无用
-    this.defineTypeName = "halfLine";
+    this.defineTypeName = halfLine.defineTypeName;
     this.init_L1(canvas, false);
     this.init_L2();
     this.init_L3(p1, p2);

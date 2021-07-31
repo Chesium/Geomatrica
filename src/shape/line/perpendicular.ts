@@ -7,9 +7,11 @@ import point from "../point";
 export default class perpendicular extends line {
   Point: point;
   Line: line;
+
+  static defineTypeName = "perpendicular";
   constructor(canvas: canvas, p: point, l: line) {
     super();
-    this.defineTypeName = "perpendicular";
+    this.defineTypeName = perpendicular.defineTypeName;
     this.init_L1(canvas, false);
     this.init_L2();
     //================//

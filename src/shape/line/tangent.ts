@@ -9,9 +9,11 @@ import pointOnCircle from "../point/pointOnShape/pointOnCircle";
 export class tangent_1 extends line {
   Point: point;
   Circle: circle;
+
+  static defineTypeName = "tangent_1";
   constructor(canvas: canvas, p: point, c: circle) {
     super();
-    this.defineTypeName = "tangent_1";
+    this.defineTypeName = tangent_1.defineTypeName;
     this.init_L1(canvas, false);
     this.init_L2();
     //================//
@@ -107,9 +109,11 @@ export class tangent_1 extends line {
 export class tangent_2 extends line {
   Point: point;
   Circle: circle;
+
+  static defineTypeName = "tangent_2";
   constructor(canvas: canvas, p: point, c: circle) {
     super();
-    this.defineTypeName = "tangent_2";
+    this.defineTypeName = tangent_2.defineTypeName;
     this.init_L1(canvas, false);
     this.init_L2();
     //================//
