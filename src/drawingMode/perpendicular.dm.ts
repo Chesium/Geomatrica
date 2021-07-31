@@ -13,7 +13,7 @@ dm_perpendicular.rootCase = new drawCase((root: drawCase) => {
   root.into[point.shapeName] = new drawCase((intoPoint: drawCase) => {
     intoPoint.into[line.shapeName] = new drawCase((intoLine: drawCase) => {
       intoLine.processFn = (cv: canvas) => {
-        new perpendicular(cv, cv.chooseObjs.point[0], cv.chooseObjs.line[0]);
+        new perpendicular({ canvas: cv, p: cv.chooseObjs.point[0], l: cv.chooseObjs.line[0] });
         cv.resetChoosing();
       };
     });
@@ -21,7 +21,7 @@ dm_perpendicular.rootCase = new drawCase((root: drawCase) => {
   root.into[line.shapeName] = new drawCase((intoLine: drawCase) => {
     intoLine.into[point.shapeName] = new drawCase((intoPoint: drawCase) => {
       intoPoint.processFn = (cv: canvas) => {
-        new perpendicular(cv, cv.chooseObjs.point[0], cv.chooseObjs.line[0]);
+        new perpendicular({ canvas: cv, p: cv.chooseObjs.point[0], l: cv.chooseObjs.line[0] });
         cv.resetChoosing();
       };
     });

@@ -9,7 +9,11 @@ var dm_CP_circle = new twoPointsObj_dm(
     description: "画圆（圆心和一点）",
   },
   (canvas: canvas) => {
-    return new CP_circle(canvas, canvas.chooseObjs.point[0], canvas.chooseObjs.point[1]);
+    return new CP_circle({
+      canvas: canvas,
+      center: canvas.chooseObjs.point[0],
+      point: canvas.chooseObjs.point[1],
+    });
   }
 );
 

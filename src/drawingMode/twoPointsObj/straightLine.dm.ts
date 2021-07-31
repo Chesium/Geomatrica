@@ -9,7 +9,11 @@ var dm_straightLine = new twoPointsObj_dm(
     description: "画直线",
   },
   (canvas: canvas) => {
-    return new straightLine(canvas, canvas.chooseObjs.point[0], canvas.chooseObjs.point[1]);
+    return new straightLine({
+      canvas: canvas,
+      p1: canvas.chooseObjs.point[0],
+      p2: canvas.chooseObjs.point[1],
+    });
   }
 );
 

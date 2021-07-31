@@ -21,23 +21,23 @@ export default class angleBisector_3P extends line {
   Point3: point;
 
   static defineTypeName = "angleBisector_3P";
-  constructor(canvas: canvas, p1: point, p2: point, p3: point) {
+  constructor(dfc: angleBisector_3P_fc) {
     super();
     this.defineTypeName = angleBisector_3P.defineTypeName;
-    this.init_L1(canvas, false);
+    this.init_L1(dfc.canvas, false);
     this.init_L2();
     //================//
-    this.Point1 = p1;
-    this.Point2 = p2;
-    this.Point3 = p3;
+    this.Point1 = dfc.p1;
+    this.Point2 = dfc.p2;
+    this.Point3 = dfc.p3;
     //对象间父子关系处理
-    p1.children.push(this);
-    p1.onObjs.push(this);
-    p2.children.push(this);
-    p2.onObjs.push(this);
-    p3.children.push(this);
-    p3.onObjs.push(this);
-    this.parents = [p1, p2, p3];
+    dfc.p1.children.push(this);
+    dfc.p1.onObjs.push(this);
+    dfc.p2.children.push(this);
+    dfc.p2.onObjs.push(this);
+    dfc.p3.children.push(this);
+    dfc.p3.onObjs.push(this);
+    this.parents = [dfc.p1, dfc.p2, dfc.p3];
     //================//
     this.calc();
     this.init_end();
@@ -91,18 +91,18 @@ export class angleBisector_2L_1 extends line {
   Line2: line;
 
   static defineTypeName = "angleBisector_2L_1";
-  constructor(canvas: canvas, l1: line, l2: line) {
+  constructor(dfc: angleBisector_2L_fc) {
     super();
     this.defineTypeName = angleBisector_2L_1.defineTypeName;
-    this.init_L1(canvas, false);
+    this.init_L1(dfc.canvas, false);
     this.init_L2();
     //================//
-    this.Line1 = l1;
-    this.Line2 = l2;
+    this.Line1 = dfc.l1;
+    this.Line2 = dfc.l2;
     //对象间父子关系处理
-    l1.children.push(this);
-    l2.children.push(this);
-    this.parents = [l1, l2];
+    dfc.l1.children.push(this);
+    dfc.l2.children.push(this);
+    this.parents = [dfc.l1, dfc.l2];
     //================//
     this.calc();
     this.init_end();
@@ -180,18 +180,18 @@ export class angleBisector_2L_2 extends line {
   Line2: line;
 
   static defineTypeName = "angleBisector_2L_2";
-  constructor(canvas: canvas, l1: line, l2: line) {
+  constructor(dfc: angleBisector_2L_fc) {
     super();
-    this.defineTypeName = angleBisector_2L_2.defineTypeName;
-    this.init_L1(canvas, false);
+    this.defineTypeName = angleBisector_2L_1.defineTypeName;
+    this.init_L1(dfc.canvas, false);
     this.init_L2();
     //================//
-    this.Line1 = l1;
-    this.Line2 = l2;
+    this.Line1 = dfc.l1;
+    this.Line2 = dfc.l2;
     //对象间父子关系处理
-    l1.children.push(this);
-    l2.children.push(this);
-    this.parents = [l1, l2];
+    dfc.l1.children.push(this);
+    dfc.l2.children.push(this);
+    this.parents = [dfc.l1, dfc.l2];
     //================//
     this.calc();
     this.init_end();

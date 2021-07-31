@@ -22,20 +22,20 @@ export default class circumcircle extends circle {
   Point3: point;
 
   static defineTypeName = "circumcircle";
-  constructor(canvas: canvas, p1: point, p2: point, p3: point) {
+  constructor(dfc: circumcircle_fc) {
     super(); //无用
     this.defineTypeName = circumcircle.defineTypeName;
-    this.init_L1(canvas, false);
+    this.init_L1(dfc.canvas, false);
     this.init_L2();
-    this.Point1 = p1;
-    this.Point2 = p2;
-    this.Point3 = p3;
-    p1.children.push(this);
-    p1.onObjs.push(this);
-    p2.children.push(this);
-    p2.onObjs.push(this);
-    p3.children.push(this);
-    p3.onObjs.push(this);
+    this.Point1 = dfc.p1;
+    this.Point2 = dfc.p2;
+    this.Point3 = dfc.p3;
+    dfc.p1.children.push(this);
+    dfc.p1.onObjs.push(this);
+    dfc.p2.children.push(this);
+    dfc.p2.onObjs.push(this);
+    dfc.p3.children.push(this);
+    dfc.p3.onObjs.push(this);
     this.parents = [this.Point1, this.Point2, this.Point3];
     this.drawableObj = this.Point3;
     this.calc();

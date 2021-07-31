@@ -15,20 +15,20 @@ export default class pointOnCircle extends pointOnShape {
   Circle: circle; //点在这个圆上
 
   static defineTypeName = "pointOnCircle";
-  constructor(canvas: canvas, c: circle, init_x: number, init_y: number) {
+  constructor(dfc: pointOnCircle_fc) {
     super(); //无用
     this.defineTypeName = pointOnCircle.defineTypeName;
-    this.init_L1(canvas, false);
+    this.init_L1(dfc.canvas, false);
     this.init_L2();
     //================//
-    this.Circle = c;
-    this.onObjs.push(c);
+    this.Circle = dfc.c;
+    this.onObjs.push(dfc.c);
     //对象间父子关系处理
-    c.children.push(this);
+    dfc.c.children.push(this);
     this.parents = [this.Circle];
     //从初始坐标开始找到最近的线上点
-    this.x = init_x;
-    this.y = init_y;
+    this.x = dfc.init_x;
+    this.y = dfc.init_y;
     this.following = true;
     this.calc();
     this.following = false;

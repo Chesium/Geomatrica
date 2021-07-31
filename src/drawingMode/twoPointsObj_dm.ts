@@ -23,7 +23,7 @@ export default class twoPointsObj_dm extends drawingMode {
     this.rootCase = new drawCase((root: drawCase) => {
       root.intoBlank = new drawCase((intoBlank: drawCase) => {
         intoBlank.processFn = (cv: canvas, crd: crd) => {
-          var newP = new freepoint(cv, crd.x, crd.y);
+          var newP = new freepoint({ canvas: cv, x: crd.x, y: crd.y });
           newP.updInteractionArea();
           newP.updBoundRect();
           newP.updBitmap();
@@ -52,7 +52,7 @@ export default class twoPointsObj_dm extends drawingMode {
       });
       root.into[point.shapeName] = new drawCase((intoPoint: drawCase) => {
         intoPoint.processFn = (cv: canvas, crd: crd) => {
-          var prePoint = new MousePoint(cv);
+          var prePoint = new MousePoint({ canvas: cv });
           cv.currentCase = this.rootCase.into[point.shapeName].into[point.shapeName];
           cv.chooseObjs.all.push(prePoint);
           cv.chooseObjs.point.push(prePoint);

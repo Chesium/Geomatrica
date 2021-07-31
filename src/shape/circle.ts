@@ -66,18 +66,18 @@ export default abstract class circle extends obj {
         continue;
       }
       if (t instanceof line) {
-        new intersection_LC_1(this.canvas, t, this, true);
-        new intersection_LC_2(this.canvas, t, this, true);
+        new intersection_LC_1({ canvas: this.canvas, l: t, c: this, predefined: true });
+        new intersection_LC_2({ canvas: this.canvas, l: t, c: this, predefined: true });
       }
       if (t instanceof circle) {
-        new intersection_CC_1(this.canvas, this, t, true);
-        new intersection_CC_2(this.canvas, this, t, true);
+        new intersection_CC_1({ canvas: this.canvas, c1: this, c2: t, predefined: true });
+        new intersection_CC_2({ canvas: this.canvas, c1: this, c2: t, predefined: true });
       }
     }
   }
 
   generatePointOnIt(crd: crd): point {
-    return new pointOnCircle(this.canvas, this, crd.x, crd.y);
+    return new pointOnCircle({ canvas: this.canvas, c: this, init_x: crd.x, init_y: crd.y });
   }
 
   setData(c: stdCircle): void {

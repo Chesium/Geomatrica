@@ -16,18 +16,18 @@ export class intersection_LC_1 extends intersection {
   Circle: circle; //点也在这条线上
 
   static defineTypeName = "intersection_LC_1";
-  constructor(canvas: canvas, l: line, c: circle, predefined: boolean = false) {
+  constructor(dfc: intersection_LC_fc) {
     super(); //无用
     this.defineTypeName = intersection_LC_1.defineTypeName;
-    this.init_L1(canvas, predefined);
+    this.init_L1(dfc.canvas, dfc.predefined);
     this.init_L2();
     //================//
-    this.Line = l;
-    this.Circle = c;
-    this.onObjs.push(l, c);
+    this.Line = dfc.l;
+    this.Circle = dfc.c;
+    this.onObjs.push(dfc.l, dfc.c);
     //对象间父子关系处理
-    l.children.push(this);
-    c.children.push(this);
+    dfc.l.children.push(this);
+    dfc.c.children.push(this);
     this.parents = [this.Line, this.Circle];
     //================//
     this.calc();
@@ -89,17 +89,17 @@ export class intersection_LC_2 extends intersection {
   Circle: circle; //点也在这条线上
 
   static defineTypeName = "intersection_LC_2";
-  constructor(canvas: canvas, l: line, c: circle, predefined: boolean = false) {
+  constructor(dfc: intersection_LC_fc) {
     super(); //无用
     this.defineTypeName = intersection_LC_2.defineTypeName;
-    this.init_L1(canvas, predefined);
+    this.init_L1(dfc.canvas, dfc.predefined);
     this.init_L2();
     //================//
-    this.Line = l;
-    this.Circle = c;
+    this.Line = dfc.l;
+    this.Circle = dfc.c;
     //对象间父子关系处理
-    l.children.push(this);
-    c.children.push(this);
+    dfc.l.children.push(this);
+    dfc.c.children.push(this);
     this.parents = [this.Line, this.Circle];
     //================//
     this.calc();

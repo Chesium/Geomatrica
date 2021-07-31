@@ -13,7 +13,12 @@ dm_circumcircle.rootCase = new drawCase((root: drawCase) => {
     intoPoint1.into[point.shapeName] = new drawCase((intoPoint2: drawCase) => {
       intoPoint2.into[point.shapeName] = new drawCase((intoPoint3: drawCase) => {
         intoPoint3.processFn = (cv: canvas) => {
-          new circumcircle(cv, cv.chooseObjs.point[0], cv.chooseObjs.point[1], cv.chooseObjs.point[2]);
+          new circumcircle({
+            canvas: cv,
+            p1: cv.chooseObjs.point[0],
+            p2: cv.chooseObjs.point[1],
+            p3: cv.chooseObjs.point[2],
+          });
           cv.resetChoosing();
         };
       });

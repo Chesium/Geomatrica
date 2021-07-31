@@ -12,15 +12,15 @@ export default class freePoint extends point {
   dragOffset: crd;
 
   static defineTypeName = "freepoint";
-  constructor(canvas: canvas, x: number, y: number) {
+  constructor(dfc: freePoint_fc) {
     super(); //无用
     this.defineTypeName = freePoint.defineTypeName;
-    this.init_L1(canvas, false);
+    this.init_L1(dfc.canvas, false);
     this.init_L2();
     //================//
     this.exist = true;
-    this.x = x;
-    this.y = y;
+    this.x = dfc.x;
+    this.y = dfc.y;
     this.calc();
     this.canvas.rootObjs.push(this); //自由点特有语句 当前所有根对象均为自由点
     //================//

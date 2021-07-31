@@ -10,12 +10,12 @@ export class CP_circle_fc extends obj_fc {
 
 export default class CP_circle extends twoPointsCircle {
   static defineTypeName = "CP_circle";
-  constructor(canvas: canvas, center: point, point: point) {
+  constructor(dfc: CP_circle_fc) {
     super(); //无用
     this.defineTypeName = CP_circle.defineTypeName;
-    this.init_L1(canvas, false);
+    this.init_L1(dfc.canvas, false);
     this.init_L2();
-    this.init_L3(center, point);
+    this.init_L3(dfc.center, dfc.point);
     this.calc();
     this.init_end();
   }

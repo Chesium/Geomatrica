@@ -15,17 +15,17 @@ export default class perpendicularBisector extends line {
   Point2: point; //点也在这条线上
 
   static defineTypeName = "perpendicularBisector";
-  constructor(canvas: canvas, p1: point, p2: point) {
+  constructor(dfc: perpendicularBisector_fc) {
     super(); //无用
     this.defineTypeName = perpendicularBisector.defineTypeName;
-    this.init_L1(canvas, false);
+    this.init_L1(dfc.canvas, false);
     this.init_L2();
     //================//
-    this.Point1 = p1;
-    this.Point2 = p2;
+    this.Point1 = dfc.p1;
+    this.Point2 = dfc.p2;
     //对象间父子关系处理
-    p1.children.push(this);
-    p2.children.push(this);
+    dfc.p1.children.push(this);
+    dfc.p2.children.push(this);
     this.parents = [this.Point1, this.Point2];
     //================//
     this.calc();

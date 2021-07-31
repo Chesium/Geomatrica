@@ -12,7 +12,11 @@ dm_midPoint.rootCase = new drawCase((root: drawCase) => {
   root.into[point.shapeName] = new drawCase((intoPoint1: drawCase) => {
     intoPoint1.into[point.shapeName] = new drawCase((intoPoint2: drawCase) => {
       intoPoint2.processFn = (cv: canvas) => {
-        new midPoint(cv, cv.chooseObjs.point[0], cv.chooseObjs.point[1]);
+        new midPoint({
+          canvas: cv,
+          p1: cv.chooseObjs.point[0],
+          p2: cv.chooseObjs.point[1],
+        });
         cv.resetChoosing();
       };
     });

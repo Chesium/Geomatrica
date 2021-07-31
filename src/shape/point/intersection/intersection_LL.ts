@@ -15,18 +15,18 @@ export default class intersection_LL extends intersection {
   Line2: line; //点也在这条线上
 
   static defineTypeName = "intersection_LL";
-  constructor(canvas: canvas, l1: line, l2: line, predefined: boolean = false) {
+  constructor(dfc: intersection_LL_fc) {
     super(); //无用
     this.defineTypeName = intersection_LL.defineTypeName;
-    this.init_L1(canvas, predefined);
+    this.init_L1(dfc.canvas, dfc.predefined);
     this.init_L2();
     //================//
-    this.Line1 = l1;
-    this.Line2 = l2;
-    this.onObjs.push(l1, l2);
+    this.Line1 = dfc.l1;
+    this.Line2 = dfc.l2;
+    this.onObjs.push(dfc.l1, dfc.l2);
     //对象间父子关系处理
-    l1.children.push(this);
-    l2.children.push(this);
+    dfc.l1.children.push(this);
+    dfc.l2.children.push(this);
     this.parents = [this.Line1, this.Line2];
     //================//
     this.calc();

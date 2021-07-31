@@ -9,7 +9,11 @@ var dm_extensionLine = new twoPointsObj_dm(
     description: "画延长线",
   },
   (canvas: canvas) => {
-    return new extensionLine(canvas, canvas.chooseObjs.point[0], canvas.chooseObjs.point[1]);
+    return new extensionLine({
+      canvas: canvas,
+      p1: canvas.chooseObjs.point[0],
+      p2: canvas.chooseObjs.point[1],
+    });
   }
 );
 

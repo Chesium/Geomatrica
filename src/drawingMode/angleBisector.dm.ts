@@ -14,7 +14,12 @@ dm_angleBisector.rootCase = new drawCase((root: drawCase) => {
     intoPoint1.into[point.shapeName] = new drawCase((intoPoint2: drawCase) => {
       intoPoint2.into[point.shapeName] = new drawCase((intoPoint3: drawCase) => {
         intoPoint3.processFn = (cv: canvas) => {
-          new angleBisector_3P(cv, cv.chooseObjs.point[0], cv.chooseObjs.point[1], cv.chooseObjs.point[2]);
+          new angleBisector_3P({
+            canvas: cv,
+            p1: cv.chooseObjs.point[0],
+            p2: cv.chooseObjs.point[1],
+            p3: cv.chooseObjs.point[2],
+          });
           cv.resetChoosing();
         };
       });
@@ -23,8 +28,16 @@ dm_angleBisector.rootCase = new drawCase((root: drawCase) => {
   root.into[line.shapeName] = new drawCase((intoLine1: drawCase) => {
     intoLine1.into[line.shapeName] = new drawCase((intoLine2: drawCase) => {
       intoLine2.processFn = (cv: canvas) => {
-        new angleBisector_2L_1(cv, cv.chooseObjs.line[0], cv.chooseObjs.line[1]);
-        new angleBisector_2L_2(cv, cv.chooseObjs.line[0], cv.chooseObjs.line[1]);
+        new angleBisector_2L_1({
+          canvas: cv,
+          l1: cv.chooseObjs.line[0],
+          l2: cv.chooseObjs.line[1],
+        });
+        new angleBisector_2L_2({
+          canvas: cv,
+          l1: cv.chooseObjs.line[0],
+          l2: cv.chooseObjs.line[1],
+        });
         cv.resetChoosing();
       };
     });

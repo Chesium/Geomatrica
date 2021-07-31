@@ -11,11 +11,11 @@ var dm_drawPoint = new drawingMode({
 dm_drawPoint.rootCase = new drawCase((root: drawCase) => {
   root.intoBlank = new drawCase((intoBlank: drawCase) => {
     intoBlank.processFn = (cv: canvas, crd: crd) => {
-      new freePoint(cv, crd.x, crd.y);
+      new freePoint({ canvas: cv, x: crd.x, y: crd.y });
       cv.resetChoosing();
     };
   });
-  root.intoAny=new drawCase((intoAny:drawCase)=>{
+  root.intoAny = new drawCase((intoAny: drawCase) => {
     intoAny.processFn = (cv: canvas, crd: crd) => {
       cv.chooseObjs.all[0].generatePointOnIt(crd);
       cv.resetChoosing();

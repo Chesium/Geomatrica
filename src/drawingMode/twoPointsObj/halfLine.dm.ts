@@ -9,7 +9,11 @@ var dm_halfLine = new twoPointsObj_dm(
     description: "画射线",
   },
   (canvas: canvas) => {
-    return new halfLine(canvas, canvas.chooseObjs.point[0], canvas.chooseObjs.point[1]);
+    return new halfLine({
+      canvas: canvas,
+      p1: canvas.chooseObjs.point[0],
+      p2: canvas.chooseObjs.point[1],
+    });
   }
 );
 

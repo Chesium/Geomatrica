@@ -15,18 +15,18 @@ export default class parallelLine extends line {
   Line: line;
 
   static defineTypeName = "parallelLine";
-  constructor(canvas: canvas, p: point, l: line) {
+  constructor(dfc: parallelLine_fc) {
     super();
     this.defineTypeName = parallelLine.defineTypeName;
-    this.init_L1(canvas, false);
+    this.init_L1(dfc.canvas, false);
     this.init_L2();
     //================//
-    this.Point = p;
-    this.Line = l;
+    this.Point = dfc.p;
+    this.Line = dfc.l;
     //对象间父子关系处理
-    l.children.push(this);
-    p.children.push(this);
-    p.onObjs.push(this);
+    dfc.l.children.push(this);
+    dfc.p.children.push(this);
+    dfc.p.onObjs.push(this);
     this.parents = [this.Line, this.Point];
     //================//
     this.calc();

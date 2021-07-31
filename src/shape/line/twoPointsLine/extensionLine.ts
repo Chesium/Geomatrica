@@ -10,12 +10,12 @@ export class extensionLine_fc extends obj_fc {
 
 export default class extensionLine extends twoPointsLine {
   static defineTypeName = "extensionLine";
-  constructor(canvas: canvas, p1: point, p2: point) {
+  constructor(dfc: extensionLine_fc) {
     super(); //无用
     this.defineTypeName = extensionLine.defineTypeName;
-    this.init_L1(canvas, false);
+    this.init_L1(dfc.canvas, false);
     this.init_L2();
-    this.init_L3(p1, p2);
+    this.init_L3(dfc.p1, dfc.p2);
     this.init_end();
   }
   calc(): void {

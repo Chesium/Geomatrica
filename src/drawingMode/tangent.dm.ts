@@ -1,6 +1,6 @@
 import drawingMode, { drawCase } from "../drawingMode";
 import canvas from "../canvas";
-import  { tangent_1, tangent_2 } from "../shape/line/tangent";
+import { tangent_1, tangent_2 } from "../shape/line/tangent";
 import point from "../shape/point";
 import circle from "../shape/circle";
 
@@ -13,8 +13,8 @@ dm_tangent.rootCase = new drawCase((root: drawCase) => {
   root.into[point.shapeName] = new drawCase((intoPoint: drawCase) => {
     intoPoint.into[circle.shapeName] = new drawCase((intoCircle: drawCase) => {
       intoCircle.processFn = (cv: canvas) => {
-        new tangent_1(cv, cv.chooseObjs.point[0], cv.chooseObjs.circle[0]);
-        new tangent_2(cv, cv.chooseObjs.point[0], cv.chooseObjs.circle[0]);
+        new tangent_1({ canvas: cv, p: cv.chooseObjs.point[0], c: cv.chooseObjs.circle[0] });
+        new tangent_2({ canvas: cv, p: cv.chooseObjs.point[0], c: cv.chooseObjs.circle[0] });
         cv.resetChoosing();
       };
     });
@@ -22,8 +22,8 @@ dm_tangent.rootCase = new drawCase((root: drawCase) => {
   root.into[circle.shapeName] = new drawCase((intoCircle: drawCase) => {
     intoCircle.into[point.shapeName] = new drawCase((intoPoint: drawCase) => {
       intoPoint.processFn = (cv: canvas) => {
-        new tangent_1(cv, cv.chooseObjs.point[0], cv.chooseObjs.circle[0]);
-        new tangent_2(cv, cv.chooseObjs.point[0], cv.chooseObjs.circle[0]);
+        new tangent_1({ canvas: cv, p: cv.chooseObjs.point[0], c: cv.chooseObjs.circle[0] });
+        new tangent_2({ canvas: cv, p: cv.chooseObjs.point[0], c: cv.chooseObjs.circle[0] });
         cv.resetChoosing();
       };
     });

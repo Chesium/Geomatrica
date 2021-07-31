@@ -8,17 +8,17 @@ interface moveEventListener extends EventListenerObject {
   self: MousePoint;
 }
 
-export class MousePoint_fc extends obj_fc{}
+export class MousePoint_fc extends obj_fc {}
 
 export default class MousePoint extends point {
   moveEventListener: moveEventListener;
-  
+
   static defineTypeName = "MousePoint";
-  constructor(canvas: canvas) {
+  constructor(dfc: MousePoint_fc) {
     super(); //无用
     this.name = "MOUSE";
     this.defineTypeName = MousePoint.defineTypeName;
-    this.init_L1(canvas, false);
+    this.init_L1(dfc.canvas, false);
     this.init_L2();
     //================//
     this.exist = true;
@@ -78,7 +78,7 @@ export default class MousePoint extends point {
     if (focus instanceof obj) {
       newP = focus.generatePointOnIt(this);
     } else {
-      newP = new freepoint(this.canvas, this.x, this.y);
+      newP = new freepoint({ canvas: this.canvas, x: this.x, y: this.y });
     }
     newP.onObjs = newP.onObjs.concat(this.onObjs);
     return newP;

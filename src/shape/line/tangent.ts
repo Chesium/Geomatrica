@@ -17,18 +17,18 @@ export class tangent_1 extends line {
   Circle: circle;
 
   static defineTypeName = "tangent_1";
-  constructor(canvas: canvas, p: point, c: circle) {
+  constructor(dfc: tangent_fc) {
     super();
     this.defineTypeName = tangent_1.defineTypeName;
-    this.init_L1(canvas, false);
+    this.init_L1(dfc.canvas, false);
     this.init_L2();
     //================//
-    this.Point = p;
-    this.Circle = c;
+    this.Point = dfc.p;
+    this.Circle = dfc.c;
     //对象间父子关系处理
-    c.children.push(this);
-    p.children.push(this);
-    p.onObjs.push(this);
+    dfc.c.children.push(this);
+    dfc.p.children.push(this);
+    dfc.p.onObjs.push(this);
     this.parents = [this.Circle, this.Point];
     //================//
     this.calc();
@@ -117,17 +117,18 @@ export class tangent_2 extends line {
   Circle: circle;
 
   static defineTypeName = "tangent_2";
-  constructor(canvas: canvas, p: point, c: circle) {
+  constructor(dfc: tangent_fc) {
     super();
-    this.defineTypeName = tangent_2.defineTypeName;
-    this.init_L1(canvas, false);
+    this.defineTypeName = tangent_1.defineTypeName;
+    this.init_L1(dfc.canvas, false);
     this.init_L2();
     //================//
-    this.Point = p;
-    this.Circle = c;
+    this.Point = dfc.p;
+    this.Circle = dfc.c;
     //对象间父子关系处理
-    c.children.push(this);
-    p.children.push(this);
+    dfc.c.children.push(this);
+    dfc.p.children.push(this);
+    dfc.p.onObjs.push(this);
     this.parents = [this.Circle, this.Point];
     //================//
     this.calc();

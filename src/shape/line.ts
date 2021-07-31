@@ -91,17 +91,17 @@ export default abstract class line extends obj {
         if (haveEqualIndex(this.parents, t.parents)) {
           continue;
         }
-        new intersection_LL(this.canvas, this, t, true);
+        new intersection_LL({ canvas: this.canvas, l1: this, l2: t, predefined: true });
       }
       if (t instanceof circle) {
-        new intersection_LC_1(this.canvas, this, t, true);
-        new intersection_LC_2(this.canvas, this, t, true);
+        new intersection_LC_1({ canvas: this.canvas, l: this, c: t, predefined: true });
+        new intersection_LC_2({ canvas: this.canvas, l: this, c: t, predefined: true });
       }
     }
   }
 
   generatePointOnIt(crd: crd): point {
-    return new pointOnLine(this.canvas, this, crd.x, crd.y);
+    return new pointOnLine({ canvas: this.canvas, l: this, init_x: crd.x, init_y: crd.y });
   }
 
   setData(l: stdLine): void {

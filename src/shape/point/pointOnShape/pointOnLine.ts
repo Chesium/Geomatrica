@@ -15,20 +15,20 @@ export default class pointOnLine extends pointOnShape {
   Line: line; //点在这条线上
 
   static defineTypeName = "pointOnLine";
-  constructor(canvas: canvas, l: line, init_x: number, init_y: number) {
+  constructor(dfc: pointOnLine_fc) {
     super(); //无用
     this.defineTypeName = pointOnLine.defineTypeName;
-    this.init_L1(canvas, false);
+    this.init_L1(dfc.canvas, false);
     this.init_L2();
     //================//
-    this.Line = l;
-    this.onObjs.push(l);
+    this.Line = dfc.l;
+    this.onObjs.push(dfc.l);
     //对象间父子关系处理
-    l.children.push(this);
+    dfc.l.children.push(this);
     this.parents = [this.Line];
     //从初始坐标开始找到最近的线上点
-    this.x = init_x;
-    this.y = init_y;
+    this.x = dfc.init_x;
+    this.y = dfc.init_y;
     this.following = true;
     this.calc();
     this.following = false;
