@@ -3,6 +3,12 @@ import point from "../point";
 import line from "../line";
 import { crd, pos } from "../../misc";
 import { calcLineEq, calcPerpendicular, centerOfGravity } from "../../util";
+import { obj_fc } from "../../object";
+
+export class perpendicularBisector_fc extends obj_fc {
+  p1: point;
+  p2: point;
+}
 
 export default class perpendicularBisector extends line {
   Point1: point; //点在这条线上

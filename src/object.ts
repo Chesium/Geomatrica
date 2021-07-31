@@ -7,6 +7,9 @@ import { defaultStyle } from "./style";
 import point from "./shape/point";
 import { style } from "./style";
 
+export class obj_fc {
+  canvas: canvas;
+}
 //图形对象类
 export default abstract class obj {
   static readonly IAA_color = 0xffffff;

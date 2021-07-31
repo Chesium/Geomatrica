@@ -5,6 +5,12 @@ import circle from "../circle";
 import line from "../line";
 import point from "../point";
 import pointOnCircle from "../point/pointOnShape/pointOnCircle";
+import { obj_fc } from "../../object";
+
+export class tangent_fc extends obj_fc {
+  p: point;
+  c: circle;
+}
 
 export class tangent_1 extends line {
   Point: point;

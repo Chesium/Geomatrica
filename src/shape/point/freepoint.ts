@@ -1,10 +1,16 @@
 import point from "../point";
 import { crd } from "../../misc";
 import canvas from "../../canvas";
+import { obj_fc } from "../../object";
+
+export class freePoint_fc extends obj_fc {
+  x: number;
+  y: number;
+}
 
 export default class freePoint extends point {
   dragOffset: crd;
-  
+
   static defineTypeName = "freepoint";
   constructor(canvas: canvas, x: number, y: number) {
     super(); //无用

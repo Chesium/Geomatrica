@@ -2,6 +2,13 @@ import pointOnShape from "../pointOnShape";
 import line from "../../line";
 import canvas from "../../../canvas";
 import { substituteIntoLineEq } from "../../../util";
+import { obj_fc } from "../../../object";
+
+export class pointOnLine_fc extends obj_fc {
+  l: line;
+  init_x: number;
+  init_y: number;
+}
 
 export default class pointOnLine extends pointOnShape {
   proportion: number = 0.5; //比例默认值

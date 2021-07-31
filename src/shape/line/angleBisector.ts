@@ -3,6 +3,17 @@ import { pos } from "../../misc";
 import { calcIntersectionLL, calcLineEq, substituteIntoLineEq } from "../../util";
 import line from "../line";
 import point from "../point";
+import { obj_fc } from "../../object";
+
+export class angleBisector_3P_fc extends obj_fc {
+  p1: point;
+  p2: point;
+  p3: point;
+}
+export class angleBisector_2L_fc extends obj_fc {
+  l1: line;
+  l2: line;
+}
 
 export default class angleBisector_3P extends line {
   Point1: point;

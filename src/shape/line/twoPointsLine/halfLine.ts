@@ -1,6 +1,12 @@
 import twoPointsLine from "../twoPointsLine";
 import point from "../../point";
 import canvas from "../../../canvas";
+import { obj_fc } from "../../../object";
+
+export class halfLine_fc extends obj_fc {
+  p1: point;
+  p2: point;
+}
 
 export default class halfLine extends twoPointsLine {
   static defineTypeName = "halfLine";

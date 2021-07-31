@@ -1,6 +1,13 @@
 import pointOnShape from "../pointOnShape";
 import circle from "../../circle";
 import canvas from "../../../canvas";
+import { obj_fc } from "../../../object";
+
+export class pointOnCircle_fc extends obj_fc {
+  c: circle;
+  init_x: number;
+  init_y: number;
+}
 
 export default class pointOnCircle extends pointOnShape {
   cosine: number = 0;

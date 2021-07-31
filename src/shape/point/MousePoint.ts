@@ -2,11 +2,13 @@ import point from "../point";
 import { crd } from "../../misc";
 import canvas from "../../canvas";
 import freepoint from "./freepoint";
-import obj from "../../object";
+import obj, { obj_fc } from "../../object";
 
 interface moveEventListener extends EventListenerObject {
   self: MousePoint;
 }
+
+export class MousePoint_fc extends obj_fc{}
 
 export default class MousePoint extends point {
   moveEventListener: moveEventListener;

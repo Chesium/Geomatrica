@@ -1,7 +1,12 @@
 import canvas from "../../canvas";
 import { centerOfGravity } from "../../util";
 import point from "../point";
+import { obj_fc } from "../../object";
 
+export class midPoint_fc extends obj_fc {
+  p1: point;
+  p2: point;
+}
 export default class midPoint extends point {
   Point1: point; //点在这条线上
   Point2: point; //点也在这条线上

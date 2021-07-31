@@ -1,6 +1,13 @@
 import intersection from "../intersection";
 import circle from "../../circle";
 import canvas from "../../../canvas";
+import { obj_fc } from "../../../object";
+
+export class intersection_CC_fc extends obj_fc {
+  c1: circle;
+  c2: circle;
+  predefined: boolean = false;
+}
 
 export class intersection_CC_1 extends intersection {
   Circle1: circle; //点在这条线上

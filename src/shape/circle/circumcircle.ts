@@ -8,6 +8,13 @@ import {
   centerOfGravity,
   substituteIntoLineEq,
 } from "../../util";
+import { obj_fc } from "../../object";
+
+export class circumcircle_fc extends obj_fc {
+  p1: point;
+  p2: point;
+  p3: point;
+}
 
 export default class circumcircle extends circle {
   Point1: point;

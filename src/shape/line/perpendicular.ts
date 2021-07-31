@@ -3,6 +3,12 @@ import { pos } from "../../misc";
 import { calcPerpendicular } from "../../util";
 import line from "../line";
 import point from "../point";
+import { obj_fc } from "../../object";
+
+export class perpendicular_fc extends obj_fc {
+  p: point;
+  l: line;
+}
 
 export default class perpendicular extends line {
   Point: point;

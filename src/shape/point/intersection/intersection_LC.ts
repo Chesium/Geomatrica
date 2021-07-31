@@ -3,6 +3,13 @@ import line from "../../line";
 import circle from "../../circle";
 import canvas from "../../../canvas";
 import { substituteIntoLineEq } from "../../../util";
+import { obj_fc } from "../../../object";
+
+export class intersection_LC_fc extends obj_fc {
+  l: line;
+  c: circle;
+  predefined: boolean = false;
+}
 
 export class intersection_LC_1 extends intersection {
   Line: line; //点在这条线上

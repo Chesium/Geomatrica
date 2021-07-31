@@ -1,6 +1,12 @@
 import point from "../../point";
 import canvas from "../../../canvas";
 import twoPointsCircle from "../twoPointsCircle";
+import { obj_fc } from "../../../object";
+
+export class CP_circle_fc extends obj_fc {
+  center: point;
+  point: point;
+}
 
 export default class CP_circle extends twoPointsCircle {
   static defineTypeName = "CP_circle";

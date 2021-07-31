@@ -3,6 +3,12 @@ import { pos } from "../../misc";
 import calcParallelLine from "../../util";
 import line from "../line";
 import point from "../point";
+import { obj_fc } from "../../object";
+
+export class parallelLine_fc extends obj_fc {
+  p: point;
+  l: line;
+}
 
 export default class parallelLine extends line {
   Point: point;

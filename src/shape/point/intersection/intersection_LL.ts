@@ -2,6 +2,13 @@ import intersection from "../intersection";
 import line from "../../line";
 import canvas from "../../../canvas";
 import { calcIntersectionLL, substituteIntoLineEq } from "../../../util";
+import { obj_fc } from "../../../object";
+
+export class intersection_LL_fc extends obj_fc {
+  l1: line;
+  l2: line;
+  predefined: boolean = false;
+}
 
 export default class intersection_LL extends intersection {
   Line1: line; //点在这条线上
