@@ -1,4 +1,5 @@
 import canvas from "../../canvas";
+import { objectForSaving } from "../../misc";
 import { centerOfGravity } from "../../util";
 import point from "../point";
 
@@ -36,4 +37,15 @@ export default class midPoint extends point {
   // updDrag见shape
   // updMove见shape
   // getTagCrd见point
+
+  save(): objectForSaving {
+    return {
+      index: this.saveI,
+      shown: this.shown,
+      style: this.style,
+      name: this.name,
+      def: midPoint.defineTypeName,
+      initData: [this.Point1.saveI, this.Point2.saveI],
+    };
+  }
 }

@@ -1,6 +1,5 @@
-import { LINE_CAP, IApplicationOptions,TextStyle } from "pixi.js";
+import { LINE_CAP } from "pixi.js";
 import canvas from "./canvas";
-import Mode from "./Mode";
 import obj from "./object";
 import { style } from "./style";
 
@@ -85,20 +84,18 @@ export class stdCircle extends crd {
  * 格式 : `[左下点坐标,右上点坐标]`
  */
 export type rect = [pair, pair];
-
-export class stdObjInitData{
-  canvas:canvas;
-  parents:obj[];
+export class stdObjInitData {
+  canvas: canvas;
+  parents: obj[];
 }
 
 export class objectForSaving {
-  index:number
-  shown:boolean;
-  style:style;
-  name:string;
-  definitionI:number;
-  parentsI:number[];
-  initData:number[];
+  index: number;
+  shown: boolean;
+  style: style;
+  name: string;
+  def: string;
+  initData: any[];
 }
 export class canvasForSaving {
   objects: objectForSaving[];

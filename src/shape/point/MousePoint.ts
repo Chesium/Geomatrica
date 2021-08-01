@@ -10,7 +10,7 @@ interface moveEventListener extends EventListenerObject {
 
 export default class MousePoint extends point {
   moveEventListener: moveEventListener;
-  
+
   static defineTypeName = "MousePoint";
   constructor(canvas: canvas) {
     super(); //无用
@@ -81,4 +81,6 @@ export default class MousePoint extends point {
     newP.onObjs = newP.onObjs.concat(this.onObjs);
     return newP;
   }
+
+  save = (): undefined => undefined;
 }

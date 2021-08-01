@@ -1,5 +1,5 @@
 import { Graphics, LINE_CAP } from "pixi.js";
-import { rect, pos, crd } from "./misc";
+import { rect, pos, crd, objectForSaving } from "./misc";
 import { generateName } from "./util";
 import canvas from "./canvas";
 import tagBox from "./tagBox";
@@ -54,6 +54,8 @@ export default abstract class obj {
   public tag: tagBox; //对象标签
   public name: string; //对象名称
 
+  saveI: number;
+
   static shapeIndexes: { [index: string]: number } = {};
   static defIndexes: { [index: string]: number } = {};
 
@@ -99,6 +101,7 @@ export default abstract class obj {
   abstract updInteractionArea(): void; //更新交互层图形 (形状层) 已完成
   abstract init_L2(): void; //形状层专有初始化(形状层) 已完成
   abstract generatePointOnIt(crd: crd): point;
+  abstract save(): objectForSaving | undefined;
 
   update(): void {
     if (this.removed) {
