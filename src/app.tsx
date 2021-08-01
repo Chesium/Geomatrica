@@ -4,6 +4,7 @@ import { Menu, N1, N2, N3 } from "./menu";
 import ModeSwitch from "./modeSwitch";
 import canvas from "./canvas";
 import Euclidean2D from "./Mode/Euclidean2D.mode";
+import { ReactSVG } from "react-svg";
 
 export default class App extends React.Component<{ buttons: [string, drawingMode | undefined][] }> {
   cv: canvas = null;
@@ -29,8 +30,7 @@ export default class App extends React.Component<{ buttons: [string, drawingMode
       <div id="main">
         <img id="icon" src="../assets/chesium2.png" />
         <div id="header">
-          <div id="headerID" />
-          <img id="gm-logo" src="../assets/Geomatrica-icon.svg" />
+          <ReactSVG className="gm-logo" src="../assets/Geomatrica-icon.svg" />
           <Menu>
             <N1 name="file" ctx="文件">
               <N2 name="new" lCtx="新建画板" rCtx="Alt+O" haveN3={true}>

@@ -42,6 +42,7 @@
   display: flex;
   flex-direction: column;
   z-index: 30;
+  justify-content: center;
 }
 
 #headerID {
@@ -54,10 +55,16 @@
   align-items: center;
 }
 
-#gm-logo {
+.gm-logo {
   position: relative;
   left: 6px;
-  height: 30px;
+  height: 90%;
+  display: flex;
+  
+  >div,
+  >div>svg {
+    height: 100%;
+  }
 }
 
 #headerID p {
@@ -120,7 +127,6 @@ body {
 
 .graphic-tagbox {
   user-select: none;
-  // pointer-events: none;
 }
 
 .graphic-tag[dragging] {
