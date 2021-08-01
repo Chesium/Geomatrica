@@ -7,9 +7,10 @@ export default class intersection_LL extends intersection {
   Line1: line; //点在这条线上
   Line2: line; //点也在这条线上
 
+  static defineTypeName = "intersection_LL";
   constructor(canvas: canvas, l1: line, l2: line, predefined: boolean = false) {
     super(); //无用
-    this.defineTypeName = "intersection_LL";
+    this.defineTypeName = intersection_LL.defineTypeName;
     this.init_L1(canvas, predefined);
     this.init_L2();
     //================//

@@ -42,14 +42,6 @@ export default class canvas {
    */
   O: obj[] = [];
   /**
-   * ## 预定义图形对象列表
-   * 画板中所有预定义(predefined)图形对象被存储在这里
-   *
-   * ---
-   * "predefined objects"的缩写
-   */
-  pO: obj[] = [];
-  /**
    * ## 交互区域响应序列
    * 画板中各可点击图形对象交互区域的响应序列
    *
@@ -75,11 +67,11 @@ export default class canvas {
    * ---
    * 目前有3种可能的值:
    *
-   * `1` : 空闲
+   * `0` : 空闲
    *
-   * `2` : 正在拖动图形对象
+   * `1` : 正在拖动图形对象
    *
-   * `3` : 正在拖动图形标签
+   * `2` : 正在拖动图形标签
    */
   Status: number = 0;
   /**
@@ -297,7 +289,6 @@ export default class canvas {
    */
   constructor(pixiAppSetting: IApplicationOptions, Mode: Mode) {
     this.PIXIapp = new Application(pixiAppSetting);
-    this.PIXIapp.view.removeAttribute("style");
     this.Mode = Mode;
     this.nextNameI = {
       point: 0,
@@ -492,6 +483,7 @@ export default class canvas {
         }
       }
     });
+    this.PIXIapp.view.removeAttribute("style");
   }
   /**
    * ## 转换至显示用坐标`pos`
@@ -552,16 +544,18 @@ export default class canvas {
     //ABSL
     if (this.drawingModeI != 0) {
       var predefineObjs: obj[] = this.IAseq[0].flat(2);
-      for (var i in predefineObjs) {
-        if (!predefineObjs[i].removed) {
+      console.log("predefineObjs:", predefineObjs);
+      for (var po of predefineObjs) {
+        console.log("po:", po);
+        if (!po.removed) {
           if (
-            predefineObjs[i].boundRect[0][0] <= pos.x &&
-            pos.x <= predefineObjs[i].boundRect[1][0] &&
-            predefineObjs[i].boundRect[0][1] <= pos.y &&
-            pos.y <= predefineObjs[i].boundRect[1][1]
+            po.boundRect[0][0] <= pos.x &&
+            pos.x <= po.boundRect[1][0] &&
+            po.boundRect[0][1] <= pos.y &&
+            pos.y <= po.boundRect[1][1]
           ) {
-            if (predefineObjs[i].checkBitmap(pos)) {
-              return predefineObjs[i].toObj();
+            if (po.checkBitmap(pos)) {
+              return po.toObj();
             }
           }
         }
@@ -836,4 +830,10 @@ export default class canvas {
       }
     }
   }
+
+  // save():string{
+  //   for(var obj of this.O){
+
+  //   }
+  // }
 }

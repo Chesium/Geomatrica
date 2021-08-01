@@ -13,9 +13,11 @@ export default class circumcircle extends circle {
   Point1: point;
   Point2: point;
   Point3: point;
+
+  static defineTypeName = "circumcircle";
   constructor(canvas: canvas, p1: point, p2: point, p3: point) {
     super(); //无用
-    this.defineTypeName = "circumcircle";
+    this.defineTypeName = circumcircle.defineTypeName;
     this.init_L1(canvas, false);
     this.init_L2();
     this.Point1 = p1;

@@ -4,9 +4,11 @@ import canvas from "../../canvas";
 
 export default class freePoint extends point {
   dragOffset: crd;
+  
+  static defineTypeName = "freepoint";
   constructor(canvas: canvas, x: number, y: number) {
     super(); //无用
-    this.defineTypeName="freepoint";
+    this.defineTypeName = freePoint.defineTypeName;
     this.init_L1(canvas, false);
     this.init_L2();
     //================//

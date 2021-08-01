@@ -7,9 +7,11 @@ import point from "../point";
 export default class parallelLine extends line {
   Point: point;
   Line: line;
+
+  static defineTypeName = "parallelLine";
   constructor(canvas: canvas, p: point, l: line) {
     super();
-    this.defineTypeName = "parallelLine";
+    this.defineTypeName = parallelLine.defineTypeName;
     this.init_L1(canvas, false);
     this.init_L2();
     //================//

@@ -8,9 +8,10 @@ export class intersection_LC_1 extends intersection {
   Line: line; //点在这条线上
   Circle: circle; //点也在这条线上
 
+  static defineTypeName = "intersection_LC_1";
   constructor(canvas: canvas, l: line, c: circle, predefined: boolean = false) {
     super(); //无用
-    this.defineTypeName = "intersection_LC_1";
+    this.defineTypeName = intersection_LC_1.defineTypeName;
     this.init_L1(canvas, predefined);
     this.init_L2();
     //================//
@@ -80,9 +81,10 @@ export class intersection_LC_2 extends intersection {
   Line: line; //点在这条线上
   Circle: circle; //点也在这条线上
 
+  static defineTypeName = "intersection_LC_2";
   constructor(canvas: canvas, l: line, c: circle, predefined: boolean = false) {
     super(); //无用
-    this.defineTypeName = "intersection_LC_2";
+    this.defineTypeName = intersection_LC_2.defineTypeName;
     this.init_L1(canvas, predefined);
     this.init_L2();
     //================//

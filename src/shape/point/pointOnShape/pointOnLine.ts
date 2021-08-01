@@ -7,9 +7,10 @@ export default class pointOnLine extends pointOnShape {
   proportion: number = 0.5; //比例默认值
   Line: line; //点在这条线上
 
+  static defineTypeName = "pointOnLine";
   constructor(canvas: canvas, l: line, init_x: number, init_y: number) {
     super(); //无用
-    this.defineTypeName = "pointOnLine";
+    this.defineTypeName = pointOnLine.defineTypeName;
     this.init_L1(canvas, false);
     this.init_L2();
     //================//

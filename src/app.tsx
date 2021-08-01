@@ -5,7 +5,6 @@ import ModeSwitch from "./modeSwitch";
 import canvas from "./canvas";
 import Euclidean2D from "./Mode/Euclidean2D.mode";
 import { ReactSVG } from "react-svg";
-
 export default class App extends React.Component<{ buttons: [string, drawingMode | undefined][] }> {
   cv: canvas = null;
   constructor(props: { buttons: [string, drawingMode | undefined][] }) {
@@ -58,9 +57,11 @@ export default class App extends React.Component<{ buttons: [string, drawingMode
           <canvas id="workarea" ref={this.createCanvas} />
         </div>
         <div className="toolbar">
-          {this.props.buttons.map((v: [string, drawingMode | undefined]) => (
-            <ModeSwitch key={v[0]} app={this} iconSrc={"../assets/" + v[0] + ".svg"} drawingMode={v[1]} />
-          ))}
+          <div className="modeswitch-container">
+            {this.props.buttons.map((v: [string, drawingMode | undefined]) => (
+              <ModeSwitch key={v[0]} app={this} iconSrc={"../assets/" + v[0] + ".svg"} drawingMode={v[1]} />
+            ))}
+          </div>
         </div>
       </div>
     );

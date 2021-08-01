@@ -1,3 +1,9 @@
+import { LINE_CAP, IApplicationOptions,TextStyle } from "pixi.js";
+import canvas from "./canvas";
+import Mode from "./Mode";
+import obj from "./object";
+import { style } from "./style";
+
 /**
  * ## 显示用坐标
  */
@@ -60,8 +66,8 @@ export class stdLine {
 // };
 
 export class stdCircle extends crd {
-  exist: boolean=false;
-  r: number=NaN;
+  exist: boolean = false;
+  r: number = NaN;
 }
 
 // export const EMPTY_CIRCLE: stdCircle = {
@@ -79,3 +85,28 @@ export class stdCircle extends crd {
  * 格式 : `[左下点坐标,右上点坐标]`
  */
 export type rect = [pair, pair];
+
+export class stdObjInitData{
+  canvas:canvas;
+  parents:obj[];
+}
+
+export class objectForSaving {
+  index:number
+  shown:boolean;
+  style:style;
+  name:string;
+  definitionI:number;
+  parentsI:number[];
+  initData:number[];
+}
+export class canvasForSaving {
+  objects: objectForSaving[];
+  // Mode: Mode;
+  showBoundBox: boolean;
+  trCoe: [number, number, number];
+  axisXtype: number;
+  axisYtype: number;
+  axisStyle: { width: number; color: number; alpha: number; cap: LINE_CAP };
+  // scaleFont: TextStyle;
+}

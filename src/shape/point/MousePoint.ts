@@ -10,10 +10,12 @@ interface moveEventListener extends EventListenerObject {
 
 export default class MousePoint extends point {
   moveEventListener: moveEventListener;
+  
+  static defineTypeName = "MousePoint";
   constructor(canvas: canvas) {
     super(); //无用
     this.name = "MOUSE";
-    this.defineTypeName = "MousePoint";
+    this.defineTypeName = MousePoint.defineTypeName;
     this.init_L1(canvas, false);
     this.init_L2();
     //================//

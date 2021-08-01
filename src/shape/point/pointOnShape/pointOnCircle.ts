@@ -7,9 +7,10 @@ export default class pointOnCircle extends pointOnShape {
   sine: number = 0;
   Circle: circle; //点在这个圆上
 
+  static defineTypeName = "pointOnCircle";
   constructor(canvas: canvas, c: circle, init_x: number, init_y: number) {
     super(); //无用
-    this.defineTypeName = "pointOnCircle";
+    this.defineTypeName = pointOnCircle.defineTypeName;
     this.init_L1(canvas, false);
     this.init_L2();
     //================//

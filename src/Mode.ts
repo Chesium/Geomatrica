@@ -38,6 +38,9 @@ export default class Mode {
    * 默认绘图模式在`this.drawingModes`中的索引
    */
   defaultDrawingModeI: number = 0;
+
+  // defs: { [index: string]: typeof obj } = {};
+
   /**
    * @param  {string} name 模式的名称
    * @param  {string} description 模式的描述
@@ -54,17 +57,29 @@ export default class Mode {
    * @param  {drawingMode} newDrawingMode 新的绘图模式
    * @returns void
    */
-  registerDrawingMode(newDrawingMode: drawingMode): void {
-    if (newDrawingMode.indexes[this.name] != undefined) {
-      return;
+  registerDrawingModes(newDrawingModes: drawingMode[]): void {
+    for (var dm of newDrawingModes) {
+      if (dm.indexes[this.name] != undefined) {
+        return;
+      }
+      dm.indexes[this.name] = this.drawingModes.length;
+      this.drawingModes.push(dm);
     }
-    newDrawingMode.indexes[this.name] = this.drawingModes.length;
-    this.drawingModes.push(newDrawingMode);
   }
-  registerShape(newShape: typeof obj): void {
-    if (newShape.indexes[this.name] != undefined) {
-      return;
+  registerShapes(newShapes: typeof obj[]): void {
+    for (var shape of newShapes) {
+      if (shape.shapeIndexes[this.name] != undefined) {
+        return;
+      }
+      this.shapes[shape.shapeName] = shape;
     }
-    this.shapes[newShape.shapeName] = newShape;
   }
+  // registerDefs(newDefs: typeof obj[]): void {
+  //   for (var def of newDefs) {
+  //     if (def.defIndexes[this.name] != undefined) {
+  //       return;
+  //     }
+  //     this.defs[def.defineTypeName] = def;
+  //   }
+  // }
 }
