@@ -59,7 +59,7 @@ export default class App extends React.Component<{ buttons: [string, drawingMode
         <div className="toolbar">
           <div className="modeswitch-container">
             {this.props.buttons.map((v: [string, drawingMode | undefined]) => (
-              <ModeSwitch key={v[0]} app={this} iconSrc={"../assets/" + v[0] + ".svg"} drawingMode={v[1]} />
+              <ModeSwitch key={v[0]} app={this} iconSrc={"../svg/" + v[0] + ".svg"} drawingMode={v[1]} />
             ))}
           </div>
         </div>

@@ -101,7 +101,7 @@ export default abstract class obj {
   abstract updInteractionArea(): void; //更新交互层图形 (形状层) 已完成
   abstract init_L2(): void; //形状层专有初始化(形状层) 已完成
   abstract generatePointOnIt(crd: crd): point;
-  abstract save(): objectForSaving | undefined;
+  // abstract save(): objectForSaving | undefined;
 
   update(): void {
     if (this.removed) {
