@@ -61,7 +61,7 @@ export default class App extends React.Component<{ buttons: [string, drawingMode
           <canvas id="workarea" ref={this.createCanvas} />
         </div>
         <div className="toolbar">
-          <div className="modeswitch-container">
+          <div className="mode-switch-container">
             {this.props.buttons.map((v: [string, drawingMode | undefined]) => (
               <ModeSwitch
                 key={v[0]}
