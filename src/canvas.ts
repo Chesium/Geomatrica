@@ -300,8 +300,10 @@ export default class canvas {
     this.stageBound = [
       [0, 0],
       [
-        this.PIXIapp.view.offsetWidth - getOffsetLeft(this.PIXIapp.view),
-        this.PIXIapp.view.offsetHeight - getOffsetTop(this.PIXIapp.view),
+        // this.PIXIapp.view.offsetWidth - getOffsetLeft(this.PIXIapp.view),
+        // this.PIXIapp.view.offsetHeight - getOffsetTop(this.PIXIapp.view),
+        this.PIXIapp.view.offsetWidth,
+        this.PIXIapp.view.offsetHeight,
       ],
     ];
 
@@ -483,7 +485,7 @@ export default class canvas {
         }
       }
     });
-    this.PIXIapp.view.removeAttribute("style");
+    // this.PIXIapp.view.removeAttribute("style");
   }
   /**
    * ## 转换至显示用坐标`pos`

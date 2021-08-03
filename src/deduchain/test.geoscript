@@ -1,0 +1,26 @@
+METHOD "same angle"
+
+GIVE <POINTS> A B C D E F
+CHECKIF <ANGLE> A B C === <ANGLE> D E
+
+BEGIN
+  CHECK <OR>
+  | A =/= B
+  | B =/= C
+  | D =/= E
+  | E =/= F
+  ->ELSE
+    THROW NDGERR "angle doesn't exist"
+
+  CHECK B === E
+
+  BRANCH
+  ->CASE D $in <HALFLINE> B A
+    CHECK F $in <HALFLINE> B C
+    PASS
+  ->CASE D $in <HALFLINE> B C
+    CHECK F $in <HALFLINE> B A
+    PASS
+  ->ELSE
+    REJECT
+END
