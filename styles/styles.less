@@ -60,7 +60,7 @@
   left: 6px;
   height: 90%;
   display: flex;
-  
+
   >div,
   >div>svg {
     height: 100%;
@@ -95,24 +95,19 @@ body {
 }
 
 .mode-switch {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+  position: relative;
+  top: 5px;
+  left: -20px;
+  height: 50px;
+  width: 70px;
+  margin: 8px 0px 8px 0px;
+
+
   border-radius: 5px;
   box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transition-timing-function: ease;
   transition-duration: 0.5s;
-  background-color: white;
-  background-position: center right;
-  background-repeat: no-repeat;
-  background-size: 50px 50px;
-  height: 50px;
-  width: 70px;
-  margin: 3px 0px 3px 0px;
-
-  position: relative;
-  top: 5px;
-  left: -20px;
+  background-color: transparent;
 }
 
 .mode-switch:hover {
@@ -120,9 +115,24 @@ body {
   transform: translateX(8px);
 }
 
-.mode-switch:checked {
+.mode-switch[chosen] {
   box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transform: translateX(15px);
+}
+
+.mode-switch-icon {
+  position: relative;
+  left: 20px;
+  top: 0px;
+  height: 50px;
+  width: 50px;
+  display: flex;
+}
+
+.mode-switch-icon>div,
+.mode-switch-icon>div>svg {
+  height: 100%;
+  width: 100%;
 }
 
 .graphic-tagbox {
@@ -132,14 +142,3 @@ body {
 .graphic-tag[dragging] {
   box-shadow: 0 0 10px 0.5px rgba(0, 0, 0, 0.2);
 }
-
-@icons: "move", "segment", "point", "circle", "line", "halfline", "intersection",
-  "perpendicular", "parallel", "extensionLine", "angleBisector", "tangent", "perpendicularBisector", "midPoint", "circumcircle";
-
-each(@icons, {
-    #button-@{index} {
-      background-image: url("../assets/@{value}.svg")
-    }
-  }
-
-);

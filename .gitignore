@@ -2,4 +2,3 @@ node_modules/
 dist/
 *.me
 *.i.md
-package-lock.json

@@ -7,26 +7,30 @@ import Euclidean2D from "./Mode/Euclidean2D.mode";
 import { ReactSVG } from "react-svg";
 export default class App extends React.Component<{ buttons: [string, drawingMode | undefined][] }> {
   cv: canvas = null;
+  createCanvas: (element: HTMLCanvasElement) => void;
   constructor(props: { buttons: [string, drawingMode | undefined][] }) {
     super(props);
+    this.createCanvas = (element: HTMLCanvasElement) => {
+      this.cv = new canvas(
+        {
+          antialias: true,
+          resolution: window.devicePixelRatio || 1,
+          autoDensity: true,
+          resizeTo: element.parentElement,
+          view: element,
+          backgroundColor: 0x000000,
+          backgroundAlpha: 0,
+        },
+        Euclidean2D
+      );
+    };
   }
-  createCanvas = (element: HTMLCanvasElement) => {
-    this.cv = new canvas(
-      {
-        antialias: true,
-        resolution: window.devicePixelRatio || 1,
-        autoDensity: true,
-        resizeTo: element.parentElement,
-        view: element,
-        backgroundColor: 0x000000,
-        backgroundAlpha: 0,
-      },
-      Euclidean2D
-    );
-  };
+  cvInit() {
+    this.cv.changeDrawingMode(this.cv.Mode.defaultDrawingModeI);
+  }
   render(): React.ReactNode {
     return (
-      <div id="main">
+      <div id="main" ref={() => this.cvInit()}>
         <img id="icon" src="../assets/chesium2.png" />
         <div id="header">
           <ReactSVG className="gm-logo" src="../assets/Geomatrica-icon.svg" />
@@ -59,7 +63,12 @@ export default class App extends React.Component<{ buttons: [string, drawingMode
         <div className="toolbar">
           <div className="modeswitch-container">
             {this.props.buttons.map((v: [string, drawingMode | undefined]) => (
-              <ModeSwitch key={v[0]} app={this} iconSrc={"../svg/" + v[0] + ".svg"} drawingMode={v[1]} />
+              <ModeSwitch
+                key={v[0]}
+                app={this}
+                iconSrc={"../assets/switchIcons/" + v[0] + ".svg"}
+                drawingMode={v[1]}
+              />
             ))}
           </div>
         </div>

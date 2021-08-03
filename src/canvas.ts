@@ -295,7 +295,7 @@ export default class canvas {
       line: 0,
       circle: 0,
     };
-    this.changeDrawingMode(Mode.defaultDrawingModeI);
+    // this.changeDrawingMode(Mode.defaultDrawingModeI);
     this.stage = this.PIXIapp.stage;
     this.stageBound = [
       [0, 0],
@@ -620,15 +620,21 @@ export default class canvas {
    * @returns void
    */
   changeDrawingMode(newDrawingModeI: number): void {
+    console.log(
+      `this.Mode.drawingModes[${newDrawingModeI}].switch:`,
+      this.Mode.drawingModes[newDrawingModeI].switch
+    );
     if (this.drawingModeI != undefined) {
       if (this.Mode.drawingModes[this.drawingModeI].switch != undefined) {
-        this.Mode.drawingModes[this.drawingModeI].switch.setState(() => ({ checked: false }));
+        // this.Mode.drawingModes[this.drawingModeI].switch.setState(() => ({ checked: false }));
+        this.Mode.drawingModes[this.drawingModeI].switch.off();
       }
     }
-    this.drawingModeI = newDrawingModeI;
     if (this.Mode.drawingModes[newDrawingModeI].switch != undefined) {
-      this.Mode.drawingModes[newDrawingModeI].switch.setState(() => ({ checked: true }));
+      // this.Mode.drawingModes[newDrawingModeI].switch.setState(() => ({ checked: true }));
+      this.Mode.drawingModes[newDrawingModeI].switch.on();
     }
+    this.drawingModeI = newDrawingModeI;
     this.resetChoosing();
   }
   /**
