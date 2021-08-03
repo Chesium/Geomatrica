@@ -31,7 +31,6 @@ export default class App extends React.Component<{ buttons: [string, drawingMode
   render(): React.ReactNode {
     return (
       <div id="main" ref={() => this.cvInit()}>
-        <img id="icon" src="../assets/chesium2.png" />
         <div id="header">
           <ReactSVG className="gm-logo" src="../assets/Geomatrica-icon.svg" />
           <Menu>

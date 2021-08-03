@@ -47,13 +47,6 @@
   // padding-bottom: @headerHeight;
 }
 
-#icon {
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  width: 70px;
-}
-
 #header {
 
   grid-column-start: 1;
@@ -140,11 +133,35 @@ body {
   //* 这里加括号，见 https://www.cnblogs.com/xiaoqiang001/p/14354616.html
 }
 
+.mode-switch-container::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.mode-switch-container::-webkit-scrollbar-track {
+  background: #f6f6f6;
+  border-radius: 2px;
+}
+
+.mode-switch-container::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 2px;
+}
+
+.mode-switch-container::-webkit-scrollbar-thumb:hover {
+  background: #747474;
+}
+
+.mode-switch-container::-webkit-scrollbar-corner {
+  background: #f6f6f6;
+}
+
 .mode-switch {
   height: 50px;
   width: 50px;
   margin: (@spaceBetweenSwitches / 2);
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   border-radius: 5px;
   border: 4px solid black;
   //*     宽度-样式-颜色
