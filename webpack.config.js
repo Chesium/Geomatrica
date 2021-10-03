@@ -56,6 +56,10 @@ const config = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
+  devServer: {
+    host: "127.0.0.1",
+    port: 12701,
+  },
 };
 
 module.exports = () => {
