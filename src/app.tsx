@@ -32,7 +32,7 @@ export default class App extends React.Component<{ buttons: [string, drawingMode
     return (
       <div id="main" ref={() => this.cvInit()}>
         <div id="header">
-          <ReactSVG className="gm-logo" src="../assets/Geomatrica-icon.svg" />
+          <ReactSVG className="gm-logo" src="./assets/Geomatrica-icon.svg" />
           <Menu>
             <N1 name="file" ctx="文件">
               <N2 name="new" lCtx="新建画板" rCtx="Alt+O" haveN3={true}>
@@ -65,7 +65,7 @@ export default class App extends React.Component<{ buttons: [string, drawingMode
               <ModeSwitch
                 key={v[0]}
                 app={this}
-                iconSrc={"../assets/switchIcons/" + v[0] + ".svg"}
+                iconSrc={"./assets/switchIcons/" + v[0] + ".svg"}
                 drawingMode={v[1]}
               />
             ))}

@@ -1,6 +1,7 @@
 require("../styles/styles.less");
 require("../styles/nav.css");
 require("katex/dist/katex.min.css");
+require("../favicon.png");
 
 import { settings } from "pixi.js";
 settings.SORTABLE_CHILDREN = true;
@@ -14,7 +15,7 @@ document.title = "Geomatrica";
 var favicon = document.createElement("link");
 favicon.type = "image/png";
 favicon.rel = "icon";
-favicon.href = "../favicon.png";
+favicon.href = "favicon.png";
 document.getElementsByTagName("head")[0].appendChild(favicon);
 
 var root = document.createElement("div");
