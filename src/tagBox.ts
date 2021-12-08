@@ -58,6 +58,8 @@ export default class tagBox {
     });
   }
   update(): void {
+    var tx = 80;
+    var ty = 30;
     //对象 不存在 已移除 不显示(被隐藏) 则不显示标签
     if (!this.obj.exist || this.obj.removed || !this.obj.shown) {
       this.element.style.visibility = "hidden";
@@ -65,8 +67,8 @@ export default class tagBox {
       this.element.style.visibility = "visible";
     }
     var pos = this.obj.canvas.toPos(this.crd);
-    this.element.style.left = pos.x + this.offset.x + "px";
-    this.element.style.top = pos.y + this.offset.y + "px";
+    this.element.style.left = pos.x + this.offset.x + tx + "px";
+    this.element.style.top = pos.y + this.offset.y + ty + "px";
   }
   updateContent(): void {
     //用Katex渲染
