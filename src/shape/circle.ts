@@ -11,9 +11,9 @@ export default abstract class circle extends obj {
   static readonly IAA_width = 15;
   static shapeName = "circle";
 
-  x: number;
-  y: number;
-  r: number;
+  x!: number;
+  y!: number;
+  r!: number;
 
   init_L2() {
     this.shape = circle;
@@ -27,7 +27,7 @@ export default abstract class circle extends obj {
     if (!this.shown || !this.exist) {
       return;
     }
-    for (var i in this.style.line) {
+    for (const i in this.style.line) {
       this.body.lineStyle(this.style.line[i]);
       this.body.drawCircle(...pairForm(this.canvas.toPos(this)), this.r * this.canvas.trCoe[0]);
     }
@@ -51,7 +51,7 @@ export default abstract class circle extends obj {
 
   getTagCrd(): pos {
     if (!this.exist) {
-      return { x: undefined, y: undefined };
+      return { x: NaN, y: NaN };
     }
     return {
       x: this.x + this.r / 1.4142135623730951,
@@ -60,8 +60,8 @@ export default abstract class circle extends obj {
   }
 
   preDefine(): void {
-    for (var i in this.canvas.O) {
-      var t: obj = this.canvas.O[i];
+    for (const i in this.canvas.O) {
+      const t: obj = this.canvas.O[i];
       if (!t.shown || t.removed || t.index == this.index) {
         continue;
       }

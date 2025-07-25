@@ -1,5 +1,5 @@
 import canvas from "../../canvas";
-import { objectForSaving } from "../../misc";
+import { type objectForSaving } from "../../misc";
 import { centerOfGravity } from "../../util";
 import point from "../point";
 

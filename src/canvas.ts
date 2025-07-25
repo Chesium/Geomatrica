@@ -1,11 +1,11 @@
-import { Application, IApplicationOptions } from "pixi.js";
+import { Application, type IApplicationOptions } from "pixi.js";
 import { Container } from "pixi.js";
 import { Text, TextStyle } from "pixi.js";
 import { Graphics, LINE_CAP } from "pixi.js";
 
-import { chooseObjs, drawCase } from "./drawingMode";
+import { type chooseObjs, drawCase } from "./drawingMode";
 import obj from "./object";
-import { rect, pos, crd } from "./misc";
+import { type rect, pos, crd } from "./misc";
 import { posForm, floatAdd, floatMul, pairForm, getOffsetLeft, getOffsetTop } from "./util";
 import Mode from "./Mode";
 import { defaultStyle, focusStyle } from "./style";
@@ -101,7 +101,7 @@ export default class canvas {
    * ---
    * 具体指当前绘图模式在`this.Mode.drawingModes`中的索引
    */
-  drawingModeI: number;
+  drawingModeI!: number;
   /**
    * ## 画板模式
    * 决定能在这画板上画什么、怎么画
@@ -267,7 +267,7 @@ export default class canvas {
    * ---
    * 标识该步应执行哪些函数、之后还会出现什么情况
    */
-  currentCase: drawCase;
+  currentCase!: drawCase;
   /**
    * ## 是否处于根情况
    *
@@ -313,7 +313,7 @@ export default class canvas {
     this.updAxes();
 
     //设置鼠标事件
-    this.PIXIapp.resizeTo.addEventListener("mousedown", (ev: MouseEvent): void => {
+    this.PIXIapp.resizeTo.addEventListener("mousedown", (ev: Event): void => {
       if (this.justEndDrawing) {
         this.justEndDrawing = false;
         return;
@@ -324,8 +324,8 @@ export default class canvas {
       if (this.Status == 3) {
         return;
       }
-      var IAAs = this.IAseq.flat(2);
-      for (var i in IAAs) {
+      const IAAs = this.IAseq.flat(2);
+      for (const i in IAAs) {
         if (IAAs[i].removed) {
           continue;
         }
@@ -338,19 +338,19 @@ export default class canvas {
           IAAs[i].needUpdBitmap = false;
         }
       }
-      var crd = this.toCrd({
-        x: ev.pageX - this.PIXIapp.resizeTo.offsetLeft,
-        y: ev.pageY - this.PIXIapp.resizeTo.offsetTop,
+      const crd = this.toCrd({
+        x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
+        y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
       });
       console.log(
         "[mousedown] pos:",
-        ev.pageX - this.PIXIapp.resizeTo.offsetLeft,
+        (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
         " ",
-        ev.pageY - this.PIXIapp.resizeTo.offsetTop
+        (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop
       );
-      var focus = this.chooseByPos({
-        x: ev.pageX - this.PIXIapp.resizeTo.offsetLeft,
-        y: ev.pageY - this.PIXIapp.resizeTo.offsetTop,
+      const focus = this.chooseByPos({
+        x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
+        y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
       });
       console.log("[mousedown] current focus:", focus);
       console.log("[mousedown] current drawing case:", this.currentCase);
@@ -358,7 +358,7 @@ export default class canvas {
         if (focus instanceof obj) {
           //点击了一个对象
           //处理泛形状情况
-          var AnyCase = this.currentCase.intoAny;
+          const AnyCase = this.currentCase.intoAny;
           if (AnyCase != undefined) {
             //匹配 进入该情况 添加该对象至选中对象列表 执行处理函数
             this.currentCase = AnyCase;
@@ -371,7 +371,7 @@ export default class canvas {
             }
           }
           //查找该对象类型是否符和 当前绘图情况的 某一种[子情况]
-          var Tcase = this.currentCase.into[focus.shape.shapeName];
+          const Tcase = this.currentCase.into[focus.shape.shapeName];
           if (Tcase != undefined) {
             //匹配 进入该情况 添加该对象至选中对象列表 执行处理函数
             this.currentCase = Tcase;
@@ -388,7 +388,7 @@ export default class canvas {
           //重置选择操作
           this.resetChoosing();
           //处理点击空白情况
-          var blankCase = this.currentCase.intoBlank;
+          const blankCase = this.currentCase.intoBlank;
           if (blankCase != undefined) {
             this.currentCase = blankCase;
             this.inRootCase = false;
@@ -399,7 +399,7 @@ export default class canvas {
         }
       }
     });
-    this.PIXIapp.resizeTo.addEventListener("mousemove", (ev: MouseEvent): void => {
+    this.PIXIapp.resizeTo.addEventListener("mousemove", (ev: Event): void => {
       if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
         return;
       }
@@ -407,17 +407,17 @@ export default class canvas {
         return;
       }
       // console.log("status",this.Status);
-      var crd = this.toCrd({
-        x: ev.pageX - this.PIXIapp.resizeTo.offsetLeft,
-        y: ev.pageY - this.PIXIapp.resizeTo.offsetTop,
+      const crd = this.toCrd({
+        x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
+        y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
       });
       switch (this.Status) {
         case 1:
           this.O[this.F].updDrag(crd);
           break;
         case 2:
-          this.trCoe[1] = ev.pageX - this.PIXIapp.resizeTo.offsetLeft + this.dragOffset.x;
-          this.trCoe[2] = ev.pageY - this.PIXIapp.resizeTo.offsetTop + this.dragOffset.y;
+          this.trCoe[1] = (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft + this.dragOffset.x;
+          this.trCoe[2] = (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop + this.dragOffset.y;
           this.updAll();
           // console.log("[update drag->canvas] trcoe:", this.trCoe);
           break;
@@ -425,53 +425,53 @@ export default class canvas {
           break;
       }
     });
-    this.PIXIapp.resizeTo.addEventListener("mouseup", (ev: MouseEvent): void => {
+    this.PIXIapp.resizeTo.addEventListener("mouseup", (ev: Event): void => {
       if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
         return;
       }
       if (this.Status == 3) {
         return;
       }
-      var crd = this.toCrd({
-        x: ev.pageX - this.PIXIapp.resizeTo.offsetLeft,
-        y: ev.pageY - this.PIXIapp.resizeTo.offsetTop,
+      const crd = this.toCrd({
+        x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
+        y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
       });
       if (this.F != -1) {
         if (this.O[this.F].initializing) {
           this.O[this.F].initializing = false;
-          var focus = this.chooseByPos({
-            x: ev.pageX - this.PIXIapp.resizeTo.offsetLeft,
-            y: ev.pageY - this.PIXIapp.resizeTo.offsetTop,
+          const focus = this.chooseByPos({
+            x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
+            y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
           });
         }
       }
       this.F = -1;
       this.Status = 0;
     });
-    this.PIXIapp.resizeTo.addEventListener("wheel", (ev: WheelEvent): void => {
+    this.PIXIapp.resizeTo.addEventListener("wheel", (ev: Event): void => {
       if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
         return;
       }
-      if (ev.deltaY < 0) {
+      if ((ev as WheelEvent).deltaY < 0) {
         this.trCoe[0] *= 1.1;
         this.trCoe[1] =
-          ev.pageX -
+          (ev as WheelEvent).pageX -
           this.PIXIapp.resizeTo.offsetLeft +
-          (this.trCoe[1] - ev.pageX + this.PIXIapp.resizeTo.offsetLeft) * 1.1;
+          (this.trCoe[1] - (ev as WheelEvent).pageX + this.PIXIapp.resizeTo.offsetLeft) * 1.1;
         this.trCoe[2] =
-          ev.pageY -
+          (ev as WheelEvent).pageY -
           this.PIXIapp.resizeTo.offsetTop +
-          (this.trCoe[2] - ev.pageY + this.PIXIapp.resizeTo.offsetTop) * 1.1;
+          (this.trCoe[2] - (ev as WheelEvent).pageY + this.PIXIapp.resizeTo.offsetTop) * 1.1;
       } else {
         this.trCoe[0] /= 1.1;
         this.trCoe[1] =
-          ev.pageX -
+          (ev as WheelEvent).pageX -
           this.PIXIapp.resizeTo.offsetLeft +
-          (this.trCoe[1] - ev.pageX + this.PIXIapp.resizeTo.offsetLeft) / 1.1;
+          (this.trCoe[1] - (ev as WheelEvent).pageX + this.PIXIapp.resizeTo.offsetLeft) / 1.1;
         this.trCoe[2] =
-          ev.pageY -
+          (ev as WheelEvent).pageY -
           this.PIXIapp.resizeTo.offsetTop +
-          (this.trCoe[2] - ev.pageY + this.PIXIapp.resizeTo.offsetTop) / 1.1;
+          (this.trCoe[2] - (ev as WheelEvent).pageY + this.PIXIapp.resizeTo.offsetTop) / 1.1;
       }
       this.updAll();
     });
@@ -527,7 +527,7 @@ export default class canvas {
    */
   updAll(): void {
     this.updAxes();
-    for (var i in this.rootObjs) {
+    for (const i in this.rootObjs) {
       if (!this.rootObjs[i].removed) {
         this.rootObjs[i].update();
       }
@@ -545,9 +545,9 @@ export default class canvas {
   chooseByPos(pos: pos): -1 | obj {
     //ABSL
     if (this.drawingModeI != 0) {
-      var predefineObjs: obj[] = this.IAseq[0].flat(2);
+      const predefineObjs: obj[] = this.IAseq[0].flat(2);
       console.log("predefineObjs:", predefineObjs);
-      for (var po of predefineObjs) {
+      for (const po of predefineObjs) {
         console.log("po:", po);
         if (!po.removed) {
           if (
@@ -563,8 +563,8 @@ export default class canvas {
         }
       }
     }
-    var objs = this.IAseq[1].flat(2);
-    for (var i in objs) {
+    const objs = this.IAseq[1].flat(2);
+    for (const i in objs) {
       if (!objs[i].removed) {
         if (
           objs[i].boundRect[0][0] <= pos.x &&
@@ -590,7 +590,7 @@ export default class canvas {
    * @returns void
    */
   clearChooseList(): void {
-    for (var i in this.chooseObjs.all) {
+    for (const i in this.chooseObjs.all) {
       //重置所有选中元素的样式
       this.chooseObjs.all[i].changeStyle(defaultStyle);
     }
@@ -648,7 +648,7 @@ export default class canvas {
   updAxes(): void {
     // console.log("[update AXES]");
     this.axis.clear();
-    var origin = this.toPos({ x: 0, y: 0 }),
+    const origin = this.toPos({ x: 0, y: 0 }),
       dp_Xm = this.stageBound[0][0],
       dp_Ym = this.stageBound[0][1],
       dp_Xn = this.stageBound[1][0],
@@ -656,8 +656,8 @@ export default class canvas {
       minCrd = this.toCrd(posForm(this.stageBound[0])),
       maxCrd = this.toCrd(posForm(this.stageBound[1]));
     this.axis.lineStyle(this.axisStyle);
-    var rsl = 1;
-    var wtt = new Text("1", this.scaleFont); //widthTestText
+    let rsl = 1;
+    const wtt = new Text("1", this.scaleFont); //widthTestText
     while (this.trCoe[0] * rsl < 1.5 * (wtt.width + 10)) {
       if ((rsl + "")[0] == "2") {
         rsl /= 2;
@@ -707,7 +707,7 @@ export default class canvas {
       if (this.axisXtype > 1) {
         //添加刻度文字
         //清空先前的
-        for (let i in this.Xscale) {
+        for (const i in this.Xscale) {
           this.Xscale[i].text = "";
         }
         for (
@@ -776,7 +776,7 @@ export default class canvas {
       if (this.axisYtype > 1) {
         //添加刻度文字
         //清空先前的
-        for (let i in this.Yscale) {
+        for (const i in this.Yscale) {
           this.Yscale[i].text = "";
         }
         for (

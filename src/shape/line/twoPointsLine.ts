@@ -23,11 +23,11 @@ export default abstract class twoPointsLine extends line {
       return;
     }
     this.exist = true;
-    var x1 = this.Point1.x,
+    const x1 = this.Point1.x,
       y1 = this.Point1.y,
       x2 = this.Point2.x,
       y2 = this.Point2.y;
-    var l = calcLineEq(this.Point1, this.Point2);
+    const l = calcLineEq(this.Point1, this.Point2);
     this.exist = l.exist;
     this.a = l.a;
     this.b = l.b;
@@ -103,9 +103,9 @@ export default abstract class twoPointsLine extends line {
   }
   getTagCrd(): pos {
     if (!this.exist) {
-      return { x: undefined, y: undefined };
+      return { x: NaN, y: NaN};
     }
-    var t = (this.refP_t[0] + this.refP_t[1]) / 2;
+    const t = (this.refP_t[0] + this.refP_t[1]) / 2;
     return {
       x: this.a * t + this.b,
       y: this.c * t + this.d,

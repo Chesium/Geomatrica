@@ -2,7 +2,7 @@ import canvas from "../../canvas";
 import halfLine from "../../shape/line/twoPointsLine/halfLine";
 import twoPointsObj_dm from "../twoPointsObj_dm";
 
-var dm_halfLine = new twoPointsObj_dm(
+const dm_halfLine = new twoPointsObj_dm(
   {
     name: "draw halfLine",
     title: "射线",

@@ -3,7 +3,7 @@ import canvas from "../canvas";
 import midPoint from "../shape/point/midPoint";
 import point from "../shape/point";
 
-var dm_midPoint = new drawingMode({
+const dm_midPoint = new drawingMode({
   name: "draw midPoint",
   title: "中点",
   description: "选中两点作其中点",

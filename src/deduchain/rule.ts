@@ -1,6 +1,6 @@
 import fact from "./fact";
 
-export default class rule {
+export default interface rule {
   name: string;
   description: string;
 

@@ -1,6 +1,6 @@
-import ddcObjType from "./ddcObjType";
+import type ddcObjType from "./ddcObjType";
 
-export default class ddcObj {
+export default interface ddcObj {
   index:number;
   type:ddcObjType;
 }

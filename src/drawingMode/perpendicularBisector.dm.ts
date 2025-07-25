@@ -3,7 +3,7 @@ import canvas from "../canvas";
 import perpendicularBisector from "../shape/line/perpendicularBisector";
 import point from "../shape/point";
 
-var dm_perpendicularBisector = new drawingMode({
+const dm_perpendicularBisector = new drawingMode({
   name: "draw perpendicularBisector",
   title: "中垂线",
   description: "选中两点作其中垂线",

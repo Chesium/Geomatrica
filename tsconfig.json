@@ -3,11 +3,17 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
-    "module": "es6",
-    "lib": ["DOM", "ES2019.Array"],
-    "target": "es5",
+    "module": "ESNext",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "target": "ES2022",
     "allowJs": true,
     "jsx": "react"
   },
-  "files": ["src/index.tsx"]
+  "files": [
+    "src/index.tsx"
+  ]
 }

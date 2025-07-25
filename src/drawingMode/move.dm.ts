@@ -2,7 +2,7 @@ import drawingMode, { drawCase } from "../drawingMode";
 import canvas from "../canvas";
 import { crd } from "../misc";
 
-var dm_move = new drawingMode({
+const dm_move = new drawingMode({
   name: "move objects",
   title: "移动",
   description: "移动对象或画板",
@@ -11,7 +11,7 @@ var dm_move = new drawingMode({
 dm_move.rootCase = new drawCase((root: drawCase) => {
   root.intoAny = new drawCase((intoAny: drawCase) => {
     intoAny.processFn = (cv: canvas, crd: crd) => {
-      var endListener = () => {
+      const endListener = () => {
         cv.resetChoosing();
         cv.PIXIapp.view.removeEventListener("mouseup", endListener);
       };
@@ -22,7 +22,7 @@ dm_move.rootCase = new drawCase((root: drawCase) => {
   root.intoBlank = new drawCase((intoBlank: drawCase) => {
     intoBlank.processFn = (cv: canvas, crd: crd) => {
       cv.resetChoosing();
-      var pos = cv.toPos(crd);
+      const pos = cv.toPos(crd);
       cv.dragOffset.x = cv.trCoe[1] - pos.x;
       cv.dragOffset.y = cv.trCoe[2] - pos.y;
       cv.Status = 2;

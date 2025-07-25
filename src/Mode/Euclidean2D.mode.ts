@@ -6,7 +6,7 @@ import {shapes} from "../shape/shape"
  * ## 欧几里得平面几何模式
  * 默认(现今也是唯一)的画板模式
  */
-var Euclidean2D = new Mode("Euclidean2D", "Euclidean2D");
+const Euclidean2D = new Mode("Euclidean2D", "Euclidean2D");
 
 Euclidean2D.registerDrawingModes(dms);
 Euclidean2D.defaultDrawingModeI = 2;

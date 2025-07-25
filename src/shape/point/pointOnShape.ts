@@ -2,7 +2,7 @@ import point from "../point";
 import { crd } from "../../misc";
 
 export default abstract class pointOnShape extends point {
-  following: boolean; //是否跟随鼠标
+  following!: boolean; //是否跟随鼠标
 
   //对象上的点属于半约束点
 

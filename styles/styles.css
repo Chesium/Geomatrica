@@ -1,5 +1,3 @@
-@headerHeight: 36px;
-@toolbarWidth: 90px;
 
 #root {
   position: absolute;
@@ -13,9 +11,8 @@
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: 90px 1fr; //| | |
-  grid-template-rows: 36px 1fr; //---
-  // flex-direction: column;
+  grid-template-columns: 90px 1fr;
+  grid-template-rows: 36px 1fr;
 }
 
 #workarea,
@@ -36,15 +33,12 @@
   grid-row-start: 2;
   grid-row-end: 3;
 
-  // position: absolute;
-  // top: @headerHeight;
   left: 0px;
-  width: @toolbarWidth;
+  width: 90px;
   height: 100%;
   overflow: hidden;
   background-color: rgb(255, 255, 255);
   box-shadow: 5px 0px 10px 2px rgba(0, 0, 0, 0.1);
-  // padding-bottom: @headerHeight;
 }
 
 #header {
@@ -58,7 +52,7 @@
   top: 0px;
   left: 0px;
   width: 100%;
-  height: @headerHeight;
+  height: 36px;
   overflow: hidden;
   box-shadow: 5px 0px 5px 2px rgba(0, 0, 0, 0.4);
   background-color: rgb(255, 255, 255);
@@ -119,8 +113,6 @@ body {
   z-index: 0;
 }
 
-@spaceBetweenSwitches: 6px;
-
 .mode-switch-container {
   display: flex;
   height: 100%;
@@ -129,8 +121,7 @@ body {
   justify-content: center;
   overflow-x: hidden;
   overflow-y: scroll;
-  padding-top: (@spaceBetweenSwitches / 2);
-  //* 这里加括号，见 https://www.cnblogs.com/xiaoqiang001/p/14354616.html
+  padding-top: 3px;
 }
 
 .mode-switch-container::-webkit-scrollbar {
@@ -159,12 +150,11 @@ body {
 .mode-switch {
   height: 50px;
   width: 50px;
-  margin: (@spaceBetweenSwitches / 2);
+  margin: 3px;
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
   border: 4px solid black;
-  //*     宽度-样式-颜色
   box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transition-timing-function: ease;
   transition-duration: 0.5s;

@@ -32,15 +32,15 @@ export default class pointOnCircle extends pointOnShape {
     if (this.checkNonExistParents()) {
       return;
     }
-    var x0 = this.Circle.x,
+    const x0 = this.Circle.x,
       y0 = this.Circle.y,
       r = this.Circle.r;
     if (this.following) {
-      var x1 = this.x,
+      const x1 = this.x,
         y1 = this.y;
-      var xdif = x1 - x0,
+      const xdif = x1 - x0,
         ydif = y1 - y0;
-      var d = Math.sqrt(xdif * xdif + ydif * ydif);
+      const d = Math.sqrt(xdif * xdif + ydif * ydif);
       this.cosine = xdif / d;
       this.sine = ydif / d;
     }

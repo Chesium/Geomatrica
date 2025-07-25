@@ -31,7 +31,7 @@ export class intersection_LC_1 extends intersection {
       return;
     }
 
-    var a = this.Line.a,
+    const a = this.Line.a,
       b = this.Line.b,
       c = this.Line.c,
       d = this.Line.d,
@@ -39,16 +39,16 @@ export class intersection_LC_1 extends intersection {
       x = this.Circle.x,
       y = this.Circle.y,
       r = this.Circle.r;
-    var A = a * a + c * c,
+    const A = a * a + c * c,
       B = 2 * (a * (b - x) + c * (d - y)),
       C = b * b + d * d + x * x + y * y - r * r - 2 * (b * x + d * y);
-    var delta = B * B - 4 * A * C; //判别式Δ
+    const delta = B * B - 4 * A * C; //判别式Δ
     if (delta < 0) {
       this.exist = false;
       return;
     }
-    var t1 = (-B + Math.sqrt(delta)) / (2 * A);
-    var t2 = -(B / A + t1),
+    const t1 = (-B + Math.sqrt(delta)) / (2 * A);
+    let t2 = -(B / A + t1),
       ts = [],
       t;
     if (t1 >= Math.min(rg[0], rg[1]) && t1 <= Math.max(rg[0], rg[1])) {
@@ -103,7 +103,7 @@ export class intersection_LC_2 extends intersection {
       return;
     }
 
-    var a = this.Line.a,
+    const a = this.Line.a,
       b = this.Line.b,
       c = this.Line.c,
       d = this.Line.d,
@@ -111,16 +111,16 @@ export class intersection_LC_2 extends intersection {
       x = this.Circle.x,
       y = this.Circle.y,
       r = this.Circle.r;
-    var A = a * a + c * c,
+    const A = a * a + c * c,
       B = 2 * (a * (b - x) + c * (d - y)),
       C = b * b + d * d + x * x + y * y - r * r - 2 * (b * x + d * y);
-    var delta = B * B - 4 * A * C; //判别式Δ
+    const delta = B * B - 4 * A * C; //判别式Δ
     if (delta < 0) {
       this.exist = false;
       return;
     }
-    var t1 = (-B + Math.sqrt(delta)) / (2 * A);
-    var t2 = -(B / A + t1),
+    const t1 = (-B + Math.sqrt(delta)) / (2 * A);
+    let t2 = -(B / A + t1),
       ts = [],
       t;
     if (t1 >= Math.min(rg[0], rg[1]) && t1 <= Math.max(rg[0], rg[1])) {

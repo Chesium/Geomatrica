@@ -32,7 +32,7 @@ export default class pointOnLine extends pointOnShape {
     if (this.checkNonExistParents()) {
       return;
     }
-    var a = this.Line.a,
+    const a = this.Line.a,
       b = this.Line.b,
       c = this.Line.c,
       d = this.Line.d,

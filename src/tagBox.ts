@@ -9,8 +9,8 @@ export default class tagBox {
   obj: obj; //该标签属于的对象
   element: HTMLElement; //该标签对应的HTML元素
   dragging: boolean = false;
-  dragPos: pos; //拖动开始时的鼠标位置
-  dragBeginOffset: pos; //拖动开始时的offset
+  dragPos: pos | undefined; //拖动开始时的鼠标位置
+  dragBeginOffset: pos | undefined; //拖动开始时的offset
   constructor(tagCrd: crd, content: string, obj: obj) {
     //初始化
     this.crd = tagCrd;
@@ -26,7 +26,7 @@ export default class tagBox {
     this.update();
     this.updateContent();
     this.element.children[0].classList.add("graphic-tag");
-    this.element.children[0].addEventListener("mousedown", (ev: MouseEvent) => {
+    this.element.children[0].addEventListener("mousedown", (ev: Event) => {
       //只有处于移动模式时采才可拖动标签
       console.log("tagbox:click");
       if (this.obj.canvas.Mode.drawingModes[this.obj.canvas.drawingModeI].name == "move objects") {
@@ -34,16 +34,16 @@ export default class tagBox {
         this.dragging = true;
         this.obj.canvas.Status = 3; //"3"标识该画板中正在拖动一个标签
         this.obj.canvas.F = this.obj.index;
-        this.dragPos = { x: ev.pageX, y: ev.pageY };
+        this.dragPos = { x: (ev as MouseEvent).pageX, y: (ev as MouseEvent).pageY };
         // console.log("tagbox beginDrag dragpos:", this.dragPos);
         this.dragBeginOffset = { x: this.offset.x, y: this.offset.y };
       }
     });
-    this.obj.canvas.PIXIapp.resizeTo.addEventListener("mousemove", (ev: MouseEvent) => {
+    this.obj.canvas.PIXIapp.resizeTo.addEventListener("mousemove", (ev: Event) => {
       if (this.obj.canvas.Status == 3 && this.dragging) {
         // console.log("tagbox updDrag origin this:", this);
-        this.offset.x = ev.pageX - this.dragPos.x + this.dragBeginOffset.x;
-        this.offset.y = ev.pageY - this.dragPos.y + this.dragBeginOffset.y;
+        this.offset.x = (ev as MouseEvent).pageX - this.dragPos!.x + this.dragBeginOffset!.x;
+        this.offset.y = (ev as MouseEvent).pageY - this.dragPos!.y + this.dragBeginOffset!.y;
         this.update();
       }
     });
@@ -58,15 +58,15 @@ export default class tagBox {
     });
   }
   update(): void {
-    var tx = 80;
-    var ty = 30;
+    const tx = 80;
+    const ty = 30;
     //对象 不存在 已移除 不显示(被隐藏) 则不显示标签
     if (!this.obj.exist || this.obj.removed || !this.obj.shown) {
       this.element.style.visibility = "hidden";
     } else {
       this.element.style.visibility = "visible";
     }
-    var pos = this.obj.canvas.toPos(this.crd);
+    const pos = this.obj.canvas.toPos(this.crd);
     this.element.style.left = pos.x + this.offset.x + tx + "px";
     this.element.style.top = pos.y + this.offset.y + ty + "px";
   }

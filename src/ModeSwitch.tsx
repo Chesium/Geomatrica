@@ -11,8 +11,8 @@ export default class ModeSwitch extends React.Component<{
   drawingMode: drawingMode | undefined;
 }> {
   title: string;
-  element: HTMLElement = null;
-  setRef: (ref: HTMLElement) => void;
+  element: HTMLElement | null = null;
+  setRef: (ref: HTMLElement | null) => void;
   constructor(prop: { app: App; iconSrc: string; drawingMode: drawingMode | undefined }) {
     super(prop);
     if (prop.drawingMode == undefined) {
@@ -21,7 +21,7 @@ export default class ModeSwitch extends React.Component<{
       this.title = prop.drawingMode.title;
       prop.drawingMode.switch = this;
     }
-    this.setRef = (ref: HTMLElement) => {
+    this.setRef = (ref: HTMLElement | null) => {
       this.element = ref;
     };
   }
@@ -29,16 +29,16 @@ export default class ModeSwitch extends React.Component<{
     if (this.props.drawingMode != undefined && this.props.app.cv != undefined) {
       this.props.app.cv.changeDrawingMode(this.props.drawingMode.indexes[this.props.app.cv.Mode.name]);
     }
-    for (var dm of this.props.app.cv.Mode.drawingModes) {
+    for (const dm of this.props.app.cv.Mode.drawingModes) {
       dm.switch.off();
     }
     this.on();
   }
   on() {
-    this.element.setAttribute("chosen", "");
+    this.element!.setAttribute("chosen", "");
   }
   off() {
-    this.element.removeAttribute("chosen");
+    this.element!.removeAttribute("chosen");
   }
   render(): React.ReactNode {
     return (

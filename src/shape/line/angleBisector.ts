@@ -41,7 +41,7 @@ export default class angleBisector_3P extends line {
      *    │
      *   2•─────────────────•3
      */
-    var x1 = this.Point1.x,
+    const x1 = this.Point1.x,
       y1 = this.Point1.y,
       x2 = this.Point2.x,
       y2 = this.Point2.y,
@@ -52,11 +52,11 @@ export default class angleBisector_3P extends line {
       this.exist = false;
       return;
     }
-    var l12 = Math.hypot(x1 - x2, y1 - y2), //边 12 的长度
+    const l12 = Math.hypot(x1 - x2, y1 - y2), //边 12 的长度
       l32 = Math.hypot(x3 - x2, y3 - y2); //边 32 的长度
-    var k1o_o3 = l12 / l32; //边1o与边o3长度之比
-    var ko3_13 = 1 / (k1o_o3 + 1); //边o2与边13长度之比
-    var o = {
+    const k1o_o3 = l12 / l32; //边1o与边o3长度之比
+    const ko3_13 = 1 / (k1o_o3 + 1); //边o2与边13长度之比
+    const o = {
       x: x3 - (x3 - x1) * ko3_13,
       y: y3 - (y3 - y1) * ko3_13,
     };
@@ -65,9 +65,9 @@ export default class angleBisector_3P extends line {
   }
   getTagCrd(): pos {
     if (!this.exist) {
-      return { x: undefined, y: undefined };
+      return { x: NaN, y: NaN};
     }
-    var t = (this.refP_t[0] + this.refP_t[1]) / 2;
+    const t = (this.refP_t[0] + this.refP_t[1]) / 2;
     return {
       x: this.a * t + this.b,
       y: this.c * t + this.d,
@@ -100,23 +100,23 @@ export class angleBisector_2L_1 extends line {
     if (this.checkNonExistParents()) {
       return;
     }
-    var a1 = this.Line1.a,
+    const a1 = this.Line1.a,
       c1 = this.Line1.c,
       a2 = this.Line2.a,
       c2 = this.Line2.c;
     this.r = [-Infinity, Infinity];
-    var itsc = calcIntersectionLL(this.Line1, this.Line2);
+    const itsc = calcIntersectionLL(this.Line1, this.Line2);
     if (!itsc.exist) {
       this.exist = false;
       return;
     }
     this.exist = true;
-    var p = substituteIntoLineEq(itsc.t1, this.Line1),
+    const p = substituteIntoLineEq(itsc.t1, this.Line1),
       p1 = substituteIntoLineEq(itsc.t1 + 1, this.Line1),
       p2 = substituteIntoLineEq(itsc.t2 + 1, this.Line2);
 
-    var dnmnt = (a2 * c1 - a1 * c2) * (a2 * c1 + a1 * c2); //角平分线斜率的分母 denominator简称
-    var mn_t;
+    const dnmnt = (a2 * c1 - a1 * c2) * (a2 * c1 + a1 * c2); //角平分线斜率的分母 denominator简称
+    let mn_t;
     if (dnmnt == 0) {
       //分母为零 角平分线垂直于x轴
       this.a = 0;
@@ -134,8 +134,8 @@ export class angleBisector_2L_1 extends line {
       this.d = p.y - this.c * p.x;
       mn_t = p.x;
     }
-    var pl = calcLineEq(p1, p2);
-    var pItsc = calcIntersectionLL(this, pl);
+    const pl = calcLineEq(p1, p2);
+    const pItsc = calcIntersectionLL(this, pl);
     if (pItsc.t1 > mn_t) {
       this.dr = 1;
       if (dnmnt == 0) {
@@ -154,9 +154,9 @@ export class angleBisector_2L_1 extends line {
   }
   getTagCrd(): pos {
     if (!this.exist) {
-      return { x: undefined, y: undefined };
+      return { x: NaN, y: NaN};
     }
-    var t = (this.refP_t[1] - this.refP_t[0]) * 2 + this.refP_t[0];
+    const t = (this.refP_t[1] - this.refP_t[0]) * 2 + this.refP_t[0];
     return {
       x: this.a * t + this.b,
       y: this.c * t + this.d,
@@ -189,23 +189,23 @@ export class angleBisector_2L_2 extends line {
     if (this.checkNonExistParents()) {
       return;
     }
-    var a1 = this.Line1.a,
+    const a1 = this.Line1.a,
       c1 = this.Line1.c,
       a2 = this.Line2.a,
       c2 = this.Line2.c;
     this.r = [-Infinity, Infinity];
-    var itsc = calcIntersectionLL(this.Line1, this.Line2);
+    const itsc = calcIntersectionLL(this.Line1, this.Line2);
     if (!itsc.exist) {
       this.exist = false;
       return;
     }
     this.exist = true;
-    var p = substituteIntoLineEq(itsc.t1, this.Line1),
+    const p = substituteIntoLineEq(itsc.t1, this.Line1),
       p1 = substituteIntoLineEq(itsc.t1 + 1, this.Line1),
       p2 = substituteIntoLineEq(itsc.t2 + 1, this.Line2);
 
-    var dnmnt = (a2 * c1 - a1 * c2) * (a2 * c1 + a1 * c2); //角平分线斜率的分母 denominator简称
-    var mn_t;
+    const dnmnt = (a2 * c1 - a1 * c2) * (a2 * c1 + a1 * c2); //角平分线斜率的分母 denominator简称
+    let mn_t;
     if (dnmnt == 0) {
       //分母为零 角平分线垂直于x轴
       this.a = 0;
@@ -223,8 +223,8 @@ export class angleBisector_2L_2 extends line {
       this.d = p.y - this.c * p.x;
       mn_t = p.x;
     }
-    var pl = calcLineEq(p1, p2);
-    var pItsc = calcIntersectionLL(this, pl);
+    const pl = calcLineEq(p1, p2);
+    const pItsc = calcIntersectionLL(this, pl);
     if (pItsc.t1 > mn_t) {
       this.dr = 1;
       if (dnmnt == 0) {
@@ -243,9 +243,9 @@ export class angleBisector_2L_2 extends line {
   }
   getTagCrd(): pos {
     if (!this.exist) {
-      return { x: undefined, y: undefined };
+      return { x: NaN, y: NaN};
     }
-    var t = (this.refP_t[1] - this.refP_t[0]) * 2 + this.refP_t[0];
+    const t = (this.refP_t[1] - this.refP_t[0]) * 2 + this.refP_t[0];
     return {
       x: this.a * t + this.b,
       y: this.c * t + this.d,

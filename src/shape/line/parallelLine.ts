@@ -34,9 +34,9 @@ export default class parallelLine extends line {
   }
   getTagCrd(): pos {
     if (!this.exist) {
-      return { x: undefined, y: undefined };
+      return { x: NaN, y: NaN};
     }
-    var t = (this.refP_t[1] - this.refP_t[0]) * 2 + this.refP_t[0];
+    const t = (this.refP_t[1] - this.refP_t[0]) * 2 + this.refP_t[0];
     return {
       x: this.a * t + this.b,
       y: this.c * t + this.d,

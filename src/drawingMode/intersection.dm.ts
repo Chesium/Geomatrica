@@ -6,7 +6,7 @@ import { intersection_CC_1, intersection_CC_2 } from "../shape/point/intersectio
 import line from "../shape/line";
 import circle from "../shape/circle";
 
-var dm_intersection = new drawingMode({
+const dm_intersection = new drawingMode({
   name: "draw intersection",
   title: "交点",
   description: "选中两对象作其交点",

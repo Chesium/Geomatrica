@@ -23,7 +23,7 @@ export default class twoPointsObj_dm extends drawingMode {
     this.rootCase = new drawCase((root: drawCase) => {
       root.intoBlank = new drawCase((intoBlank: drawCase) => {
         intoBlank.processFn = (cv: canvas, crd: crd) => {
-          var newP = new freepoint(cv, crd.x, crd.y);
+          const newP = new freepoint(cv, crd.x, crd.y);
           newP.updInteractionArea();
           newP.updBoundRect();
           newP.updBitmap();
@@ -37,7 +37,7 @@ export default class twoPointsObj_dm extends drawingMode {
       });
       root.into[line.shapeName] = new drawCase((intoLine: drawCase) => {
         intoLine.processFn = (cv: canvas, crd: crd) => {
-          var newP = cv.chooseObjs.all[0].generatePointOnIt(crd);
+          const newP = cv.chooseObjs.all[0].generatePointOnIt(crd);
           cv.chooseObjs.all.pop();
           newP.updInteractionArea();
           newP.updBoundRect();
@@ -52,15 +52,15 @@ export default class twoPointsObj_dm extends drawingMode {
       });
       root.into[point.shapeName] = new drawCase((intoPoint: drawCase) => {
         intoPoint.processFn = (cv: canvas, crd: crd) => {
-          var prePoint = new MousePoint(cv);
+          const prePoint = new MousePoint(cv);
           cv.currentCase = this.rootCase.into[point.shapeName].into[point.shapeName];
           cv.chooseObjs.all.push(prePoint);
           cv.chooseObjs.point.push(prePoint);
 
-          var new2pObj = finalFn(cv);
+          const new2pObj = finalFn(cv);
 
-          var endListener = (ev: MouseEvent) => {
-            var focus = cv.chooseByPos({ x: ev.offsetX, y: ev.offsetY });
+          const endListener = (ev: MouseEvent) => {
+            const focus = cv.chooseByPos({ x: ev.offsetX, y: ev.offsetY });
             console.log("[drawing 2P obj][mouseup] current focus:", focus);
             if (focus instanceof obj) {
               if (focus.index == cv.chooseObjs.point[0].index) {
@@ -69,7 +69,7 @@ export default class twoPointsObj_dm extends drawingMode {
                 return;
               }
             }
-            var stickP = prePoint.toPoint();
+            const stickP = prePoint.toPoint();
             stickP.children.push(new2pObj);
             new2pObj.Point2 = stickP;
             new2pObj.parents[1] = new2pObj.Point2;

@@ -6,8 +6,8 @@ export default abstract class point extends obj {
   static readonly IAA_radius = 15;
   static shapeName = "point";
 
-  x: number;
-  y: number;
+  x!: number;
+  y!: number;
 
   onObjs: obj[] = [];
 
@@ -24,7 +24,7 @@ export default abstract class point extends obj {
     if (!this.shown || !this.exist) {
       return;
     }
-    for (var i in this.style.point) {
+    for (const i in this.style.point) {
       this.body.beginFill(this.style.point[i].color, this.style.point[i].alpha);
       this.body.lineStyle(this.style.point[i].outline);
       this.body.drawCircle(...pairForm(this.canvas.toPos(this)), this.style.point[i].radius);

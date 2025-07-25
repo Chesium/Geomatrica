@@ -4,7 +4,7 @@ import angleBisector_3P, { angleBisector_2L_1, angleBisector_2L_2 } from "../sha
 import point from "../shape/point";
 import line from "../shape/line";
 
-var dm_angleBisector = new drawingMode({
+const dm_angleBisector = new drawingMode({
   name: "draw angleBisector",
   title: "角平分线",
   description: "选中三点作其构成角的平分线",

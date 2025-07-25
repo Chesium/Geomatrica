@@ -3,7 +3,7 @@ import { crd } from "../../misc";
 import canvas from "../../canvas";
 
 export default class freePoint extends point {
-  dragOffset: crd;
+  dragOffset!: crd;
   
   static defineTypeName = "freepoint";
   constructor(canvas: canvas, x: number, y: number) {

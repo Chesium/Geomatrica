@@ -1,4 +1,4 @@
-import { rect, stdLine, pos, pair, crd, REAL_NUMBER } from "./misc";
+import { type rect, stdLine, pos, type pair, crd, REAL_NUMBER } from "./misc";
 
 export function posForm(pair: pair): pos {
   //将pos对象转为pair二元组
@@ -92,7 +92,7 @@ export function generateName(shapeName: string, index: number): string {
     case "circle": //circle
       return "c" + "_{" + (index + 1) + "}";
     default:
-      break;
+      return "d" + "_{" + (index + 1) + "}";
   }
 }
 
@@ -141,10 +141,10 @@ export function floatMul(a: number, b: number) {
     e: string = b.toString();
   try {
     c += d.split(".")[1].length;
-  } catch (f) {}
+  } catch (f) { }
   try {
     c += e.split(".")[1].length;
-  } catch (f) {}
+  } catch (f) { }
   return (Number(d.replace(".", "")) * Number(e.replace(".", ""))) / Math.pow(10, c);
 }
 
@@ -217,11 +217,11 @@ export function calcPerpendicular(p: crd, l: stdLine): stdLine {
 
     //clockwise 90°
     perp.dr = l.dr == 1 ? -1 : 1;
-    if (perp.dr == 1) {
-      perp.refP_t = [p.x + 10 / Math.sqrt(1 + k * k), p.x - 10 / Math.sqrt(1 + k * k)];
-    } else {
-      perp.refP_t = [p.x - 10 / Math.sqrt(1 + k * k), p.x + 10 / Math.sqrt(1 + k * k)];
-    }
+    // if (perp.dr == 1) {
+    //   perp.refP_t = [p.x + 10 / Math.sqrt(1 + k * k), p.x - 10 / Math.sqrt(1 + k * k)];
+    // } else {
+    //   perp.refP_t = [p.x - 10 / Math.sqrt(1 + k * k), p.x + 10 / Math.sqrt(1 + k * k)];
+    // }
   } else {
     //[/][|]->[\][-]
     var k = -l.a / l.c;
@@ -259,6 +259,7 @@ export function calcPerpendicular(p: crd, l: stdLine): stdLine {
 
 export default function calcParallelLine(p: crd, l: stdLine): stdLine {
   var para = new stdLine();
+  para.dr = l.dr;
   if (l.a == 0) {
     //[|]->[|]
     para.exist = true;
@@ -274,13 +275,11 @@ export default function calcParallelLine(p: crd, l: stdLine): stdLine {
     para.b = 0;
     para.c = k;
     para.d = p.y - k * p.x;
-  }
-
-  para.dr = l.dr;
-  if (para.dr == 1) {
-    para.refP_t = [p.x + 1 / Math.sqrt(1 + k * k), p.x - 1 / Math.sqrt(1 + k * k)];
-  } else {
-    para.refP_t = [p.x - 1 / Math.sqrt(1 + k * k), p.x + 1 / Math.sqrt(1 + k * k)];
+    if (para.dr == 1) {
+      para.refP_t = [p.x + 1 / Math.sqrt(1 + k * k), p.x - 1 / Math.sqrt(1 + k * k)];
+    } else {
+      para.refP_t = [p.x - 1 / Math.sqrt(1 + k * k), p.x + 1 / Math.sqrt(1 + k * k)];
+    }
   }
   para.r = [-Infinity, Infinity];
   return para;

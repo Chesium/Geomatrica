@@ -1,12 +1,12 @@
 import React from "react";
 import drawingMode from "./drawingMode";
 import { Menu, N1, N2, N3 } from "./menu";
-import ModeSwitch from "./modeSwitch";
+import ModeSwitch from "./ModeSwitch";
 import canvas from "./canvas";
 import Euclidean2D from "./Mode/Euclidean2D.mode";
 import { ReactSVG } from "react-svg";
 export default class App extends React.Component<{ buttons: [string, drawingMode | undefined][] }> {
-  cv: canvas = null;
+  cv!: canvas;
   createCanvas: (element: HTMLCanvasElement) => void;
   constructor(props: { buttons: [string, drawingMode | undefined][] }) {
     super(props);
@@ -16,7 +16,7 @@ export default class App extends React.Component<{ buttons: [string, drawingMode
           antialias: true,
           resolution: window.devicePixelRatio || 1,
           autoDensity: true,
-          resizeTo: element.parentElement,
+          resizeTo: element.parentElement!,
           view: element,
           backgroundColor: 0x000000,
           backgroundAlpha: 0,

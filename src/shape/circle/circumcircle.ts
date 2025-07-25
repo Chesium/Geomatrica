@@ -39,11 +39,11 @@ export default class circumcircle extends circle {
       return;
     }
     this.exist = true;
-    var l = calcPerpendicular(
+    const l = calcPerpendicular(
       centerOfGravity(this.Point1, this.Point2),
       calcLineEq(this.Point1, this.Point2)
     );
-    var _center = calcIntersectionLL(
+    const _center = calcIntersectionLL(
       l,
       calcPerpendicular(centerOfGravity(this.Point1, this.Point3), calcLineEq(this.Point1, this.Point3))
     );
@@ -51,7 +51,7 @@ export default class circumcircle extends circle {
       this.exist = false;
       return;
     }
-    var center = substituteIntoLineEq(_center.t1, l);
+    const center = substituteIntoLineEq(_center.t1, l);
     this.x = center.x;
     this.y = center.y;
     this.r = Math.hypot(this.x - this.Point1.x, this.y - this.Point1.y);

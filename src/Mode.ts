@@ -58,7 +58,7 @@ export default class Mode {
    * @returns void
    */
   registerDrawingModes(newDrawingModes: drawingMode[]): void {
-    for (var dm of newDrawingModes) {
+    for (const dm of newDrawingModes) {
       if (dm.indexes[this.name] != undefined) {
         return;
       }
@@ -67,7 +67,7 @@ export default class Mode {
     }
   }
   registerShapes(newShapes: typeof obj[]): void {
-    for (var shape of newShapes) {
+    for (const shape of newShapes) {
       if (shape.shapeIndexes[this.name] != undefined) {
         return;
       }

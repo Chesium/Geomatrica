@@ -4,7 +4,7 @@ import  { tangent_1, tangent_2 } from "../shape/line/tangent";
 import point from "../shape/point";
 import circle from "../shape/circle";
 
-var dm_tangent = new drawingMode({
+const dm_tangent = new drawingMode({
   name: "draw tangent",
   title: "切线",
   description: "选中一点和一圆作该圆过此点的切线",

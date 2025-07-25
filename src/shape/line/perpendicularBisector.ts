@@ -35,9 +35,9 @@ export default class perpendicularBisector extends line {
   }
   getTagCrd(): pos {
     if (!this.exist) {
-      return { x: undefined, y: undefined };
+      return { x: NaN, y: NaN};
     }
-    var t = (this.refP_t[0] + this.refP_t[1]) / 2;
+    const t = (this.refP_t[0] + this.refP_t[1]) / 2;
     return {
       x: this.a * t + this.b,
       y: this.c * t + this.d,

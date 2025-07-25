@@ -1,7 +1,7 @@
-import ddcObj from "../ddcObj";
+import type ddcObj from "../ddcObj";
 import fact from "../fact";
 
-export default class collineation extends fact {
-  static typeName = "collineation";
+export default interface collineation extends fact {
+  typeName : "collineation";
   points:ddcObj[];
 }

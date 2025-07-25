@@ -1,11 +1,11 @@
 import { Graphics, LINE_CAP } from "pixi.js";
-import { rect, pos, crd, objectForSaving } from "./misc";
+import { type rect, pos, crd, type objectForSaving } from "./misc";
 import { generateName } from "./util";
 import canvas from "./canvas";
 import tagBox from "./tagBox";
 import { defaultStyle } from "./style";
 import point from "./shape/point";
-import { style } from "./style";
+import { type style } from "./style";
 
 //图形对象类
 export default abstract class obj {
@@ -14,22 +14,22 @@ export default abstract class obj {
   static shapeName: string;
 
   //形状层静态信息
-  protected interactPriority: number; //交互优先级 越小越先
-  shape: typeof obj;
+  protected interactPriority!: number; //交互优先级 越小越先
+  shape!: typeof obj;
   // public shapeName: string; //形状参考名
   // public shapeI: number;
-  public shapeDescription: string; //形状参考描述
-  protected bodyZIndex: number; //显示堆叠顺序 越大越前
+  public shapeDescription!: string; //形状参考描述
+  protected bodyZIndex!: number; //显示堆叠顺序 越大越前
   //定义层静态信息
   static defineTypeName: string; //定义参考名
-  public defineTypeName: string; //定义参考名
+  public defineTypeName!: string; //定义参考名
   // public defineI: number;
-  public defineTypeDescription: string; //定义参考描述
+  public defineTypeDescription!: string; //定义参考描述
 
-  public initializing: boolean; //是否在初始化
-  public preDefined: boolean; //是否为预定义对象 这些对象只有交互层而无显示层
-  public canvas: canvas; //对象所在的画板
-  public index: number; //对象在画板中的索引 唯一
+  public initializing!: boolean; //是否在初始化
+  public preDefined!: boolean; //是否为预定义对象 这些对象只有交互层而无显示层
+  public canvas!: canvas; //对象所在的画板
+  public index!: number; //对象在画板中的索引 唯一
   public removed: boolean = false; //是否被移除(删除)
   public exist: boolean = false; //对象在当前定义下是否存在
   public parents: obj[] = []; //父对象列表
@@ -37,24 +37,24 @@ export default abstract class obj {
   public preDefinedChildren: obj[] = []; //预定义子对象列表
   public drawableObj: undefined | obj = undefined;
   public interactive: boolean = true; //是否允许交互(点中)
-  protected interactionArea: Graphics; //交互层PIXI图形
+  protected interactionArea!: Graphics; //交互层PIXI图形
   public boundRect: rect = [
     [0, 0],
     [0, 0],
   ]; //所在区域矩形
-  protected boundBox: Graphics; //显示「所在区域矩形」的PIXI图形 (调试用)
+  protected boundBox!: Graphics; //显示「所在区域矩形」的PIXI图形 (调试用)
   public needUpdBoundRect: boolean = false; //是否需要在下一次交互更新中刷新「所在区域矩形」
-  public bitmap: number[][]; //存储「所在区域矩形」中确切可交互区域的二值矩阵 大小与「所在区域矩形」相同
+  public bitmap!: number[][]; //存储「所在区域矩形」中确切可交互区域的二值矩阵 大小与「所在区域矩形」相同
   public needUpdBitmap: boolean = false; //是否需要在下一次交互更新中刷新 bitmap
   public drawing: boolean = false; //是否正在绘画该对象
   public shown: boolean = false; //是否显示该对象
-  protected body: Graphics; //显示层PIXI图形
-  protected style: style; //对象的样式
+  protected body!: Graphics; //显示层PIXI图形
+  protected style!: style; //对象的样式
   protected tagCrd: crd = { x: 0, y: 0 }; //用于确认对象标签的坐标
-  public tag: tagBox; //对象标签
-  public name: string; //对象名称
+  public tag!: tagBox; //对象标签
+  public name!: string; //对象名称
 
-  saveI: number;
+  saveI!: number;
 
   static shapeIndexes: { [index: string]: number } = {};
   static defIndexes: { [index: string]: number } = {};
@@ -77,7 +77,7 @@ export default abstract class obj {
   beginMove(crd: crd): void {
     //开始移动该对象(形状层或定义层)
     //默认为递归使父对象开始移动
-    for (var i in this.parents) {
+    for (const i in this.parents) {
       this.parents[i].beginMove(crd);
     }
   }
@@ -89,7 +89,7 @@ export default abstract class obj {
   updMove(crd: crd): void {
     //更新移动操作(形状层或定义层)
     //默认为递归更新父对象移动操作
-    for (var i in this.parents) {
+    for (const i in this.parents) {
       this.parents[i].updMove(crd);
     }
   }
@@ -117,7 +117,7 @@ export default abstract class obj {
     if (!this.preDefined) {
       this.updBody();
       //更新对象标签
-      var tagCrd = this.getTagCrd();
+      const tagCrd = this.getTagCrd();
       this.tagCrd.x = tagCrd.x;
       this.tagCrd.y = tagCrd.y;
       this.tag.update();
@@ -136,7 +136,7 @@ export default abstract class obj {
   }
   updBoundRect(): void {
     //刷新「所在区域矩形」
-    let localBounds = this.interactionArea.getLocalBounds();
+    const localBounds = this.interactionArea.getLocalBounds();
     this.boundRect = [
       [Math.floor(localBounds.x), Math.floor(localBounds.y)],
       [
@@ -164,12 +164,12 @@ export default abstract class obj {
   }
   updBitmap(): void {
     //刷新「所在区域矩形」中确切可交互区域的二值矩阵
-    var px: number[] = this.canvas.PIXIapp.renderer.plugins.extract.pixels(this.interactionArea);
-    var tran: number[] = Array.from(
+    const px: number[] = this.canvas.PIXIapp.renderer.plugins.extract.pixels(this.interactionArea);
+    const tran: number[] = Array.from(
       { length: px.length / 4 },
       (_: any, i: number) => px[4 * i + 3] + px[4 * i + 2] + px[4 * i + 1] + px[4 * i]
     );
-    var width: number = Math.floor(this.interactionArea.width);
+    const width: number = Math.floor(this.interactionArea.width);
     this.bitmap = Array.from({ length: Math.floor(this.interactionArea.height) }, (_: any, i: number) =>
       tran.slice(i * width, (i + 1) * width)
     );
@@ -212,7 +212,7 @@ export default abstract class obj {
   }
   checkNonExistParents(): boolean {
     //检查是否有不存在的父对象 若有则设自己为不存在 否则返回false
-    for (var i in this.parents) {
+    for (const i in this.parents) {
       if (!this.parents[i].exist) {
         this.exist = false;
         return true;

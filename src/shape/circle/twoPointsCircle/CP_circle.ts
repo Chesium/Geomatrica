@@ -17,7 +17,7 @@ export default class CP_circle extends twoPointsCircle {
     if (this.checkNonExistParents()) {
       return;
     }
-    var x1 = this.Point1.x,
+    const x1 = this.Point1.x,
       y1 = this.Point1.y,
       x2 = this.Point2.x,
       y2 = this.Point2.y;

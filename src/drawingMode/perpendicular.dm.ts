@@ -4,7 +4,7 @@ import perpendicular from "../shape/line/perpendicular";
 import point from "../shape/point";
 import line from "../shape/line";
 
-var dm_perpendicular = new drawingMode({
+const dm_perpendicular = new drawingMode({
   name: "draw perpendicular",
   title: "垂直",
   description: "选中一点和一线作过此点的垂线",

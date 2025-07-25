@@ -1,3 +1,3 @@
-export default class ddcObjType {
+export default interface ddcObjType {
   name:string;
 }

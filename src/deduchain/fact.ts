@@ -1,14 +1,14 @@
 import deduction from "./deduction";
-import rule from "./rule";
+import type rule from "./rule";
 
 export default abstract class fact {
   static typeName: string;
-  typeName: string;
+  typeName!: string;
   
-  deduction:deduction;
-  index:number;
+  deduction!:deduction;
+  index!:number;
 
-  lemma: rule;
+  lemma!: rule;
   conditions: fact[] = [];//parents
   verified: boolean = false;
 

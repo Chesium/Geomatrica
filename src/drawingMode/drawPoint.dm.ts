@@ -3,7 +3,7 @@ import canvas from "../canvas";
 import { crd } from "../misc";
 import freePoint from "../shape/point/freepoint";
 
-var dm_drawPoint = new drawingMode({
+const dm_drawPoint = new drawingMode({
   name: "draw points",
   title: "描点",
   description: "画点",

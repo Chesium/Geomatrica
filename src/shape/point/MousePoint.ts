@@ -27,7 +27,7 @@ export default class MousePoint extends point {
     this.moveEventListener = {
       self: this,
       handleEvent(ev: MouseEvent): void {
-        var crd: crd = this.self.canvas.toCrd({ x: ev.offsetX, y: ev.offsetY });
+        const crd: crd = this.self.canvas.toCrd({ x: ev.offsetX, y: ev.offsetY });
         this.self.x = crd.x;
         this.self.y = crd.y;
         this.self.update();
@@ -65,14 +65,14 @@ export default class MousePoint extends point {
     this.canvas.PIXIapp.view.removeEventListener("mousedown", this.moveEventListener);
 
     //递归移除子对象
-    for (var i in this.children) {
+    for (const i in this.children) {
       this.children[i].remove();
     }
   }
 
   toPoint(): point {
-    var focus = this.canvas.chooseByPos(this.canvas.toPos(this));
-    var newP: point;
+    const focus = this.canvas.chooseByPos(this.canvas.toPos(this));
+    let newP: point;
     if (focus instanceof obj) {
       newP = focus.generatePointOnIt(this);
     } else {

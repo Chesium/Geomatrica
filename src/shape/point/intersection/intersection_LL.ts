@@ -29,9 +29,9 @@ export default class intersection_LL extends intersection {
     if (this.checkNonExistParents()) {
       return;
     }
-    var r1 = this.Line1.r,
+    const r1 = this.Line1.r,
       r2 = this.Line2.r;
-    var itsc = calcIntersectionLL(this.Line1, this.Line2);
+    const itsc = calcIntersectionLL(this.Line1, this.Line2);
     if (!itsc.exist) {
       this.exist = false;
       return;

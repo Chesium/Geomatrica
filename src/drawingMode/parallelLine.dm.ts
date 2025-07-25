@@ -4,7 +4,7 @@ import parallelLine from "../shape/line/parallelLine";
 import point from "../shape/point";
 import line from "../shape/line";
 
-var dm_parallelLine = new drawingMode({
+const dm_parallelLine = new drawingMode({
   name: "draw parallelLine",
   title: "平行线",
   description: "选中一点和一线作过此点的平行线",

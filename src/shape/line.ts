@@ -1,5 +1,5 @@
 import obj from "../object";
-import { crd, range, stdLine } from "../misc";
+import { crd, type range, stdLine } from "../misc";
 import { L_DpData_To_epCrd, posForm, pairForm } from "../util";
 import point from "./point";
 import pointOnLine from "./point/pointOnShape/pointOnLine";
@@ -8,8 +8,8 @@ import circle from "./circle";
 import { intersection_LC_1, intersection_LC_2 } from "./point/intersection/intersection_LC";
 
 function haveEqualIndex(arr1: obj[], arr2: obj[]) {
-  for (var i = 0; i < arr2.length; i++) {
-    for (var j = 0; j < arr1.length; j++) {
+  for (let i = 0; i < arr2.length; i++) {
+    for (let j = 0; j < arr1.length; j++) {
       if (arr1[j].index == arr2[i].index) {
         return true;
       }
@@ -22,14 +22,14 @@ export default abstract class line extends obj {
   static readonly IAA_width = 15;
   static shapeName = "line";
 
-  a: number;
-  b: number;
-  c: number;
-  d: number;
-  r: range;
-  dr: -1 | 1;
+  a!: number;
+  b!: number;
+  c!: number;
+  d!: number;
+  r!: range;
+  dr!: -1 | 1;
 
-  refP_t: range;
+  refP_t!: range;
 
   init_L2(): void {
     this.interactPriority = 1;
@@ -43,14 +43,14 @@ export default abstract class line extends obj {
     if (!this.shown || !this.exist) {
       return;
     }
-    var endPoints = L_DpData_To_epCrd(this, [
+    const endPoints = L_DpData_To_epCrd(this, [
       pairForm(this.canvas.toCrd(posForm(this.canvas.stageBound[0]))),
       pairForm(this.canvas.toCrd(posForm(this.canvas.stageBound[1]))),
     ]);
     if (!endPoints[0]) {
       return;
     }
-    for (var i in this.style.line) {
+    for (const i in this.style.line) {
       this.body.lineStyle(this.style.line[i]);
       this.body.moveTo(...pairForm(this.canvas.toPos(endPoints[1])));
       this.body.lineTo(...pairForm(this.canvas.toPos(endPoints[2])));
@@ -62,7 +62,7 @@ export default abstract class line extends obj {
     if (this.removed || !this.exist || !this.interactive) {
       return;
     }
-    var endPoints = L_DpData_To_epCrd(this, [
+    const endPoints = L_DpData_To_epCrd(this, [
       pairForm(this.canvas.toCrd(posForm(this.canvas.stageBound[0]))),
       pairForm(this.canvas.toCrd(posForm(this.canvas.stageBound[1]))),
     ]);
@@ -82,8 +82,8 @@ export default abstract class line extends obj {
   }
 
   preDefine(): void {
-    for (var i in this.canvas.O) {
-      var t: obj = this.canvas.O[i];
+    for (const i in this.canvas.O) {
+      const t: obj = this.canvas.O[i];
       if (!t.shown || t.removed || t.index == this.index) {
         continue;
       }
@@ -110,8 +110,8 @@ export default abstract class line extends obj {
     this.c = l.c;
     this.d = l.d;
     this.r = l.r;
-    this.dr = l.dr;
-    this.exist = l.exist;
-    this.refP_t = l.refP_t;
+    this.dr = l.dr!;
+    this.exist = l.exist!;
+    this.refP_t = l.refP_t!;
   }
 }

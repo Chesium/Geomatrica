@@ -1,10 +1,10 @@
 import { LINE_CAP } from "pixi.js";
-import { ILineStyleOptions } from "pixi.js";
+import { type ILineStyleOptions } from "pixi.js";
 
 /**
  * ## 图形对象的样式
  */
-export class style {
+export interface style {
   /**
    * ## 点的样式列表
    *
@@ -38,7 +38,7 @@ export class style {
   line: ILineStyleOptions[];
 }
 
-var defaultStyle: style = {
+const defaultStyle: style = {
   point: [
     {
       radius: 5,
@@ -62,7 +62,7 @@ var defaultStyle: style = {
   ],
 };
 
-var focusStyle: style = {
+const focusStyle: style = {
   point: [
     {
       //margin

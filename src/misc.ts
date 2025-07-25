@@ -1,7 +1,7 @@
 import { LINE_CAP } from "pixi.js";
 import canvas from "./canvas";
 import obj from "./object";
-import { style } from "./style";
+import { type style } from "./style";
 
 /**
  * ## 显示用坐标
@@ -84,12 +84,12 @@ export class stdCircle extends crd {
  * 格式 : `[左下点坐标,右上点坐标]`
  */
 export type rect = [pair, pair];
-export class stdObjInitData {
+export interface stdObjInitData {
   canvas: canvas;
   parents: obj[];
 }
 
-export class objectForSaving {
+export interface objectForSaving {
   index: number;
   shown: boolean;
   style: style;
@@ -97,7 +97,7 @@ export class objectForSaving {
   def: string;
   initData: any[];
 }
-export class canvasForSaving {
+export interface canvasForSaving {
   objects: objectForSaving[];
   // Mode: Mode;
   showBoundBox: boolean;

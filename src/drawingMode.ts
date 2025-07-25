@@ -4,7 +4,7 @@ import point from "./shape/point";
 import line from "./shape/line";
 import circle from "./shape/circle";
 import { crd } from "./misc";
-import ModeSwitch from "./modeSwitch";
+import type ModeSwitch from "./ModeSwitch";
 
 /**
  * ## 选中对象列表格式
@@ -48,7 +48,7 @@ export class drawCase {
    *
    * @returns void
    */
-  processFn: (canvas: canvas, crd?: crd) => void | undefined = undefined;
+  processFn!: (canvas: canvas, crd: crd) => void | undefined;
 
   intoAny: drawCase | undefined = undefined;
   intoBlank: drawCase | undefined = undefined;
@@ -95,7 +95,7 @@ export default class drawingMode {
    * ---
    * 从其延申出其他子情况
    */
-  rootCase: drawCase;
+  rootCase!: drawCase;
 
   /**
    * ## 绘图模式的索引/编号（们）
@@ -105,7 +105,7 @@ export default class drawingMode {
   /**
    * ## 切换至此模式的按钮
    */
-  switch: ModeSwitch;
+  switch!: ModeSwitch;
   /**
    */
   constructor(info: { name: string; title: string; description: string }) {

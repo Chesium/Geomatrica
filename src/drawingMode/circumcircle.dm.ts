@@ -3,7 +3,7 @@ import canvas from "../canvas";
 import circumcircle from "../shape/circle/circumcircle";
 import point from "../shape/point";
 
-var dm_circumcircle = new drawingMode({
+const dm_circumcircle = new drawingMode({
   name: "draw circumcircle",
   title: "三点圆",
   description: "选中三点作对应三角形的外接圆",
