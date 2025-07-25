@@ -1,4 +1,3 @@
-import { noop } from "jquery";
 import { type rect, stdLine, pos, type pair, crd, REAL_NUMBER } from "./misc";
 
 export function posForm(pair: pair): pos {
@@ -145,10 +144,10 @@ export function floatMul(a: number, b: number) {
     e: string = b.toString();
   try {
     c += d.split(".")[1].length;
-  } catch { noop() }
+  } catch { }
   try {
     c += e.split(".")[1].length;
-  } catch { noop() }
+  } catch { }
   return (Number(d.replace(".", "")) * Number(e.replace(".", ""))) / Math.pow(10, c);
 }
 

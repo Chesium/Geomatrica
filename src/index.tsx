@@ -17,10 +17,6 @@ favicon.rel = "icon";
 favicon.href = "favicon.png";
 document.getElementsByTagName("head")[0].appendChild(favicon);
 
-const root = document.createElement("div");
-root.id = "root";
-document.getElementsByTagName("body")[0].appendChild(root);
-
 const buttons: [string, drawingMode | undefined][] = [
   ["move", dm.dm_move],
   ["segment", dm.dm_segment],

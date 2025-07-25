@@ -13,7 +13,8 @@
     "allowJs": true,
     "jsx": "react"
   },
-  "files": [
-    "src/index.tsx"
+  "include": [
+    "src",
+    "vite.config.ts"
   ]
 }
