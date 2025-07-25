@@ -1,5 +1,5 @@
 import { Graphics, LINE_CAP } from "pixi.js";
-import { type rect, pos, crd, type objectForSaving } from "./misc";
+import { type rect, pos, crd } from "./misc";
 import { generateName } from "./util";
 import canvas from "./canvas";
 import tagBox from "./tagBox";
@@ -61,7 +61,7 @@ export default abstract class obj {
 
   //================//
 
-  calc(): void {} //根据定义计算形状层显示数据(定义层) 默认为空
+  calc(): void { } //根据定义计算形状层显示数据(定义层) 默认为空
   beginDraw(crd: crd): void {
     //开始绘画该对象(形状层或定义层)
     if (this.drawableObj != undefined) {
@@ -121,11 +121,11 @@ export default abstract class obj {
       this.tagCrd.x = tagCrd.x;
       this.tagCrd.y = tagCrd.y;
       this.tag.update();
-      for (var i in this.children) {
+      for (const i in this.children) {
         //递归更新子对象
         this.children[i].update();
       }
-      for (var i in this.preDefinedChildren) {
+      for (const i in this.preDefinedChildren) {
         //递归更新预定义子对象
         if (!this.preDefinedChildren[i].removed && this.preDefinedChildren[i].preDefined) {
           //有可能已成实对象 所以还要判定一次是否为预定义对象
@@ -167,10 +167,10 @@ export default abstract class obj {
     const px: number[] = this.canvas.PIXIapp.renderer.plugins.extract.pixels(this.interactionArea);
     const tran: number[] = Array.from(
       { length: px.length / 4 },
-      (_: any, i: number) => px[4 * i + 3] + px[4 * i + 2] + px[4 * i + 1] + px[4 * i]
+      (_, i: number) => px[4 * i + 3] + px[4 * i + 2] + px[4 * i + 1] + px[4 * i]
     );
     const width: number = Math.floor(this.interactionArea.width);
-    this.bitmap = Array.from({ length: Math.floor(this.interactionArea.height) }, (_: any, i: number) =>
+    this.bitmap = Array.from({ length: Math.floor(this.interactionArea.height) }, (_, i: number) =>
       tran.slice(i * width, (i + 1) * width)
     );
     this.needUpdBitmap = false;
@@ -196,11 +196,11 @@ export default abstract class obj {
     }
 
     //递归移除子对象 预定义子对象
-    for (var i in this.children) {
+    for (const i in this.children) {
       this.children[i].remove();
     }
     if (!this.preDefined) {
-      for (var i in this.preDefinedChildren) {
+      for (const i in this.preDefinedChildren) {
         this.preDefinedChildren[i].remove();
       }
     }
@@ -235,8 +235,7 @@ export default abstract class obj {
     this.boundBox.zIndex = 2;
     this.canvas.stage.addChild(this.boundBox);
     this.style = defaultStyle;
-    if (this.preDefined) {
-    } else {
+    if (!this.preDefined) {
       this.shown = true;
       this.body = new Graphics();
       this.canvas.stage.addChild(this.body);

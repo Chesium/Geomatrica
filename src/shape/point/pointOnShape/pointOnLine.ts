@@ -40,7 +40,7 @@ export default class pointOnLine extends pointOnShape {
       t1 = this.Line.refP_t[0],
       t2 = this.Line.refP_t[1];
     if (!this.following) {
-      var t = (t2 - t1) * this.proportion + t1;
+      const t = (t2 - t1) * this.proportion + t1;
       this.exist = true;
       this.setData(substituteIntoLineEq(t, this.Line));
       return;
@@ -49,7 +49,7 @@ export default class pointOnLine extends pointOnShape {
       console.log("ERROR in calcData:the line doesn't exist.");
       return;
     }
-    var t = (a * (this.x - b) + c * (this.y - d)) / (a * a + c * c);
+    const t = (a * (this.x - b) + c * (this.y - d)) / (a * a + c * c);
     if (t < Math.min(r[0], r[1])) {
       this.exist = true;
       this.setData(substituteIntoLineEq(t1, this.Line));

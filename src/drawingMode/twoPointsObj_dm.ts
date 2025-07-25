@@ -51,7 +51,7 @@ export default class twoPointsObj_dm extends drawingMode {
         };
       });
       root.into[point.shapeName] = new drawCase((intoPoint: drawCase) => {
-        intoPoint.processFn = (cv: canvas, crd: crd) => {
+        intoPoint.processFn = (cv: canvas) => {
           const prePoint = new MousePoint(cv);
           cv.currentCase = this.rootCase.into[point.shapeName].into[point.shapeName];
           cv.chooseObjs.all.push(prePoint);

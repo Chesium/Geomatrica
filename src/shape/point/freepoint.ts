@@ -4,7 +4,7 @@ import canvas from "../../canvas";
 
 export default class freePoint extends point {
   dragOffset!: crd;
-  
+
   static defineTypeName = "freepoint";
   constructor(canvas: canvas, x: number, y: number) {
     super(); //无用
@@ -22,7 +22,7 @@ export default class freePoint extends point {
   }
   // calc见shape
   // beginDraw见shape
-  beginDrag(crd: crd) {
+  beginDrag() {
     this.focusOnIt();
     this.dragOffset = { x: 0, y: 0 };
   }

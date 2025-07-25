@@ -1,7 +1,7 @@
 import canvas from "../../canvas";
 import point from "../point";
 import line from "../line";
-import { crd, pos } from "../../misc";
+import { pos } from "../../misc";
 import { calcLineEq, calcPerpendicular, centerOfGravity } from "../../util";
 
 export default class perpendicularBisector extends line {
@@ -35,7 +35,7 @@ export default class perpendicularBisector extends line {
   }
   getTagCrd(): pos {
     if (!this.exist) {
-      return { x: NaN, y: NaN};
+      return { x: NaN, y: NaN };
     }
     const t = (this.refP_t[0] + this.refP_t[1]) / 2;
     return {

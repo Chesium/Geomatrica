@@ -1,3 +1,4 @@
+/* eslint-disable @eslint-react/no-unused-class-component-members */
 import React from "react";
 import drawingMode from "./drawingMode";
 import App from "./app";

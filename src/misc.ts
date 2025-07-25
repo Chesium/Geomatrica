@@ -95,7 +95,7 @@ export interface objectForSaving {
   style: style;
   name: string;
   def: string;
-  initData: any[];
+  initData: unknown[];
 }
 export interface canvasForSaving {
   objects: objectForSaving[];

@@ -6,7 +6,7 @@ import { Graphics, LINE_CAP } from "pixi.js";
 import { type chooseObjs, drawCase } from "./drawingMode";
 import obj from "./object";
 import { type rect, pos, crd } from "./misc";
-import { posForm, floatAdd, floatMul, pairForm, getOffsetLeft, getOffsetTop } from "./util";
+import { posForm, floatAdd, floatMul, pairForm } from "./util";
 import Mode from "./Mode";
 import { defaultStyle, focusStyle } from "./style";
 import dm_move from "./drawingMode/move.dm";
@@ -233,11 +233,11 @@ export default class canvas {
      */
     cap: LINE_CAP;
   } = {
-    width: 1,
-    color: 0x000000,
-    alpha: 1,
-    cap: LINE_CAP.ROUND,
-  };
+      width: 1,
+      color: 0x000000,
+      alpha: 1,
+      cap: LINE_CAP.ROUND,
+    };
   /**
    * ## X坐标轴刻度值PIXI文字列表
    * 用于显示X坐标轴上所有刻度值的PIXI文字（`PIXI.Text`）列表
@@ -425,24 +425,24 @@ export default class canvas {
           break;
       }
     });
-    this.PIXIapp.resizeTo.addEventListener("mouseup", (ev: Event): void => {
+    this.PIXIapp.resizeTo.addEventListener("mouseup", (): void => {
       if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
         return;
       }
       if (this.Status == 3) {
         return;
       }
-      const crd = this.toCrd({
-        x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
-        y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
-      });
+      // const crd = this.toCrd({
+      //   x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
+      //   y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
+      // });
       if (this.F != -1) {
         if (this.O[this.F].initializing) {
           this.O[this.F].initializing = false;
-          const focus = this.chooseByPos({
-            x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
-            y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
-          });
+          // const focus = this.chooseByPos({
+          //   x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
+          //   y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
+          // });
         }
       }
       this.F = -1;
@@ -698,7 +698,7 @@ export default class canvas {
             if (I == 0) {
               continue;
             }
-            var DPcrd_t = this.toPos({ x: I, y: 0 });
+            const DPcrd_t = this.toPos({ x: I, y: 0 });
             this.axis.moveTo(...pairForm(DPcrd_t));
             this.axis.lineTo(DPcrd_t.x, origin.y + 3);
           }
@@ -718,7 +718,7 @@ export default class canvas {
           if (I == 0) {
             continue;
           }
-          var DPcrd_t = this.toPos({ x: I, y: 0 });
+          const DPcrd_t = this.toPos({ x: I, y: 0 });
 
           //若Text对象不够了则新建一个作为stage的子对象之一
           if (this.Xscale[i] === undefined) {
@@ -767,7 +767,7 @@ export default class canvas {
             if (I == 0) {
               continue;
             }
-            var DPcrd_t = this.toPos({ x: 0, y: I });
+            const DPcrd_t = this.toPos({ x: 0, y: I });
             this.axis.moveTo(...pairForm(DPcrd_t));
             this.axis.lineTo(origin.x - 3, DPcrd_t.y);
           }
@@ -787,7 +787,7 @@ export default class canvas {
           if (I == 0) {
             continue;
           }
-          var DPcrd_t = this.toPos({ x: 0, y: I });
+          const DPcrd_t = this.toPos({ x: 0, y: I });
 
           //若Text对象不够了则新建一个作为stage的子对象之一
           if (this.Yscale[i] === undefined) {

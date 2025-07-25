@@ -43,13 +43,13 @@ export default abstract class point extends obj {
     this.needUpdBoundRect = true;
   }
   //点不会和其他形状"相交" 故preDefine()方法为空
-  preDefine(): void {}
+  preDefine(): void { }
   //点的标签位置和点一样
   getTagCrd(): pos {
     return { x: this.x, y: this.y };
   }
 
-  generatePointOnIt(crd: crd): point {
+  generatePointOnIt(): point {
     return this;
   }
 

@@ -8,7 +8,7 @@ export default abstract class pointOnShape extends point {
 
   //拖动和移动 不同
   //拖动为使其在某对象"上"运动
-  beginDrag(crd: crd) {
+  beginDrag() {
     this.focusOnIt();
   }
   updDrag(crd: crd) {

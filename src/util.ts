@@ -1,3 +1,4 @@
+import { noop } from "jquery";
 import { type rect, stdLine, pos, type pair, crd, REAL_NUMBER } from "./misc";
 
 export function posForm(pair: pair): pos {
@@ -26,10 +27,11 @@ export function L_DpData_To_epCrd(l: stdLine, VF: rect): [boolean, crd, crd] {
   //若画面中该线不可见 则返回的元组中第一个布尔值为false
   // console.log(l,VF);
   //visual field
-  var Xm: number = VF[0][0],
+  const Xm: number = VF[0][0],
     Yn: number = VF[0][1], //changed
     Xn: number = VF[1][0],
     Ym: number = VF[1][1]; //changed ^ swapped
+  let t1, t2;
   if (l.a == 0) {
     if (l.c == 0) {
       console.log("ERROR in L_DpData_To_epCrd: the line doesn't exist.");
@@ -39,10 +41,10 @@ export function L_DpData_To_epCrd(l: stdLine, VF: rect): [boolean, crd, crd] {
     if (l.b < Xm || l.b > Xn) {
       return [false, new crd(), new crd()];
     }
-    var tM: number = (Ym - l.d) / l.c,
+    const tM: number = (Ym - l.d) / l.c,
       tN: number = (Yn - l.d) / l.c;
-    var t1: number = Math.max(Math.min(l.r[0], l.r[1]), Math.min(tM, tN)),
-      t2: number = Math.min(Math.max(l.r[0], l.r[1]), Math.max(tM, tN));
+    t1 = Math.max(Math.min(l.r[0], l.r[1]), Math.min(tM, tN));
+    t2 = Math.min(Math.max(l.r[0], l.r[1]), Math.max(tM, tN));
   } else if (l.c == 0) {
     //[-]
     // console.log("c==0", l.d, Ym, Yn);
@@ -50,30 +52,30 @@ export function L_DpData_To_epCrd(l: stdLine, VF: rect): [boolean, crd, crd] {
       return [false, new crd(), new crd()];
     }
     // console.log("access");
-    var tM: number = (Xm - l.b) / l.a,
+    const tM: number = (Xm - l.b) / l.a,
       tN: number = (Xn - l.b) / l.a;
-    var t1: number = Math.max(Math.min(l.r[0], l.r[1]), Math.min(tM, tN)),
-      t2: number = Math.min(Math.max(l.r[0], l.r[1]), Math.max(tM, tN));
+    t1 = Math.max(Math.min(l.r[0], l.r[1]), Math.min(tM, tN));
+    t2 = Math.min(Math.max(l.r[0], l.r[1]), Math.max(tM, tN));
   } else {
     //[/]
     //compare X
-    var Ym_t: number = (Ym - l.d) / l.c,
+    const Ym_t: number = (Ym - l.d) / l.c,
       Yn_t: number = (Yn - l.d) / l.c,
       Xm_t: number = (Xm - l.b) / l.a,
       Xn_t: number = (Xn - l.b) / l.a;
-    var Ym_t_X: number = Ym_t * l.a + l.b,
+    const Ym_t_X: number = Ym_t * l.a + l.b,
       Yn_t_X: number = Yn_t * l.a + l.b;
-    var Ymn_minX: number = Math.min(Ym_t_X, Yn_t_X),
+    const Ymn_minX: number = Math.min(Ym_t_X, Yn_t_X),
       Ymn_maxX: number = Math.max(Ym_t_X, Yn_t_X),
       Ymn_minX_t: number = Ym_t_X < Yn_t_X ? Ym_t : Yn_t,
       Ymn_maxX_t: number = Ym_t_X > Yn_t_X ? Ym_t : Yn_t;
     if ((Ymn_minX < Xm && Ymn_maxX < Xm) || (Ymn_minX > Xn && Ymn_maxX > Xn)) {
       return [false, { x: 0, y: 0 }, { x: 0, y: 0 }];
     }
-    var tA: number = Ymn_minX > Xm ? Ymn_minX_t : Xm_t,
+    const tA: number = Ymn_minX > Xm ? Ymn_minX_t : Xm_t,
       tB: number = Ymn_maxX < Xn ? Ymn_maxX_t : Xn_t;
-    var t1: number = Math.max(Math.min(l.r[0], l.r[1]), Math.min(tA, tB)),
-      t2: number = Math.min(Math.max(l.r[0], l.r[1]), Math.max(tA, tB));
+    t1 = Math.max(Math.min(l.r[0], l.r[1]), Math.min(tA, tB));
+    t2 = Math.min(Math.max(l.r[0], l.r[1]), Math.max(tA, tB));
   }
   return [true, { x: l.a * t1 + l.b, y: l.c * t1 + l.d }, { x: l.a * t2 + l.b, y: l.c * t2 + l.d }];
 }
@@ -84,9 +86,11 @@ export function generateName(shapeName: string, index: number): string {
   const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   switch (shapeName) {
     case "point": //point
-      var name: string = upper[index % 26];
-      var subscript: number = Math.floor(index / 26);
-      return subscript > 0 ? name + "_{" + subscript + "}" : name;
+      {
+        const name: string = upper[index % 26];
+        const subscript: number = Math.floor(index / 26);
+        return subscript > 0 ? name + "_{" + subscript + "}" : name;
+      }
     case "line": //line
       return "l" + "_{" + (index + 1) + "}";
     case "circle": //circle
@@ -96,39 +100,39 @@ export function generateName(shapeName: string, index: number): string {
   }
 }
 
-export function getOffsetLeft(obj: any) {
+export function getOffsetLeft(obj: HTMLElement) {
   //获取一个HTMLElement的Left位置
-  var tmp: number = obj.offsetLeft;
-  var node = obj.offsetParent;
+  let tmp: number = obj.offsetLeft;
+  let node = obj.offsetParent as HTMLDivElement;
   while (node != null) {
     tmp += node.offsetLeft;
-    node = node.offsetParent;
+    node = node.offsetParent as HTMLDivElement;
   }
   return tmp;
 }
 
-export function getOffsetTop(obj: any) {
+export function getOffsetTop(obj: HTMLElement) {
   //获取一个HTMLElement的Top位置
-  var tmp: number = obj.offsetTop;
-  var node = obj.offsetParent;
+  let tmp: number = obj.offsetTop;
+  let node = obj.offsetParent as HTMLDivElement;
   while (node != null) {
     tmp += node.offsetTop;
-    node = node.offsetParent;
+    node = node.offsetParent as HTMLDivElement;
   }
   return tmp;
 }
 
 export function floatAdd(a: number, b: number) {
   //无误差浮点数加法
-  var c: number, d: number, e: number;
+  let c: number, d: number, e: number;
   try {
     c = a.toString().split(".")[1].length;
-  } catch (f) {
+  } catch {
     c = 0;
   }
   try {
     d = b.toString().split(".")[1].length;
-  } catch (f) {
+  } catch {
     d = 0;
   }
   return (e = Math.pow(10, Math.max(c, d))), (floatMul(a, e) + floatMul(b, e)) / e;
@@ -136,20 +140,20 @@ export function floatAdd(a: number, b: number) {
 
 export function floatMul(a: number, b: number) {
   //无误差浮点数乘法
-  var c: number = 0,
-    d: string = a.toString(),
+  let c: number = 0;
+  const d: string = a.toString(),
     e: string = b.toString();
   try {
     c += d.split(".")[1].length;
-  } catch (f) { }
+  } catch { noop() }
   try {
     c += e.split(".")[1].length;
-  } catch (f) { }
+  } catch { noop() }
   return (Number(d.replace(".", "")) * Number(e.replace(".", ""))) / Math.pow(10, c);
 }
 
 export function calcIntersectionLL(l1: stdLine, l2: stdLine): { exist: boolean; t1: number; t2: number } {
-  var dnmnt = l1.a * l2.c - l2.a * l1.c;
+  const dnmnt = l1.a * l2.c - l2.a * l1.c;
   if (dnmnt == 0) {
     return { exist: false, t1: NaN, t2: NaN };
   }
@@ -180,7 +184,7 @@ export function calcLineEq(p1: crd, p2: crd): stdLine {
       refP_t: [p1.y, p2.y],
     };
   } else {
-    var k = (p1.y - p2.y) / (p1.x - p2.x);
+    const k = (p1.y - p2.y) / (p1.x - p2.x);
     return {
       exist: true,
       a: 1,
@@ -195,7 +199,7 @@ export function calcLineEq(p1: crd, p2: crd): stdLine {
 }
 
 export function calcPerpendicular(p: crd, l: stdLine): stdLine {
-  var perp = new stdLine();
+  const perp = new stdLine();
   perp.exist = true;
   if (l.c == 0) {
     //[-]->[|]
@@ -224,7 +228,7 @@ export function calcPerpendicular(p: crd, l: stdLine): stdLine {
     // }
   } else {
     //[/][|]->[\][-]
-    var k = -l.a / l.c;
+    const k = -l.a / l.c;
     perp.a = 1;
     perp.b = 0;
     perp.c = k;
@@ -258,7 +262,7 @@ export function calcPerpendicular(p: crd, l: stdLine): stdLine {
 }
 
 export default function calcParallelLine(p: crd, l: stdLine): stdLine {
-  var para = new stdLine();
+  const para = new stdLine();
   para.dr = l.dr;
   if (l.a == 0) {
     //[|]->[|]
@@ -269,7 +273,7 @@ export default function calcParallelLine(p: crd, l: stdLine): stdLine {
     para.d = 0;
   } else {
     //[/][-]->[/][-]
-    var k = l.c / l.a;
+    const k = l.c / l.a;
     para.exist = true;
     para.a = 1;
     para.b = 0;
@@ -286,7 +290,7 @@ export default function calcParallelLine(p: crd, l: stdLine): stdLine {
 }
 
 export function centerOfGravity(...p: crd[]) {
-  var nx = 0,
+  let nx = 0,
     ny = 0;
   p.forEach((v) => {
     nx += v.x;

@@ -48,9 +48,9 @@ export class intersection_LC_1 extends intersection {
       return;
     }
     const t1 = (-B + Math.sqrt(delta)) / (2 * A);
-    let t2 = -(B / A + t1),
-      ts = [],
-      t;
+    const t2 = -(B / A + t1),
+      ts = [];
+    let t;
     if (t1 >= Math.min(rg[0], rg[1]) && t1 <= Math.max(rg[0], rg[1])) {
       ts.push(t1);
     }
@@ -120,9 +120,9 @@ export class intersection_LC_2 extends intersection {
       return;
     }
     const t1 = (-B + Math.sqrt(delta)) / (2 * A);
-    let t2 = -(B / A + t1),
-      ts = [],
-      t;
+    const t2 = -(B / A + t1),
+      ts = [];
+    let t;
     if (t1 >= Math.min(rg[0], rg[1]) && t1 <= Math.max(rg[0], rg[1])) {
       ts.push(t1);
     }
