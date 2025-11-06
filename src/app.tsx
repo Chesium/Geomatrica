@@ -34,22 +34,22 @@ export default class App extends React.Component<{ buttons: [string, drawingMode
         <div id="header">
           <ReactSVG className="gm-logo" src="./assets/Geomatrica-icon.svg" />
           <Menu>
-            <N1 name="file" ctx="文件">
-              <N2 name="new" lCtx="新建画板" rCtx="Alt+O" haveN3={true}>
+            <N1 name="file" ctx="File">
+              <N2 name="new" lCtx="New Canvas" rCtx="Alt+O" haveN3={true}>
                 <N3 name="new1" lCtx="NEW 1" />
                 <N3 name="new2" lCtx="NEW 2" />
                 <N3 name="new3" lCtx="NEW 3" />
               </N2>
               <hr />
-              <N2 name="import" lCtx="导入画板" rCtx="Alt+O" haveN3={false} />
-              <N2 name="export" lCtx="导出画板" rCtx="Alt+S" haveN3={false} />
+              <N2 name="import" lCtx="Import Canvas" rCtx="Alt+O" haveN3={false} />
+              <N2 name="export" lCtx="Export Canvas" rCtx="Alt+S" haveN3={false} />
             </N1>
-            <N1 name="edit" ctx="编辑">
-              <N2 name="undo" lCtx="撤销" haveN3={false} />
-              <N2 name="redo" lCtx="恢复" haveN3={false} />
-              <N2 name="search" lCtx="查找" haveN3={false} />
+            <N1 name="edit" ctx="Edit">
+              <N2 name="undo" lCtx="Undo" haveN3={false} />
+              <N2 name="redo" lCtx="Redo" haveN3={false} />
+              <N2 name="search" lCtx="Search" haveN3={false} />
             </N1>
-            <N1 name="display" ctx="显示">
+            <N1 name="display" ctx="Display">
               <N2 name="a" lCtx="AaBbCc" haveN3={false} />
               <N2 name="b" lCtx="DdEeFf" haveN3={false} />
               <N2 name="c" lCtx="GgHhIi" haveN3={false} />
