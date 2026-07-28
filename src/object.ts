@@ -1,10 +1,10 @@
 import { Graphics, LINE_CAP } from "pixi.js";
 import { type rect, pos, crd } from "./misc";
 import { generateName } from "./util";
-import canvas from "./canvas";
+import type canvas from "./canvas";
 import tagBox from "./tagBox";
 import { defaultStyle } from "./style";
-import point from "./shape/point";
+import type point from "./shape/point";
 import { type style } from "./style";
 
 //图形对象类
@@ -61,7 +61,7 @@ export default abstract class obj {
 
   //================//
 
-  calc(): void { } //根据定义计算形状层显示数据(定义层) 默认为空
+  calc(): void {} //根据定义计算形状层显示数据(定义层) 默认为空
   beginDraw(crd: crd): void {
     //开始绘画该对象(形状层或定义层)
     if (this.drawableObj != undefined) {
@@ -127,7 +127,10 @@ export default abstract class obj {
       }
       for (const i in this.preDefinedChildren) {
         //递归更新预定义子对象
-        if (!this.preDefinedChildren[i].removed && this.preDefinedChildren[i].preDefined) {
+        if (
+          !this.preDefinedChildren[i].removed &&
+          this.preDefinedChildren[i].preDefined
+        ) {
           //有可能已成实对象 所以还要判定一次是否为预定义对象
           this.preDefinedChildren[i].update();
         }
@@ -157,21 +160,25 @@ export default abstract class obj {
         this.boundRect[0][0],
         this.boundRect[0][1],
         this.boundRect[1][0] - this.boundRect[0][0],
-        this.boundRect[1][1] - this.boundRect[0][1]
+        this.boundRect[1][1] - this.boundRect[0][1],
       );
     }
     this.needUpdBoundRect = false;
   }
   updBitmap(): void {
     //刷新「所在区域矩形」中确切可交互区域的二值矩阵
-    const px: number[] = this.canvas.PIXIapp.renderer.plugins.extract.pixels(this.interactionArea);
+    const px: number[] = this.canvas.PIXIapp.renderer.plugins.extract.pixels(
+      this.interactionArea,
+    );
     const tran: number[] = Array.from(
       { length: px.length / 4 },
-      (_, i: number) => px[4 * i + 3] + px[4 * i + 2] + px[4 * i + 1] + px[4 * i]
+      (_, i: number) =>
+        px[4 * i + 3] + px[4 * i + 2] + px[4 * i + 1] + px[4 * i],
     );
     const width: number = Math.floor(this.interactionArea.width);
-    this.bitmap = Array.from({ length: Math.floor(this.interactionArea.height) }, (_, i: number) =>
-      tran.slice(i * width, (i + 1) * width)
+    this.bitmap = Array.from(
+      { length: Math.floor(this.interactionArea.height) },
+      (_, i: number) => tran.slice(i * width, (i + 1) * width),
     );
     this.needUpdBitmap = false;
   }
@@ -253,12 +260,17 @@ export default abstract class obj {
       this.preDefine();
       this.body.zIndex = this.bodyZIndex;
       if (this.name == undefined) {
-        this.name = generateName(this.shape.shapeName, this.canvas.nextNameI[this.shape.shapeName]);
+        this.name = generateName(
+          this.shape.shapeName,
+          this.canvas.nextNameI[this.shape.shapeName],
+        );
         this.canvas.nextNameI[this.shape.shapeName]++;
       }
       this.canvas.names.push(this.name);
       this.tagCrd = this.getTagCrd();
-      console.log(`[NEW OBJ]: <${this.shape.shapeName}> <${this.defineTypeName}> "${this.name}"`);
+      console.log(
+        `[NEW OBJ]: <${this.shape.shapeName}> <${this.defineTypeName}> "${this.name}"`,
+      );
       this.tag = new tagBox(this.tagCrd, this.name, this);
     }
     // this.initializing = false;
@@ -272,7 +284,9 @@ export default abstract class obj {
   }
   checkBitmap(pos: pos): boolean {
     return (
-      this.bitmap[Math.floor(pos.y) - this.boundRect[0][1]][Math.floor(pos.x) - this.boundRect[0][0]] != 0
+      this.bitmap[Math.floor(pos.y) - this.boundRect[0][1]][
+        Math.floor(pos.x) - this.boundRect[0][0]
+      ] != 0
     );
   }
   toObj<I extends obj>(this: I): I {
@@ -285,7 +299,10 @@ export default abstract class obj {
       this.body.zIndex = this.bodyZIndex;
       this.canvas.stage.addChild(this.body);
       if (this.name == undefined) {
-        this.name = generateName(this.shape.shapeName, this.canvas.nextNameI[this.shape.shapeName]);
+        this.name = generateName(
+          this.shape.shapeName,
+          this.canvas.nextNameI[this.shape.shapeName],
+        );
         this.canvas.nextNameI[this.shape.shapeName]++;
       }
       this.canvas.names.push(this.name);

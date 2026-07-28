@@ -2,7 +2,6 @@
 import React from "react";
 import drawingMode from "./drawingMode";
 import App from "./app";
-import { ReactSVG } from "react-svg";
 /**
  * ## 绘图模式切换按钮
  */
@@ -14,7 +13,11 @@ export default class ModeSwitch extends React.Component<{
   title: string;
   element: HTMLElement | null = null;
   setRef: (ref: HTMLElement | null) => void;
-  constructor(prop: { app: App; iconSrc: string; drawingMode: drawingMode | undefined }) {
+  constructor(prop: {
+    app: App;
+    iconSrc: string;
+    drawingMode: drawingMode | undefined;
+  }) {
     super(prop);
     if (prop.drawingMode == undefined) {
       this.title = "";
@@ -28,7 +31,12 @@ export default class ModeSwitch extends React.Component<{
   }
   activate() {
     if (this.props.drawingMode != undefined && this.props.app.cv != undefined) {
-      this.props.app.cv.changeDrawingMode(this.props.drawingMode.indexes[this.props.app.cv.Mode.name]);
+      this.props.app.cv.changeDrawingMode(
+        this.props.drawingMode.indexes[this.props.app.cv.Mode.name],
+      );
+    }
+    if (!this.props.app.cv) {
+      return;
     }
     for (const dm of this.props.app.cv.Mode.drawingModes) {
       dm.switch.off();
@@ -43,8 +51,13 @@ export default class ModeSwitch extends React.Component<{
   }
   render(): React.ReactNode {
     return (
-      <div className="mode-switch" title={this.title} onClick={() => this.activate()} ref={this.setRef}>
-        <ReactSVG src={this.props.iconSrc} className="mode-switch-icon" />
+      <div
+        className="mode-switch"
+        title={this.title}
+        onClick={() => this.activate()}
+        ref={this.setRef}
+      >
+        <img src={this.props.iconSrc} className="mode-switch-icon" alt="" />
       </div>
     );
   }

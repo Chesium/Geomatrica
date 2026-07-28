@@ -1,9 +1,9 @@
-import obj from "./object";
-import canvas from "./canvas";
-import point from "./shape/point";
-import line from "./shape/line";
-import circle from "./shape/circle";
-import { crd } from "./misc";
+import type obj from "./object";
+import type canvas from "./canvas";
+import type point from "./shape/point";
+import type line from "./shape/line";
+import type circle from "./shape/circle";
+import type { crd } from "./misc";
 import type ModeSwitch from "./ModeSwitch";
 
 /**

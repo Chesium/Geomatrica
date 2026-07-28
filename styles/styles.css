@@ -1,33 +1,29 @@
-
-#root {
-  position: absolute;
-  top: 0px;
-  left: 0px;
+.geomatrica-root {
+  position: relative;
   height: 100%;
   width: 100%;
-}
-
-#main {
-  height: 100%;
-  width: 100%;
+  min-height: 0;
   display: grid;
   grid-template-columns: 90px 1fr;
   grid-template-rows: 36px 1fr;
+  overflow: hidden;
+  color: #111;
+  background: #fff;
 }
 
-#workarea,
-#toolbar,
-#header {
+.geomatrica-root .workarea,
+.geomatrica-root .toolbar,
+.geomatrica-root .geomatrica-header {
   image-rendering: -webkit-optimize-contrast;
 }
 
-#workarea {
+.geomatrica-root .workarea {
+  display: block;
   height: 100%;
   width: 100%;
 }
 
-.toolbar {
-
+.geomatrica-root .toolbar {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 2;
@@ -41,8 +37,7 @@
   box-shadow: 5px 0px 10px 2px rgba(0, 0, 0, 0.1);
 }
 
-#header {
-
+.geomatrica-root .geomatrica-header {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 1;
@@ -62,7 +57,7 @@
   justify-content: center;
 }
 
-#headerID {
+.geomatrica-root .headerID {
   top: 0px;
   left: 0px;
   height: 100%;
@@ -72,19 +67,16 @@
   align-items: center;
 }
 
-.gm-logo {
+.geomatrica-root .gm-logo {
   position: relative;
   left: 6px;
   height: 90%;
   display: flex;
 
-  >div,
-  >div>svg {
-    height: 100%;
-  }
+  width: auto;
 }
 
-#headerID p {
+.geomatrica-root .headerID p {
   position: relative;
   display: inline;
   left: -10px;
@@ -94,15 +86,8 @@
   font-weight: bolder;
 }
 
-html,
-body {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
-
-#workarea-container {
-
+.geomatrica-root .workarea-container {
+  position: relative;
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 2;
@@ -111,9 +96,10 @@ body {
   height: 100%;
   width: 100%;
   z-index: 0;
+  outline: none;
 }
 
-.mode-switch-container {
+.geomatrica-root .mode-switch-container {
   display: flex;
   height: 100%;
   flex-wrap: wrap;
@@ -124,30 +110,30 @@ body {
   padding-top: 3px;
 }
 
-.mode-switch-container::-webkit-scrollbar {
+.geomatrica-root .mode-switch-container::-webkit-scrollbar {
   width: 4px;
   height: 4px;
 }
 
-.mode-switch-container::-webkit-scrollbar-track {
+.geomatrica-root .mode-switch-container::-webkit-scrollbar-track {
   background: #f6f6f6;
   border-radius: 2px;
 }
 
-.mode-switch-container::-webkit-scrollbar-thumb {
+.geomatrica-root .mode-switch-container::-webkit-scrollbar-thumb {
   background: #aaa;
   border-radius: 2px;
 }
 
-.mode-switch-container::-webkit-scrollbar-thumb:hover {
+.geomatrica-root .mode-switch-container::-webkit-scrollbar-thumb:hover {
   background: #747474;
 }
 
-.mode-switch-container::-webkit-scrollbar-corner {
+.geomatrica-root .mode-switch-container::-webkit-scrollbar-corner {
   background: #f6f6f6;
 }
 
-.mode-switch {
+.geomatrica-root .mode-switch {
   height: 50px;
   width: 50px;
   margin: 3px;
@@ -155,37 +141,37 @@ body {
   margin-bottom: 10px;
   border-radius: 5px;
   border: 4px solid black;
-  box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 4px 8px 0px rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transition-timing-function: ease;
   transition-duration: 0.5s;
   background-color: transparent;
 }
 
-.mode-switch:hover {
+.geomatrica-root .mode-switch:hover {
   border-color: green;
-  box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 4px 8px 1.5px rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.mode-switch[chosen] {
+.geomatrica-root .mode-switch[chosen] {
   border-color: red;
-  box-shadow: 0 4px 8px 1.5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 4px 8px 1.5px rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.mode-switch-icon {
-  height: 50px;
-  width: 50px;
-}
-
-.mode-switch-icon>div,
-.mode-switch-icon>div>svg {
+.geomatrica-root .mode-switch-icon {
   height: 100%;
   width: 100%;
 }
 
-.graphic-tagbox {
+.geomatrica-root .graphic-tagbox {
   user-select: none;
 }
 
-.graphic-tag[dragging] {
+.geomatrica-root .graphic-tag[dragging] {
   box-shadow: 0 0 10px 0.5px rgba(0, 0, 0, 0.2);
 }

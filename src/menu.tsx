@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from "react";
-import { ReactSVG } from "react-svg";
+import blankIconUrl from "../assets/blank.svg?url";
+import expandIconUrl from "../assets/expand.svg?url";
 export class N3 extends React.Component<{
   name: string;
   lCtx: string;
@@ -13,7 +14,7 @@ export class N3 extends React.Component<{
           {this.props.rCtx != undefined && (
             <p className="p-right">{this.props.rCtx}</p>
           )}
-          <ReactSVG className="expand-icon" src="../assets/blank.svg" />
+          <img className="expand-icon" src={blankIconUrl} alt="" />
         </div>
       </li>
     );
@@ -37,9 +38,9 @@ export class N2 extends React.Component<
             <p className="p-right">{this.props.rCtx}</p>
           )}
           {this.props.haveN3 ? (
-            <ReactSVG className="expand-icon" src="../assets/expand.svg" />
+            <img className="expand-icon" src={expandIconUrl} alt="" />
           ) : (
-            <ReactSVG className="expand-icon" src="../assets/blank.svg" />
+            <img className="expand-icon" src={blankIconUrl} alt="" />
           )}
         </div>
         {this.props.haveN3 && (

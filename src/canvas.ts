@@ -18,6 +18,12 @@ import dm_move from "./drawingMode/move.dm";
  * 所有的绘图操作都在这里进行
  */
 export default class canvas {
+  private eventController = new AbortController();
+  private resizeObserver?: ResizeObserver;
+
+  get eventSignal(): AbortSignal {
+    return this.eventController.signal;
+  }
   /**
    * ## PIXI对象
    * 画板所用的`PIXI.Application`对象
@@ -233,11 +239,11 @@ export default class canvas {
      */
     cap: LINE_CAP;
   } = {
-      width: 1,
-      color: 0x000000,
-      alpha: 1,
-      cap: LINE_CAP.ROUND,
-    };
+    width: 1,
+    color: 0x000000,
+    alpha: 1,
+    cap: LINE_CAP.ROUND,
+  };
   /**
    * ## X坐标轴刻度值PIXI文字列表
    * 用于显示X坐标轴上所有刻度值的PIXI文字（`PIXI.Text`）列表
@@ -306,6 +312,17 @@ export default class canvas {
         this.PIXIapp.view.offsetHeight,
       ],
     ];
+    if (this.PIXIapp.resizeTo instanceof HTMLElement) {
+      const resizeTarget = this.PIXIapp.resizeTo;
+      this.resizeObserver = new ResizeObserver(() => {
+        this.stageBound = [
+          [0, 0],
+          [resizeTarget.clientWidth, resizeTarget.clientHeight],
+        ];
+        this.updAll();
+      });
+      this.resizeObserver.observe(resizeTarget);
+    }
 
     //初始化坐标轴
     this.axis = new Graphics();
@@ -313,179 +330,205 @@ export default class canvas {
     this.updAxes();
 
     //设置鼠标事件
-    this.PIXIapp.resizeTo.addEventListener("mousedown", (ev: Event): void => {
-      if (this.justEndDrawing) {
-        this.justEndDrawing = false;
-        return;
-      }
-      if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
-        return;
-      }
-      if (this.Status == 3) {
-        return;
-      }
-      const IAAs = this.IAseq.flat(2);
-      for (const i in IAAs) {
-        if (IAAs[i].removed) {
-          continue;
+    this.PIXIapp.resizeTo.addEventListener(
+      "mousedown",
+      (ev: Event): void => {
+        if (this.justEndDrawing) {
+          this.justEndDrawing = false;
+          return;
         }
-        if (IAAs[i].needUpdBoundRect) {
-          IAAs[i].updBoundRect();
-          IAAs[i].needUpdBoundRect = false;
+        if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
+          return;
         }
-        if (IAAs[i].needUpdBitmap) {
-          IAAs[i].updBitmap();
-          IAAs[i].needUpdBitmap = false;
+        this.PIXIapp.resizeTo.focus();
+        if (this.Status == 3) {
+          return;
         }
-      }
-      const crd = this.toCrd({
-        x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
-        y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
-      });
-      console.log(
-        "[mousedown] pos:",
-        (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
-        " ",
-        (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop
-      );
-      const focus = this.chooseByPos({
-        x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
-        y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
-      });
-      console.log("[mousedown] current focus:", focus);
-      console.log("[mousedown] current drawing case:", this.currentCase);
-      if (this.currentCase != undefined) {
-        if (focus instanceof obj) {
-          //点击了一个对象
-          //处理泛形状情况
-          const AnyCase = this.currentCase.intoAny;
-          if (AnyCase != undefined) {
-            //匹配 进入该情况 添加该对象至选中对象列表 执行处理函数
-            this.currentCase = AnyCase;
-            this.inRootCase = false;
-            this.chooseObjs.all.push(focus);
-            this.chooseObjs[focus.shape.shapeName].push(focus);
-            focus.changeStyle(focusStyle);
-            if (AnyCase.processFn !== undefined) {
-              AnyCase.processFn(this, crd);
+        const IAAs = this.IAseq.flat(2);
+        for (const i in IAAs) {
+          if (IAAs[i].removed) {
+            continue;
+          }
+          if (IAAs[i].needUpdBoundRect) {
+            IAAs[i].updBoundRect();
+            IAAs[i].needUpdBoundRect = false;
+          }
+          if (IAAs[i].needUpdBitmap) {
+            IAAs[i].updBitmap();
+            IAAs[i].needUpdBitmap = false;
+          }
+        }
+        const pointer = this.pointerPosition(ev as MouseEvent);
+        const crd = this.toCrd(pointer);
+        console.log("[mousedown] pos:", pointer.x, " ", pointer.y);
+        const focus = this.chooseByPos(pointer);
+        console.log("[mousedown] current focus:", focus);
+        console.log("[mousedown] current drawing case:", this.currentCase);
+        if (this.currentCase != undefined) {
+          if (focus instanceof obj) {
+            //点击了一个对象
+            //处理泛形状情况
+            const AnyCase = this.currentCase.intoAny;
+            if (AnyCase != undefined) {
+              //匹配 进入该情况 添加该对象至选中对象列表 执行处理函数
+              this.currentCase = AnyCase;
+              this.inRootCase = false;
+              this.chooseObjs.all.push(focus);
+              this.chooseObjs[focus.shape.shapeName].push(focus);
+              focus.changeStyle(focusStyle);
+              if (AnyCase.processFn !== undefined) {
+                AnyCase.processFn(this, crd);
+              }
+            }
+            //查找该对象类型是否符和 当前绘图情况的 某一种[子情况]
+            const Tcase = this.currentCase.into[focus.shape.shapeName];
+            if (Tcase != undefined) {
+              //匹配 进入该情况 添加该对象至选中对象列表 执行处理函数
+              this.currentCase = Tcase;
+              this.inRootCase = false;
+              this.chooseObjs.all.push(focus);
+              this.chooseObjs[focus.shape.shapeName].push(focus);
+              focus.changeStyle(focusStyle);
+              if (Tcase.processFn !== undefined) {
+                Tcase.processFn(this, crd);
+              }
+            }
+          } else {
+            //点击空白处
+            //重置选择操作
+            this.resetChoosing();
+            //处理点击空白情况
+            const blankCase = this.currentCase.intoBlank;
+            if (blankCase != undefined) {
+              this.currentCase = blankCase;
+              this.inRootCase = false;
+              if (blankCase.processFn !== undefined) {
+                blankCase.processFn(this, crd);
+              }
             }
           }
-          //查找该对象类型是否符和 当前绘图情况的 某一种[子情况]
-          const Tcase = this.currentCase.into[focus.shape.shapeName];
-          if (Tcase != undefined) {
-            //匹配 进入该情况 添加该对象至选中对象列表 执行处理函数
-            this.currentCase = Tcase;
-            this.inRootCase = false;
-            this.chooseObjs.all.push(focus);
-            this.chooseObjs[focus.shape.shapeName].push(focus);
-            focus.changeStyle(focusStyle);
-            if (Tcase.processFn !== undefined) {
-              Tcase.processFn(this, crd);
-            }
+        }
+      },
+      { signal: this.eventController.signal },
+    );
+    this.PIXIapp.resizeTo.addEventListener(
+      "mousemove",
+      (ev: Event): void => {
+        if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
+          return;
+        }
+        if (this.Status == 3) {
+          return;
+        }
+        // console.log("status",this.Status);
+        const pointer = this.pointerPosition(ev as MouseEvent);
+        const crd = this.toCrd(pointer);
+        switch (this.Status) {
+          case 1:
+            this.O[this.F].updDrag(crd);
+            break;
+          case 2:
+            this.trCoe[1] = pointer.x + this.dragOffset.x;
+            this.trCoe[2] = pointer.y + this.dragOffset.y;
+            this.updAll();
+            // console.log("[update drag->canvas] trcoe:", this.trCoe);
+            break;
+          default:
+            break;
+        }
+      },
+      { signal: this.eventController.signal },
+    );
+    this.PIXIapp.resizeTo.addEventListener(
+      "mouseup",
+      (): void => {
+        if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
+          return;
+        }
+        if (this.Status == 3) {
+          return;
+        }
+        // const crd = this.toCrd({
+        //   x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
+        //   y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
+        // });
+        if (this.F != -1) {
+          if (this.O[this.F].initializing) {
+            this.O[this.F].initializing = false;
+            // const focus = this.chooseByPos({
+            //   x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
+            //   y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
+            // });
           }
+        }
+        this.F = -1;
+        this.Status = 0;
+      },
+      { signal: this.eventController.signal },
+    );
+    this.PIXIapp.resizeTo.addEventListener(
+      "wheel",
+      (ev: Event): void => {
+        if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
+          return;
+        }
+        ev.preventDefault();
+        const pointer = this.pointerPosition(ev as WheelEvent);
+        if ((ev as WheelEvent).deltaY < 0) {
+          this.trCoe[0] *= 1.1;
+          this.trCoe[1] = pointer.x + (this.trCoe[1] - pointer.x) * 1.1;
+          this.trCoe[2] = pointer.y + (this.trCoe[2] - pointer.y) * 1.1;
         } else {
-          //点击空白处
-          //重置选择操作
-          this.resetChoosing();
-          //处理点击空白情况
-          const blankCase = this.currentCase.intoBlank;
-          if (blankCase != undefined) {
-            this.currentCase = blankCase;
-            this.inRootCase = false;
-            if (blankCase.processFn !== undefined) {
-              blankCase.processFn(this, crd);
-            }
+          this.trCoe[0] /= 1.1;
+          this.trCoe[1] = pointer.x + (this.trCoe[1] - pointer.x) / 1.1;
+          this.trCoe[2] = pointer.y + (this.trCoe[2] - pointer.y) / 1.1;
+        }
+        this.updAll();
+      },
+      { passive: false, signal: this.eventController.signal },
+    );
+    document.addEventListener(
+      "keydown",
+      (ev: KeyboardEvent): void => {
+        if (
+          this.PIXIapp.resizeTo instanceof HTMLElement &&
+          !this.PIXIapp.resizeTo.contains(document.activeElement)
+        ) {
+          return;
+        }
+        console.log("[keydown] code: ", ev.code);
+        if (ev.code == "Escape") {
+          if (this.inRootCase) {
+            this.changeDrawingMode(dm_move.indexes[this.Mode.name]);
+          } else {
+            this.resetChoosing();
           }
         }
-      }
-    });
-    this.PIXIapp.resizeTo.addEventListener("mousemove", (ev: Event): void => {
-      if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
-        return;
-      }
-      if (this.Status == 3) {
-        return;
-      }
-      // console.log("status",this.Status);
-      const crd = this.toCrd({
-        x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
-        y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
-      });
-      switch (this.Status) {
-        case 1:
-          this.O[this.F].updDrag(crd);
-          break;
-        case 2:
-          this.trCoe[1] = (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft + this.dragOffset.x;
-          this.trCoe[2] = (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop + this.dragOffset.y;
-          this.updAll();
-          // console.log("[update drag->canvas] trcoe:", this.trCoe);
-          break;
-        default:
-          break;
-      }
-    });
-    this.PIXIapp.resizeTo.addEventListener("mouseup", (): void => {
-      if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
-        return;
-      }
-      if (this.Status == 3) {
-        return;
-      }
-      // const crd = this.toCrd({
-      //   x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
-      //   y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
-      // });
-      if (this.F != -1) {
-        if (this.O[this.F].initializing) {
-          this.O[this.F].initializing = false;
-          // const focus = this.chooseByPos({
-          //   x: (ev as MouseEvent).pageX - this.PIXIapp.resizeTo.offsetLeft,
-          //   y: (ev as MouseEvent).pageY - this.PIXIapp.resizeTo.offsetTop,
-          // });
-        }
-      }
-      this.F = -1;
-      this.Status = 0;
-    });
-    this.PIXIapp.resizeTo.addEventListener("wheel", (ev: Event): void => {
-      if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
-        return;
-      }
-      if ((ev as WheelEvent).deltaY < 0) {
-        this.trCoe[0] *= 1.1;
-        this.trCoe[1] =
-          (ev as WheelEvent).pageX -
-          this.PIXIapp.resizeTo.offsetLeft +
-          (this.trCoe[1] - (ev as WheelEvent).pageX + this.PIXIapp.resizeTo.offsetLeft) * 1.1;
-        this.trCoe[2] =
-          (ev as WheelEvent).pageY -
-          this.PIXIapp.resizeTo.offsetTop +
-          (this.trCoe[2] - (ev as WheelEvent).pageY + this.PIXIapp.resizeTo.offsetTop) * 1.1;
-      } else {
-        this.trCoe[0] /= 1.1;
-        this.trCoe[1] =
-          (ev as WheelEvent).pageX -
-          this.PIXIapp.resizeTo.offsetLeft +
-          (this.trCoe[1] - (ev as WheelEvent).pageX + this.PIXIapp.resizeTo.offsetLeft) / 1.1;
-        this.trCoe[2] =
-          (ev as WheelEvent).pageY -
-          this.PIXIapp.resizeTo.offsetTop +
-          (this.trCoe[2] - (ev as WheelEvent).pageY + this.PIXIapp.resizeTo.offsetTop) / 1.1;
-      }
-      this.updAll();
-    });
-    document.addEventListener("keydown", (ev: KeyboardEvent): void => {
-      console.log("[keydown] code: ", ev.code);
-      if (ev.code == "Escape") {
-        if (this.inRootCase) {
-          this.changeDrawingMode(dm_move.indexes[this.Mode.name]);
-        } else {
-          this.resetChoosing();
-        }
-      }
-    });
+      },
+      { signal: this.eventController.signal },
+    );
     // this.PIXIapp.view.removeAttribute("style");
+  }
+
+  destroy(): void {
+    this.eventController.abort();
+    this.resizeObserver?.disconnect();
+    this.PIXIapp.destroy(false, {
+      children: true,
+      texture: false,
+      baseTexture: false,
+    });
+  }
+
+  private pointerPosition(ev: MouseEvent): pos {
+    if (!(this.PIXIapp.resizeTo instanceof HTMLElement)) {
+      return { x: 0, y: 0 };
+    }
+    const bounds = this.PIXIapp.resizeTo.getBoundingClientRect();
+    return {
+      x: ev.clientX - bounds.left,
+      y: ev.clientY - bounds.top,
+    };
   }
   /**
    * ## 转换至显示用坐标`pos`
@@ -624,7 +667,7 @@ export default class canvas {
   changeDrawingMode(newDrawingModeI: number): void {
     console.log(
       `this.Mode.drawingModes[${newDrawingModeI}].switch:`,
-      this.Mode.drawingModes[newDrawingModeI].switch
+      this.Mode.drawingModes[newDrawingModeI].switch,
     );
     if (this.drawingModeI != undefined) {
       if (this.Mode.drawingModes[this.drawingModeI].switch != undefined) {

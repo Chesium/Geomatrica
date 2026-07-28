@@ -1,6 +1,6 @@
 import drawingMode, { drawCase } from "../drawingMode";
-import canvas from "../canvas";
-import { crd } from "../misc";
+import type canvas from "../canvas";
+import type { crd } from "../misc";
 
 const dm_move = new drawingMode({
   name: "move objects",

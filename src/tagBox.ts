@@ -26,40 +26,59 @@ export default class tagBox {
     this.update();
     this.updateContent();
     this.element.children[0].classList.add("graphic-tag");
-    this.element.children[0].addEventListener("mousedown", (ev: Event) => {
-      //只有处于移动模式时采才可拖动标签
-      console.log("tagbox:click");
-      if (this.obj.canvas.Mode.drawingModes[this.obj.canvas.drawingModeI].name == "move objects") {
-        this.element.children[0].setAttribute("dragging", "");
-        this.dragging = true;
-        this.obj.canvas.Status = 3; //"3"标识该画板中正在拖动一个标签
-        this.obj.canvas.F = this.obj.index;
-        this.dragPos = { x: (ev as MouseEvent).pageX, y: (ev as MouseEvent).pageY };
-        // console.log("tagbox beginDrag dragpos:", this.dragPos);
-        this.dragBeginOffset = { x: this.offset.x, y: this.offset.y };
-      }
-    });
-    this.obj.canvas.PIXIapp.resizeTo.addEventListener("mousemove", (ev: Event) => {
-      if (this.obj.canvas.Status == 3 && this.dragging) {
-        // console.log("tagbox updDrag origin this:", this);
-        this.offset.x = (ev as MouseEvent).pageX - this.dragPos!.x + this.dragBeginOffset!.x;
-        this.offset.y = (ev as MouseEvent).pageY - this.dragPos!.y + this.dragBeginOffset!.y;
-        this.update();
-      }
-    });
-    this.obj.canvas.PIXIapp.resizeTo.addEventListener("mouseup", () => {
-      console.log("tagbox: mouseUP status:", this.obj.canvas.Status);
-      //结束拖动
-      if (this.obj.canvas.Status == 3 && this.dragging) {
-        this.element.children[0].removeAttribute("dragging");
-        this.dragging = false;
-        this.obj.canvas.Status = 0;
-      }
-    });
+    this.element.children[0].addEventListener(
+      "mousedown",
+      (ev: Event) => {
+        //只有处于移动模式时采才可拖动标签
+        console.log("tagbox:click");
+        if (
+          this.obj.canvas.Mode.drawingModes[this.obj.canvas.drawingModeI]
+            .name == "move objects"
+        ) {
+          this.element.children[0].setAttribute("dragging", "");
+          this.dragging = true;
+          this.obj.canvas.Status = 3; //"3"标识该画板中正在拖动一个标签
+          this.obj.canvas.F = this.obj.index;
+          this.dragPos = {
+            x: (ev as MouseEvent).clientX,
+            y: (ev as MouseEvent).clientY,
+          };
+          this.dragBeginOffset = { x: this.offset.x, y: this.offset.y };
+        }
+      },
+      { signal: this.obj.canvas.eventSignal },
+    );
+    this.obj.canvas.PIXIapp.resizeTo.addEventListener(
+      "mousemove",
+      (ev: Event) => {
+        if (this.obj.canvas.Status == 3 && this.dragging) {
+          this.offset.x =
+            (ev as MouseEvent).clientX -
+            this.dragPos!.x +
+            this.dragBeginOffset!.x;
+          this.offset.y =
+            (ev as MouseEvent).clientY -
+            this.dragPos!.y +
+            this.dragBeginOffset!.y;
+          this.update();
+        }
+      },
+      { signal: this.obj.canvas.eventSignal },
+    );
+    this.obj.canvas.PIXIapp.resizeTo.addEventListener(
+      "mouseup",
+      () => {
+        console.log("tagbox: mouseUP status:", this.obj.canvas.Status);
+        if (this.obj.canvas.Status == 3 && this.dragging) {
+          this.element.children[0].removeAttribute("dragging");
+          this.dragging = false;
+          this.obj.canvas.Status = 0;
+        }
+      },
+      { signal: this.obj.canvas.eventSignal },
+    );
   }
   update(): void {
-    const tx = 80;
-    const ty = 30;
     //对象 不存在 已移除 不显示(被隐藏) 则不显示标签
     if (!this.obj.exist || this.obj.removed || !this.obj.shown) {
       this.element.style.visibility = "hidden";
@@ -67,8 +86,8 @@ export default class tagBox {
       this.element.style.visibility = "visible";
     }
     const pos = this.obj.canvas.toPos(this.crd);
-    this.element.style.left = pos.x + this.offset.x + tx + "px";
-    this.element.style.top = pos.y + this.offset.y + ty + "px";
+    this.element.style.left = pos.x + this.offset.x + "px";
+    this.element.style.top = pos.y + this.offset.y + "px";
   }
   updateContent(): void {
     //用Katex渲染
