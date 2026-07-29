@@ -1,95 +1,123 @@
-<img src="assets/GeomatricA.svg" width=200>
-=
+<p align="center">
+  <img src="assets/GeomatricA.svg" width="240" alt="Geomatrica">
+</p>
 
-**crd**: abbreviation for *coordinate* — used for computation  
-**pos**: abbreviation for *position* — used for display  
+<p align="center">
+  An experimental, dependency-aware dynamic geometry playground for the web.
+</p>
 
-**“Drag”** means holding an object with the mouse and moving it. In most cases, it is equivalent to **“move.”**  
-**“Move”** means when an object changes position, all related (dependent) objects also change position accordingly.
+## About
 
----
+Geomatrica is a browser-based dynamic geometry system for constructing and exploring Euclidean geometry. Move a point and every dependent line, circle, intersection, midpoint, or other construction is recalculated and redrawn automatically.
 
-### Steps to Add a New Feature
+I originally built this project while I was in high school, taking inspiration from [GeoGebra](https://www.geogebra.org/) and its direct, interactive approach to geometry. Geomatrica is an independent personal project and is not affiliated with GeoGebra.
 
-1. Write a new feature class in the **shape** folder  
-2. Create a corresponding **drawingMode**  
-3. Add the new drawingMode to **dm.ts**  
-4. Register the drawingMode in **Mode**  
-5. Add a button in **index.ts**
+> Geomatrica is still experimental. It is a learning project and geometry engine in progress.
 
----
+## Screenshot
 
-## Geomatrica
+![Geomatrica showing a circle, labelled points, and dependent line constructions](assets/screenshot.png)
 
-**Geomatrica** is a *dynamic geometry software (DGS)* under development, similar to GeoGebra.  
-The following features have been implemented or are planned:
+## Highlights
 
----
+- **Dynamic constructions** — objects retain their geometric relationships and update when a parent object moves.
+- **Free and constrained points** — place points anywhere, or attach them to a line or circle.
+- **Dependency-aware dragging** — drag free points, constrained points, lines, and circles while dependent objects follow.
+- **Smart construction flow** — reuse nearby points or create a point on an existing shape while drawing.
+- **Interactive canvas** — pan the plane, zoom around the cursor, and work with automatically scaled coordinate axes.
+- **Readable diagrams** — points, lines, and circles receive labels that move with their objects.
 
-### Mode 0 – Drag
+## Construction tools
 
-- [x] Freely drag free points; all their dependent objects update accordingly  
-- [x] When dragging a semi-free point on a line or circle, it moves along its path, simulating a moving point (continuously computing the position closest to the cursor)  
-- [x] Lines and circles can be dragged, which recursively drags all their parent objects, and their child objects update accordingly  
+The toolbar currently exposes 15 modes:
 
----
+| Category | Tools |
+| --- | --- |
+| Navigate | Move objects or pan the canvas |
+| Points | Free/constrained point, intersection point, midpoint |
+| Basic constructions | Segment, ray, line, extension line, centre-point circle |
+| Line relationships | Perpendicular line, parallel line, perpendicular bisector |
+| Advanced constructions | Angle bisector, tangent, circumcircle |
 
-### Mode 1 – Segment
+Intersections are supported between two lines, a line and a circle, or two circles. Angle bisectors can be constructed from three points or from two lines.
 
-- [x] Click and drag on the canvas to draw a segment  
-- [x] Clicking an existing point starts drawing a segment from that point  
-- [x] Clicking a line or circle creates a new point on it and starts a segment from there  
-- [x] Releasing the mouse on another point connects that point with the initial one  
-- [x] Releasing on a line or circle creates a new point on it and connects it with the initial point  
+## Using the canvas
 
----
+1. Select a construction tool from the left-hand toolbar.
+2. Click existing objects or empty space as required by the construction.
+3. For two-point objects such as segments and circles, click and drag from the first point to the second.
+4. Switch to **Move** to drag objects or drag empty space to pan the canvas.
 
-### Mode 2 – Point
+Additional controls:
 
-- [x] Click on empty space to create a free point  
-- [x] Click on a line or circle to create a point on it  
+- Use the mouse wheel to zoom around the pointer.
+- Press <kbd>Esc</kbd> to cancel the current selection; press it again to return to Move mode.
+- Dropping a new construction near an existing point snaps to and reuses that point.
 
----
+## Run locally
 
-### Mode 3 – Circle
+Geomatrica requires a recent version of [Node.js](https://nodejs.org/).
 
-- [x] Click to set the circle’s centre and drag to define its radius  
-- [x] Clicking an existing point starts a circle centred at that point  
-- [x] Clicking a line or circle creates a point on it and uses that as the circle’s centre  
-- [x] Releasing the mouse on another point draws a circle through that point  
-- [x] Releasing on a line or circle creates a point on it and draws a circle through it  
+```bash
+git clone https://github.com/Chesium/Geomatrica.git
+cd Geomatrica
+npm install
+npm run dev
+```
 
----
+Vite will print the local development URL in the terminal.
 
-### Mode 4 – Line
+### Available commands
 
-- [x] Click and drag on the canvas to draw a line  
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the Vite development server |
+| `npm run build` | Create a production build in `dist/` |
+| `npm run typecheck` | Check the TypeScript project without emitting files |
+| `npm run lint` | Run ESLint |
 
----
+Pushes to `main` are built and deployed through the GitHub Pages workflow in [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
 
-### Mode 5 – Ray
+## How it works
 
-- [x] Click and drag on the canvas to draw a ray  
+Geomatrica separates mathematical coordinates from display positions:
 
----
+- **`crd`** (*coordinate*) represents a point in the mathematical plane and is used for geometry calculations.
+- **`pos`** (*position*) represents a location on the screen and is used for rendering and pointer interaction.
 
-### Mode 6–14
+Geometric objects track their parents and children. A drag updates the changed object, then propagates that change through its dependants. Rendering and hit detection are handled on a responsive PixiJS canvas, while React provides the surrounding interface and tool selection.
 
-6. Intersection Point  
-7. Perpendicular Line  
-8. Parallel Line  
-9. Extended Line  
-10. Angle Bisector  
-11. Tangent  
-12. Perpendicular Bisector  
-13. Midpoint  
-14. Circumcircle  
+### Project structure
 
----
+```text
+src/
+├── drawingMode/   # Tool interaction and construction workflows
+├── shape/         # Points, lines, circles, and derived constructions
+├── Mode/          # Geometry-mode registration
+├── canvas.ts      # Rendering, coordinates, input, panning, and zooming
+├── object.ts      # Shared object lifecycle and dependency behaviour
+└── app.tsx        # React interface and toolbar
+assets/
+├── switchIcons/   # Construction-tool icons
+└── screenshot.png
+```
 
-### General Behaviours
+## Adding a construction tool
 
-- [x] When drawing lines or circles, releasing the mouse near a point automatically snaps to that point  
-- [x] In line/circle drawing modes, clicking a line or circle near a point uses that point as the start  
-- [x] In line/circle drawing modes, clicking a line or circle away from existing points creates a new moving point on it as the start  
-- [x] Display hit detection zones for clickable objects (debug feature)
+The usual extension path is:
+
+1. Implement the geometric object in `src/shape/`.
+2. Add its interaction workflow in `src/drawingMode/`.
+3. Export and register the drawing mode in `src/drawingMode/dm.ts`.
+4. Register any new base shape with the relevant mode in `src/Mode/`.
+5. Add the tool and its icon to the toolbar in `src/Geomatrica.tsx` and `src/app.tsx`.
+
+Run `npm run typecheck`, `npm run lint`, and `npm run build` before submitting a change.
+
+## Built with
+
+- [React](https://react.dev/) for the interface
+- [PixiJS](https://pixijs.com/) for canvas rendering and interaction
+- [KaTeX](https://katex.org/) for mathematical labels
+- [TypeScript](https://www.typescriptlang.org/) for the geometry engine
+- [Vite](https://vite.dev/) for development and production builds
